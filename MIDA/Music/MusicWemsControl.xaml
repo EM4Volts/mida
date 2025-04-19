@@ -1,0 +1,104 @@
+﻿<UserControl
+    x:Class="MIDA.MusicWemsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MIDA"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="1000"
+    d:DesignWidth="960"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="WemTemplate">
+            <Button
+                Height="90"
+                Margin="5"
+                Click="Play_OnClick"
+                Style="{StaticResource D2StyleButton}">
+                <Grid Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80*" />
+                        <RowDefinition Height="30*" />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Grid.RowSpan="2"
+                        Panel.ZIndex="1"
+                        BorderBrush="{StaticResource BackgroundColour30}"
+                        BorderThickness="1" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="5,5,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="{Binding Name}"
+                        TextWrapping="WrapWithOverflow" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Margin="5,0,0,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        FontFamily="{DynamicResource Haas Grot Text 56 Italic}"
+                        FontSize="14"
+                        Foreground="{StaticResource ForegroundColour75}"
+                        Text="{Binding Duration}" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Margin="0,0,5,5"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        FontFamily="{DynamicResource Haas Grot Text 56 Italic}"
+                        FontSize="14"
+                        Foreground="{StaticResource ForegroundColour75}"
+                        Text="{Binding Hash}" />
+                </Grid>
+            </Button>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="85*" />
+            <RowDefinition Height="10*" />
+        </Grid.RowDefinitions>
+
+        <CheckBox
+            x:Name="ExportAll"
+            Margin="10,0,0,0"
+            VerticalAlignment="Center"
+            Content="Select All for Export"
+            IsChecked="False"
+            Style="{StaticResource MaterialDesignCheckBox}" />
+
+        <TextBlock
+            Grid.Row="0"
+            HorizontalAlignment="Center"
+            FontSize="40"
+            Text="WEMs" />
+
+        <ListView
+            x:Name="WemList"
+            Grid.Row="1"
+            Grid.Column="0"
+            Background="Transparent"
+            BorderThickness="0">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="OverridesDefaultStyle" Value="True" />
+                    <Setter Property="Template" Value="{StaticResource WemTemplate}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+
+        <local:MusicPlayerControl
+            x:Name="MusicPlayer"
+            Grid.Row="2"
+            Grid.Column="0" />
+    </Grid>
+</UserControl>

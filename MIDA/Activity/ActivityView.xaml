@@ -1,0 +1,30 @@
+﻿<UserControl
+    x:Class="MIDA.ActivityView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MIDA"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="1000"
+    d:DesignWidth="1900"
+    mc:Ignorable="d">
+    <Grid>
+        <TabControl x:Name="ActivityTabControl">
+            <TabItem x:Name="MapTab" Header="MAP">
+                <local:ActivityMapView x:Name="MapControl" />
+            </TabItem>
+            <TabItem x:Name="EntityTab" Header="RESOURCES">
+                <local:ActivityMapEntityView x:Name="MapEntityControl" />
+            </TabItem>
+            <TabItem x:Name="DialogueTab" Header="DIALOGUE">
+                <local:ActivityDialogueView x:Name="DialogueControl" />
+            </TabItem>
+            <TabItem x:Name="DirectiveTab" Header="DIRECTIVE">
+                <local:ActivityDirectiveView x:Name="DirectiveControl" />
+            </TabItem>
+            <TabItem x:Name="MusicTab" Header="MUSIC">
+                <local:ActivityMusicView x:Name="MusicControl" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

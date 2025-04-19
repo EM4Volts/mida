@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tiger", "Tiger\Tiger.csproj", "{33040C46-022F-43E5-981F-03BD68C1587D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arithmic", "Arithmic\Arithmic.csproj", "{F7EE1308-38FF-4803-82DD-F2CC7EED58BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RevorbStd", "ThirdParty\revorbstd\RevorbStd.csproj", "{C407B28F-077C-41C2-8C16-277CB9681E92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIDA", "MIDA\MIDA.csproj", "{0978A046-53A0-985D-FEB5-63FB6D467EC4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33040C46-022F-43E5-981F-03BD68C1587D}.Debug|x64.ActiveCfg = Debug|x64
+		{33040C46-022F-43E5-981F-03BD68C1587D}.Debug|x64.Build.0 = Debug|x64
+		{33040C46-022F-43E5-981F-03BD68C1587D}.Release|x64.ActiveCfg = Release|x64
+		{33040C46-022F-43E5-981F-03BD68C1587D}.Release|x64.Build.0 = Release|x64
+		{F7EE1308-38FF-4803-82DD-F2CC7EED58BE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F7EE1308-38FF-4803-82DD-F2CC7EED58BE}.Debug|x64.Build.0 = Debug|Any CPU
+		{F7EE1308-38FF-4803-82DD-F2CC7EED58BE}.Release|x64.ActiveCfg = Release|Any CPU
+		{F7EE1308-38FF-4803-82DD-F2CC7EED58BE}.Release|x64.Build.0 = Release|Any CPU
+		{C407B28F-077C-41C2-8C16-277CB9681E92}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C407B28F-077C-41C2-8C16-277CB9681E92}.Debug|x64.Build.0 = Debug|Any CPU
+		{C407B28F-077C-41C2-8C16-277CB9681E92}.Release|x64.ActiveCfg = Release|Any CPU
+		{C407B28F-077C-41C2-8C16-277CB9681E92}.Release|x64.Build.0 = Release|Any CPU
+		{0978A046-53A0-985D-FEB5-63FB6D467EC4}.Debug|x64.ActiveCfg = Debug|x64
+		{0978A046-53A0-985D-FEB5-63FB6D467EC4}.Debug|x64.Build.0 = Debug|x64
+		{0978A046-53A0-985D-FEB5-63FB6D467EC4}.Release|x64.ActiveCfg = Release|x64
+		{0978A046-53A0-985D-FEB5-63FB6D467EC4}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4ADE517B-8670-4353-8192-C58CCFD7753C}
+	EndGlobalSection
+EndGlobal
