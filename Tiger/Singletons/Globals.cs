@@ -48,15 +48,8 @@ public class Globals : Strategy.StrategistSingleton<Globals>
     {
         _inputLayouts.AddRange(BaseInputLayouts);
 
-        if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON) // D1 has an extra base layout, so just gonna reuse the last entry (suuurely its fine)
-            _inputLayouts.Add(BaseInputLayouts[BaseInputLayouts.Count - 1]);
 
-        FileHash hash = Strategy.CurrentStrategy switch
-        {
-            TigerStrategy.DESTINY1_RISE_OF_IRON => new FileHash("0020AF80"),
-            _ when Strategy.CurrentStrategy >= TigerStrategy.DESTINY2_BEYONDLIGHT_3402 => PackageResourcer.Get().GetNamedTag("render_globals"),
-            _ => PackageResourcer.Get().GetNamedTag("client_bootstrap_patchable")
-        };
+        FileHash hash = PackageResourcer.Get().GetNamedTag("render_globals");
         var pkg = FileResourcer.Get().GetSchemaTag<SClientBootstrap>(hash);
         RenderGlobals = pkg.TagData.RenderGlobals;
 
@@ -200,49 +193,7 @@ public class Globals : Strategy.StrategistSingleton<Globals>
 
     private List<TigerInputLayoutElement> GetInputFormats()
     {
-        if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON)
-        {
-            InputFormats = new List<TigerInputLayoutElement>
-            {
-                new TigerInputLayoutElement { HlslType = "", Stride = 0, Format = DXGI_FORMAT.UNKNOWN }, // 0
-                new TigerInputLayoutElement { HlslType = "float", Stride = 4, Format = DXGI_FORMAT.R32_FLOAT }, // 1
-                new TigerInputLayoutElement { HlslType = "float2", Stride = 8, Format = DXGI_FORMAT.R32G32_FLOAT }, // 2
-                new TigerInputLayoutElement { HlslType = "float3", Stride = 12, Format = DXGI_FORMAT.R32G32B32_FLOAT }, // 3
-                new TigerInputLayoutElement { HlslType = "float4", Stride = 16, Format = DXGI_FORMAT.R32G32B32A32_FLOAT }, // 4
-                new TigerInputLayoutElement { HlslType = "float4", Stride = 4, Format = DXGI_FORMAT.R8G8B8A8_UNORM }, // 5
-                new TigerInputLayoutElement { HlslType = "uint4", Stride = 4, Format = DXGI_FORMAT.R8G8B8A8_UINT }, // 6
-                new TigerInputLayoutElement { HlslType = "int2", Stride = 4, Format = DXGI_FORMAT.R16G16_SINT }, // 7
-                new TigerInputLayoutElement { HlslType = "int4", Stride = 8, Format = DXGI_FORMAT.R16G16B16A16_SINT }, // 8
-                new TigerInputLayoutElement { HlslType = "float2", Stride = 4, Format = DXGI_FORMAT.R16G16_SNORM }, // 9
-                new TigerInputLayoutElement { HlslType = "float4", Stride = 8, Format = DXGI_FORMAT.R16G16B16A16_SNORM }, // 10
-                new TigerInputLayoutElement { HlslType = "float2", Stride = 4, Format = DXGI_FORMAT.R16G16_FLOAT }, // 11
-                new TigerInputLayoutElement { HlslType = "float4", Stride = 8, Format = DXGI_FORMAT.R16G16B16A16_FLOAT }, // 12
-                new TigerInputLayoutElement { HlslType = "int4", Stride = 4, Format = DXGI_FORMAT.R8G8B8A8_SINT }, // 13
-                new TigerInputLayoutElement { HlslType = "float4", Stride = 4, Format = DXGI_FORMAT.R8G8B8A8_SNORM }, // 14
-                new TigerInputLayoutElement { HlslType = "uint4", Stride = 4, Format = DXGI_FORMAT.R10G10B10A2_UINT }, // 15
-                new TigerInputLayoutElement { HlslType = "float4", Stride = 4, Format = DXGI_FORMAT.R10G10B10A2_UNORM }, // 16
-                new TigerInputLayoutElement { HlslType = "int", Stride = 4, Format = DXGI_FORMAT.R32_SINT }, // 17
-                new TigerInputLayoutElement { HlslType = "int2", Stride = 8, Format = DXGI_FORMAT.R32G32_SINT }, // 18
-                new TigerInputLayoutElement { HlslType = "int4", Stride = 16, Format = DXGI_FORMAT.R32G32B32A32_SINT }, // 19
-                new TigerInputLayoutElement { HlslType = "int", Stride = 4, Format = DXGI_FORMAT.R32_UINT }, // 20
-                new TigerInputLayoutElement { HlslType = "int2", Stride = 8, Format = DXGI_FORMAT.R32G32_UINT }, // 21
-                new TigerInputLayoutElement { HlslType = "int4", Stride = 16, Format = DXGI_FORMAT.R32G32B32A32_UINT }, // 22
-                new TigerInputLayoutElement { HlslType = "int", Stride = 2, Format = DXGI_FORMAT.R16_SINT }, // 23
-                new TigerInputLayoutElement { HlslType = "float", Stride = 1, Format = DXGI_FORMAT.R8_UNORM }, // 24
-                new TigerInputLayoutElement { HlslType = "", Stride = 0, Format = DXGI_FORMAT.UNKNOWN }, // 25
-                new TigerInputLayoutElement { HlslType = "", Stride = 0, Format = DXGI_FORMAT.UNKNOWN }, // 26
-                new TigerInputLayoutElement { HlslType = "", Stride = 0, Format = DXGI_FORMAT.UNKNOWN }, // 27
-                new TigerInputLayoutElement { HlslType = "", Stride = 0, Format = DXGI_FORMAT.UNKNOWN }, // 28
-                new TigerInputLayoutElement { HlslType = "", Stride = 0, Format = DXGI_FORMAT.UNKNOWN }, // 29
-                new TigerInputLayoutElement { HlslType = "float4", Stride = 4, Format = DXGI_FORMAT.R8G8B8A8_UNORM_SRGB }, // 30
-                new TigerInputLayoutElement { HlslType = "float3", Stride = 4, Format = DXGI_FORMAT.R11G11B10_FLOAT }, // 31
-                new TigerInputLayoutElement { HlslType = "float4", Stride = 8, Format = DXGI_FORMAT.R16G16B16A16_SNORM }, // 32
-                new TigerInputLayoutElement { HlslType = "", Stride = 0, Format = DXGI_FORMAT.UNKNOWN }, // 33
-            };
-        }
-
         return InputFormats;
-
     }
 
     private static readonly List<TigerInputLayout> BaseInputLayouts = new List<TigerInputLayout> {
@@ -3349,22 +3300,13 @@ public static class RenderStates
     }).ToArray();
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "41038080", 0x40)] // reference from shared_manifest
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "80978080", 0x5C)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "8C978080", 0x5C)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "8080B61C", 0x5C)]
 public struct SClientBootstrap
 {
-    [SchemaField(0x3C, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x4C, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    [SchemaField(0x48, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)] // is a Tag64 in Post-BL but its '32 bit tag, 01" so it doesn't matter
     [SchemaField(0x48, TigerStrategy.MARATHON_ALPHA)]
     public Tag<SRenderGlobals> RenderGlobals;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "B01B8080", 0x40)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "B16C8080", 0x40)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "A8678080", 0x40)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "80808070", 0x48)]
 public struct SRenderGlobals
 {
@@ -3377,9 +3319,6 @@ public struct SRenderGlobals
     public Tag<SGlobalTextures> Textures;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "841B8080", 0x20)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "996B8080", 0x20)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "AE668080", 0x20)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "80807F6A", 0x20)]
 public struct SGlobalTextures
 {
@@ -3387,15 +3326,9 @@ public struct SGlobalTextures
     public Texture SpecularTintLookup;
     public Texture SpecularLobeLookup;
     public Texture SpecularLobeLookup3D;
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON, Obsolete = true)]
-    [SchemaField(TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    [SchemaField(TigerStrategy.MARATHON_ALPHA)]
     public Texture IridescenceLookup;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "631B8080", 0x30)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "A6728080", 0x30)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "786D8080", 0x38)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "80808661", 0x38)]
 public struct SVertexInputLayouts
 {
@@ -3408,15 +3341,10 @@ public struct SVertexInputLayouts
     //[SchemaField(0x2C, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
     //public Tag<SVertexInputElementSets> ElementsLast;
 
-    [SchemaField(0x28, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x30, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
     [SchemaField(0x34, TigerStrategy.MARATHON_ALPHA)]
     public Tag<SVertexInputLayoutMapping> ElementMappings;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "DE1B8080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "AD728080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "7F6D8080", 0x18)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "80808668", 0x18)]
 public struct SVertexInputElementSets
 {
@@ -3424,18 +3352,12 @@ public struct SVertexInputElementSets
     public DynamicArray<SVertexInputElementSet> Sets;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "981A8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "AF728080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "816D8080", 0x10)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "6A868080", 0x10)]
 public struct SVertexInputElementSet
 {
     public DynamicArray<SVertexInputElement> Elements;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "D71B8080", 0x03)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "B2728080", 0x03)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "846D8080", 0x03)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "6D868080", 0x03)]
 public struct SVertexInputElement
 {
@@ -3444,9 +3366,6 @@ public struct SVertexInputElement
     public byte Format;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "C71A8080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "A9728080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "7B6D8080", 0x18)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "80808664", 0x18)]
 public struct SVertexInputLayoutMapping
 {
@@ -3454,9 +3373,6 @@ public struct SVertexInputLayoutMapping
     public DynamicArray<SVertexLayout> Layouts;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "891A8080", 0x1C)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "AC728080", 0x1C)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "7E6D8080", 0x1C)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "67868080", 0x1C)]
 public struct SVertexLayout
 {

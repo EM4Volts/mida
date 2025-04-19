@@ -1,6 +1,4 @@
-﻿using System.Collections.Concurrent;
-using Arithmic;
-using Newtonsoft.Json;
+﻿using Arithmic;
 using Tiger.Schema;
 
 namespace Tiger.Exporters;
@@ -101,60 +99,5 @@ public class AutomatedExporter
         }
     }
 
-    public static void SaveD1ShaderInfo(string saveDirectory, string meshName, TextureExportFormat outputTextureFormat, List<DyeD1> dyes, string fileSuffix = "")
-    {
-        ConcurrentDictionary<DyeSlot, ConcurrentBag<D1DyeJSON>> shader = new();
 
-        foreach (var dye in dyes)
-        {
-            var info = dye.TagData;
-            if (!shader.ContainsKey((DyeSlot)info.SlotTypeIndex))
-                shader[(DyeSlot)info.SlotTypeIndex] = new();
-
-            shader[(DyeSlot)info.SlotTypeIndex].Add(new D1DyeJSON
-            {
-                DevName = info.DevName,
-                PrimaryColor = $"[{info.PrimaryColor.X}, {info.PrimaryColor.Y}, {info.PrimaryColor.Z}, {info.PrimaryColor.W}]",
-                SecondaryColor = $"[{info.SecondaryColor.X}, {info.SecondaryColor.Y}, {info.SecondaryColor.Z}, {info.SecondaryColor.W}]",
-                DetailDiffuse = info.DetailDiffuse is not null ? $"textures/{info.DetailDiffuse.Hash}.{outputTextureFormat}" : "",
-                DetailNormal = info.DetailNormal is not null ? $"textures/{info.DetailNormal.Hash}.{outputTextureFormat}" : "",
-                DetailTransform = $"[{info.DetailTransform.X}, {info.DetailTransform.Y}, {info.DetailTransform.Z}, {info.DetailTransform.W}]",
-                DetailNormalContributionStrength = $"[{info.DetailNormalContributionStrength.X}, {info.DetailNormalContributionStrength.Y}, {info.DetailNormalContributionStrength.Z}, {info.DetailNormalContributionStrength.W}]",
-                SubsurfaceScatteringStrength = $"[{info.SubsurfaceScatteringStrength.X}, {info.SubsurfaceScatteringStrength.Y}, {info.SubsurfaceScatteringStrength.Z}, {info.SubsurfaceScatteringStrength.W}]",
-                SpecularProperties = $"[{info.SpecularProperties.X}, {info.SpecularProperties.Y}, {info.SpecularProperties.Z}, {info.SpecularProperties.W}]",
-                DecalAlphaMapTransform = $"[{info.DecalAlphaMapTransform.X}, {info.DecalAlphaMapTransform.Y}, {info.DecalAlphaMapTransform.Z}, {info.DecalAlphaMapTransform.W}]",
-                DecalBlendOption = info.DecalBlendOption,
-                Decal = info.Decal is not null ? $"textures/{info.Decal.Hash}.{outputTextureFormat}" : ""
-            });
-        }
-
-        File.WriteAllText($"{saveDirectory}/{meshName}{fileSuffix}.json", JsonConvert.SerializeObject(shader, Formatting.Indented));
-    }
-
-    public struct D1DyeJSON
-    {
-        public string DevName;
-
-        public string PrimaryColor;
-        public string SecondaryColor;
-
-        public string DetailDiffuse;
-        public string DetailNormal;
-        public string DetailTransform;
-        public string DetailNormalContributionStrength;
-
-        public string SubsurfaceScatteringStrength;
-        public string SpecularProperties;
-
-        public string DecalAlphaMapTransform;
-        public int DecalBlendOption;
-        public string Decal;
-    }
-
-    public enum DyeSlot
-    {
-        Armor,
-        Cloth,
-        Suit
-    }
 }

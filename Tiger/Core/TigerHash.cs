@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using Tiger.Schema;
-using Tiger.Schema.Activity.DESTINY1_RISE_OF_IRON;
 
 namespace Tiger;
 
@@ -234,16 +233,6 @@ public static class FileHashExtensions
     public static byte[] GetFileData(this FileHash fileHash)
     {
         return PackageResourcer.Get().GetFileData(fileHash);
-    }
-
-    // D1 Only, TagGlobals use a non 8080 reference tag that has a reference of 48018080, that "parent" tag has the class hash
-    public static FileHash? GetReferenceFromManifest(this FileHash fileHash)
-    {
-        if (Strategy.CurrentStrategy > TigerStrategy.DESTINY1_RISE_OF_IRON)
-            return fileHash.GetReferenceHash();
-
-        var temp = FileResourcer.Get().GetSchemaTag<S48018080>(fileHash.GetReferenceHash());
-        return new FileHash(temp.TagData.Reference.Hash32);
     }
 
     public static bool ContainsHash(this FileHash fileHash, uint searchValue)

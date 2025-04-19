@@ -91,12 +91,11 @@ public partial class DareView : UserControl
             if (ShouldAddToList(item, type))
             {
                 CreateOrnamentItems(item); // D1
-                var isD1 = Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON;
                 var isOrnament = type.Contains("Ornament");
                 var isWeaponOrnament = type.Contains("Weapon Ornament");
                 var isNameNotEmpty = name != "";
 
-                if ((isD1 && !isOrnament && isNameNotEmpty) || (!isD1 && isNameNotEmpty && !isWeaponOrnament))
+                if ((!isOrnament && isNameNotEmpty) || (isNameNotEmpty && !isWeaponOrnament))
                 {
                     var newItem = new ApiItem
                     {
@@ -107,7 +106,6 @@ public partial class DareView : UserControl
                         ImageHeight = 96,
                         ImageWidth = 96,
                         Item = item,
-                        IsD1 = isD1,
                     };
                     _allItems.TryAdd(item.TagData.InventoryItemHash.Hash32, newItem);
                 }
@@ -263,62 +261,34 @@ public partial class DareView : UserControl
     {
         var ornaments = parent.GetItemOrnaments();
 
-        if (Strategy.CurrentStrategy >= TigerStrategy.DESTINY2_WITCHQUEEN_6307)
+
+        foreach (var item in ornaments)
         {
-            foreach (var item in ornaments)
+            if (item.GetArtArrangementIndex() == -1)
+                continue;
+            var strings = Investment.Get().GetItemStrings(Investment.Get().GetItemIndex(item.TagData.InventoryItemHash));
+            if (!strings.IsLoaded())
+                strings.Load();
+
+            string? type = strings.TagData.ItemType.Value;
+            if (type == null)
+                type = "";
+
+            string name = Investment.Get().GetItemName(item);
+            var newItem = new ApiItem
             {
-                if (item.GetArtArrangementIndex() == -1)
-                    continue;
-                var strings = Investment.Get().GetItemStrings(Investment.Get().GetItemIndex(item.TagData.InventoryItemHash));
-                if (!strings.IsLoaded())
-                    strings.Load();
-
-                string? type = strings.TagData.ItemType.Value;
-                if (type == null)
-                    type = "";
-
-                string name = Investment.Get().GetItemName(item);
-                var newItem = new ApiItem
-                {
-                    ItemName = name,
-                    ItemType = type,
-                    ItemRarity = (DestinyTierType)parent.TagData.ItemRarity,
-                    ItemHash = item.TagData.InventoryItemHash.Hash32.ToString(),
-                    ImageHeight = 96,
-                    ImageWidth = 96,
-                    Item = item,
-                    Parent = parent
-                };
-                _allItems.TryAdd(item.TagData.InventoryItemHash.Hash32, newItem);
-            }
+                ItemName = name,
+                ItemType = type,
+                ItemRarity = (DestinyTierType)parent.TagData.ItemRarity,
+                ItemHash = item.TagData.InventoryItemHash.Hash32.ToString(),
+                ImageHeight = 96,
+                ImageWidth = 96,
+                Item = item,
+                Parent = parent
+            };
+            _allItems.TryAdd(item.TagData.InventoryItemHash.Hash32, newItem);
         }
-        else // D1
-        {
-            for (int i = 0; i < ornaments.Count; i++)
-            {
-                var item = ornaments[i];
-                var strings = Investment.Get().GetItemStrings(Investment.Get().GetItemIndex(item.TagData.InventoryItemHash));
 
-                string? type = strings.TagData.ItemType.Value;
-                if (type == null)
-                    type = "";
-
-                var name = type != "Armor Ornament" ? Investment.Get().GetItemName(item) : $"{Investment.Get().GetItemName(parent)} Ornament {i + 1}";
-                var newItem = new ApiItem
-                {
-                    ItemName = name,
-                    ItemType = type,
-                    ItemRarity = (DestinyTierType)parent.TagData.ItemRarity,
-                    ItemHash = item.TagData.InventoryItemHash.Hash32.ToString(),
-                    ImageHeight = 96,
-                    ImageWidth = 96,
-                    Item = item,
-                    Parent = parent,
-                    IsD1 = true
-                };
-                _allItems.TryAdd(item.TagData.InventoryItemHash.Hash32, newItem);
-            }
-        }
     }
 
     public static bool ShouldAddToList(InventoryItem item, string type)
@@ -342,8 +312,7 @@ public partial class DareView : UserControl
 
         var a = Investment.Get().GetItemStrings(Investment.Get().GetItemIndex(item.TagData.InventoryItemHash));
         var b = a.TagData.ItemType.Value.ToString();
-        return ((Strategy.CurrentStrategy != TigerStrategy.DESTINY1_RISE_OF_IRON
-            && (b == "Artifact" || b == "Seasonal Artifact")
+        return (((b == "Artifact" || b == "Seasonal Artifact")
             && item.TagData.Unk28.GetValue(a.GetReader()) is D2Class_C5738080)
             || item.GetArtArrangementIndex() != -1
             ||
@@ -440,9 +409,6 @@ public class ApiItem
             var primary = primaryStream != null ? ApiImageUtils.MakeBitmapImage(primaryStream, 96, 96) : null;
             var overlay = overlayStream != null ? ApiImageUtils.MakeBitmapImage(overlayStream, 96, 96) : null;
             var bg = bgStream != null ? ApiImageUtils.MakeBitmapImage(bgStream, 96, 96) : null;
-
-            if (bgOverlayStream != null && Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON)
-                primary = ApiImageUtils.MakeDyedIcon(Item);
 
             // Most if not all legendary armor will use the ornament overlay because of transmog (I assume)
             var bgOverlay = bgOverlayStream != null && ItemType.Contains("Ornament") ? ApiImageUtils.MakeBitmapImage(bgOverlayStream, 96, 96) : null;

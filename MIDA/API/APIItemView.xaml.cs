@@ -911,10 +911,6 @@ public static class ApiImageUtils
         //sometimes only the primary icon is valid
         var primary = primaryStream != null ? MakeBitmapImage(primaryStream, 96, 96) : null;
 
-        // Icon dyes
-        if (bgOverlayStream != null && Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON)
-            primary = MakeDyedIcon(item);
-
         var bg = bgStream != null ? MakeBitmapImage(bgStream, 96, 96) : null;
 
         //Most if not all legendary armor will use the ornament overlay because of transmog (I assume)
@@ -1022,74 +1018,6 @@ public static class ApiImageUtils
             return structCB3E8080.Unk00[reader, listIndex].TextureList[reader, texIndex].IconTexture;
         }
         return null;
-    }
-
-    public static BitmapImage MakeDyedIcon(InventoryItem item)
-    {
-        var iconContainer = Investment.Get().GetItemIconContainer(item);
-        var primaryStream = item.GetIconPrimaryStream();
-        var maskStream = item.GetIconBackgroundOverlayStream();
-
-        Bitmap mainImage = primaryStream != null ? MakeBitmap(primaryStream) : null;
-        Bitmap colorMaskImage = maskStream != null ? MakeBitmap(maskStream) : null;
-        if (mainImage is null || colorMaskImage is null)
-            return Bitmap2BitmapImage(mainImage, 96, 96);
-
-        // both mask and main have to be the same size
-        if (iconContainer.TagData.IconBGOverlayContainer is not null && (GetTexture(iconContainer.TagData.IconBGOverlayContainer).TagData.Height < GetTexture(iconContainer.TagData.IconPrimaryContainer).TagData.Height))
-            colorMaskImage = MakeBitmap(maskStream, GetTexture(iconContainer.TagData.IconPrimaryContainer).TagData.Height);
-
-        // Define RGB colors
-        System.Drawing.Color[] overlayColors = new System.Drawing.Color[]
-        {
-            System.Drawing.Color.FromArgb((byte)(iconContainer.TagData.DyeColorR.W * 255),
-            (byte)(Math.Pow(iconContainer.TagData.DyeColorR.X, 0.5) * 255),
-            (byte)(Math.Pow(iconContainer.TagData.DyeColorR.Y, 0.5) * 255),
-            (byte)(Math.Pow(iconContainer.TagData.DyeColorR.Z, 0.5) * 255)),   // Red channel overlay color
-
-            System.Drawing.Color.FromArgb((byte)(iconContainer.TagData.DyeColorG.W * 255),
-            (byte)(Math.Pow(iconContainer.TagData.DyeColorG.X, 0.5) * 255),
-            (byte)(Math.Pow(iconContainer.TagData.DyeColorG.Y, 0.5) * 255),
-            (byte)(Math.Pow(iconContainer.TagData.DyeColorG.Z, 0.5) * 255)),   // Green channel overlay color
-
-            System.Drawing.Color.FromArgb((byte)(iconContainer.TagData.DyeColorB.W * 255),
-            (byte)(Math.Pow(iconContainer.TagData.DyeColorB.X, 0.5) * 255),
-            (byte)(Math.Pow(iconContainer.TagData.DyeColorB.Y, 0.5) * 255),
-            (byte)(Math.Pow(iconContainer.TagData.DyeColorB.Z, 0.5) * 255))    // Blue channel overlay color
-        };
-
-
-        // Apply color from color mask
-        int width = mainImage.Width;
-        int height = mainImage.Height;
-
-        // Iterate over each pixel in the color mask and apply color to the main image
-        for (int y = 0; y < height; y++)
-        {
-            //Console.WriteLine($"H {y} : {height}");
-            for (int x = 0; x < width; x++)
-            {
-                // Get color mask pixel color
-                System.Drawing.Color maskColor = colorMaskImage.GetPixel(x, y);
-
-                // Get main image pixel color
-                System.Drawing.Color mainColor = mainImage.GetPixel(x, y);
-                System.Drawing.Color blendedColor = System.Drawing.Color.FromArgb(mainColor.A, 0, 0, 0);
-
-                // Mask R
-                blendedColor = ColorUtility.BlendColors(mainColor, overlayColors[0], maskColor.R);
-                // Mask G
-                blendedColor = ColorUtility.AddColors(blendedColor, ColorUtility.BlendColors(mainColor, overlayColors[1], maskColor.G));
-                // Mask B
-                blendedColor = ColorUtility.AddColors(blendedColor, ColorUtility.BlendColors(mainColor, overlayColors[2], maskColor.B));
-
-                // Set the modified pixel color
-                if (!blendedColor.IsZero())
-                    mainImage.SetPixel(x, y, blendedColor);
-            }
-        }
-
-        return Bitmap2BitmapImage(mainImage, 96, 96);
     }
 
     private static Bitmap MakeBitmap(UnmanagedMemoryStream stream, int wH = 0)

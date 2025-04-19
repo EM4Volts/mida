@@ -13,44 +13,13 @@ public class StrategyEventArgs : EventArgs
 }
 
 
-// todo separate the metadata out, no need to put it all in one place - just gets too long and nasty
-// the package type should be done by the resourcer, the app/depot etc should be done by tomograph data
-
-// TODO allow Marathon to inherit from D2 when possible but not the other way around.
-// But I dont think that should be an issue since strategies cant use ones higher than it
-// Marathon mainly follows LF-WQ layouts so there will still be issues where if D2 Latest is provided
-// but Marathons tag layout is different it will throw an exception.
-// Which means Marathon would HAVE to be manually defined (see below)
-
 // Order of values matters; Tag definitions are processed top to bottom so if you only provide a tag definition for WQ and not LF,
 // the code will presume that LF is the same as WQ. If this is not the case it will throw an exception.
 public enum TigerStrategy
 {
     NONE = 0,
-    [Description("Rise of Iron (PS4)"), StrategyMetadata("ps4")]
-    DESTINY1_RISE_OF_IRON = 1000,
-    [Description("Shadowkeep (Launch)"), StrategyMetadata("w64", 1085660, 1085661, 7002268313830901797, 1085662, 2399965969279284756)]
-    DESTINY2_SHADOWKEEP_2601 = 2601,
-    [Description("Shadowkeep (Final)"), StrategyMetadata("w64", 1085660, 1085661, 4160053308690659072, 1085662, 4651412338057797072)]
-    DESTINY2_SHADOWKEEP_2999 = 2999,
-    [Description("Beyond Light"), StrategyMetadata("w64", 1085660, 1085661, 5631185797932644936, 1085662, 3832609057880895101)]
-    DESTINY2_BEYONDLIGHT_3402 = 3402,
-    [Description("Witch Queen"), StrategyMetadata("w64", 1085660, 1085661, 6051526863119423207, 1085662, 1078048403901153652)]
-    DESTINY2_WITCHQUEEN_6307 = 6307,
-    [Description("Lightfall"), StrategyMetadata("w64", 1085660, 1085661, 7707143404100984016, 1085662, 5226038440689554798)]
-    DESTINY2_LIGHTFALL_7366 = 7366,
-    [Description("Latest"), StrategyMetadata("w64")]
-    DESTINY2_LATEST = 20000,  // there probably wont be a destiny version higher than this
-
     [Description("Marathon Alpha"), StrategyMetadata("w64")]
-    MARATHON_ALPHA = 20001, // at this point screw the version number
-}
-
-public enum GameVersion
-{
-    NONE,
-    DESTINY,
-    MARATHON
+    MARATHON_ALPHA = 0001, // at this point screw the version number
 }
 
 public struct StrategyConfiguration
@@ -69,12 +38,10 @@ public class Strategy
 
     [ConfigField("CurrentStrategy")]
     private static TigerStrategy _currentStrategy = _defaultStrategy;
-    private static GameVersion _currentGameVersion = _currentStrategy.GetGameVersion();
 
     // Using this is not recommended, as most classes shouldn't modify behaviour internally based on the strategy.
     // Instead, you should use StrategistSingleton to abstract the strategy away.
     public static TigerStrategy CurrentStrategy { get => _currentStrategy; }
-    public static GameVersion CurrentGame { get => _currentGameVersion; }
 
     public delegate void BeforeStrategyEventHandler(StrategyEventArgs e);
     public static event BeforeStrategyEventHandler BeforeStrategyEvent = delegate { };
@@ -93,11 +60,6 @@ public class Strategy
 
     static Strategy() { SetStrategy(_defaultStrategy); }
 
-    public static bool IsLatest() => CurrentStrategy == TigerStrategy.DESTINY2_LATEST;
-    public static bool IsPostBL() => CurrentStrategy > TigerStrategy.DESTINY2_BEYONDLIGHT_3402;
-    public static bool IsBL() => CurrentStrategy == TigerStrategy.DESTINY2_BEYONDLIGHT_3402;
-    public static bool IsPreBL() => CurrentStrategy == TigerStrategy.DESTINY2_SHADOWKEEP_2601 || CurrentStrategy == TigerStrategy.DESTINY2_SHADOWKEEP_2999;
-    public static bool IsD1() => CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON;
 
     /// <exception cref="ArgumentException">'strategyString' does not exist.</exception>
     public static void SetStrategy(string strategyString)
@@ -296,7 +258,6 @@ public class Strategy
         protected static T? _instance = null;
 
         protected TigerStrategy _strategy;
-        protected GameVersion _game;
 
         /// <summary>
         /// Called after the StrategySingleton instance is created.
@@ -362,7 +323,6 @@ public class Strategy
         protected StrategistSingleton(TigerStrategy strategy)
         {
             _strategy = strategy;
-            _game = strategy.GetGameVersion();
         }
 
 #pragma warning disable S1144 // Unused private types or members should be removed
@@ -440,24 +400,5 @@ public static class StrategyExtensions
         var member = typeof(TigerStrategy).GetMember(strategy.ToString());
         StrategyConfiguration strategyConfiguration = Strategy.GetStrategyConfiguration(strategy);
         return strategyConfiguration;
-    }
-
-    public static GameVersion GetGameVersion(this TigerStrategy strategy)
-    {
-        return strategy switch
-        {
-            TigerStrategy.NONE => GameVersion.NONE,
-            TigerStrategy.DESTINY1_RISE_OF_IRON => GameVersion.DESTINY,
-            TigerStrategy.DESTINY2_SHADOWKEEP_2601 => GameVersion.DESTINY,
-            TigerStrategy.DESTINY2_SHADOWKEEP_2999 => GameVersion.DESTINY,
-            TigerStrategy.DESTINY2_BEYONDLIGHT_3402 => GameVersion.DESTINY,
-            TigerStrategy.DESTINY2_WITCHQUEEN_6307 => GameVersion.DESTINY,
-            TigerStrategy.DESTINY2_LIGHTFALL_7366 => GameVersion.DESTINY,
-            TigerStrategy.DESTINY2_LATEST => GameVersion.DESTINY,
-
-            TigerStrategy.MARATHON_ALPHA => GameVersion.MARATHON,
-
-            _ => throw new ArgumentOutOfRangeException(nameof(strategy), $"Unhandled strategy: {strategy}")
-        };
     }
 }

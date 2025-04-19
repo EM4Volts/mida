@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using Tiger;
-using Tiger.Schema.Activity.DESTINY2_BEYONDLIGHT_3402;
+using Tiger.Schema.Activity.MARATHON_ALPHA;
 
 namespace MIDA;
 

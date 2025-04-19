@@ -17,9 +17,6 @@ public class ShaderBytecode : TigerReferenceFile<SShaderBytecode>
     {
         get
         {
-            if (Strategy.IsD1())
-                return new();
-
             if (_inputSignatures != null)
             {
                 return _inputSignatures;
@@ -40,9 +37,6 @@ public class ShaderBytecode : TigerReferenceFile<SShaderBytecode>
     {
         get
         {
-            if (Strategy.IsD1())
-                return new();
-
             if (_outputSignatures != null)
             {
                 return _outputSignatures;
@@ -63,9 +57,6 @@ public class ShaderBytecode : TigerReferenceFile<SShaderBytecode>
     {
         get
         {
-            if (Strategy.IsD1())
-                return new();
-
             if (_resources != null)
             {
                 return _resources;
@@ -83,9 +74,6 @@ public class ShaderBytecode : TigerReferenceFile<SShaderBytecode>
 
     public byte[] GetBytecode()
     {
-        if (Strategy.IsD1())
-            return Array.Empty<byte>();
-
         using TigerReader reader = GetReferenceReader();
         return reader.ReadBytes((int)_tag.BytecodeSize);
     }
@@ -97,9 +85,6 @@ public class ShaderBytecode : TigerReferenceFile<SShaderBytecode>
             return _decompiled;
 
         var shaderBytecode = GetBytecode();
-        if (Strategy.IsD1() || shaderBytecode.Length == 0)
-            return "";
-
         string binPath = $"{savePath}/{name}.bin";
         string hlslPath = $"{savePath}/{name}.hlsl";
 

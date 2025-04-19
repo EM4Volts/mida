@@ -14,7 +14,6 @@ namespace MIDA;
 public partial class DialogueView : UserControl
 {
     private Dialogue _dialogue;
-    private DialogueD1 _dialogueD1;
 
     // Kind of a hacky way but it works
     private TagView _viewer;
@@ -29,16 +28,9 @@ public partial class DialogueView : UserControl
     {
         List<dynamic?> result = new();
         _viewer = viewer;
-        if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON)
-        {
-            _dialogueD1 = new DialogueD1(hash);
-            result = _dialogueD1.Load();
-        }
-        else
-        {
-            _dialogue = new Dialogue(hash);
-            result = _dialogue.Load();
-        }
+
+        _dialogue = new Dialogue(hash);
+        result = _dialogue.Load();
 
         GenerateUI(result);
     }
@@ -63,56 +55,17 @@ public partial class DialogueView : UserControl
             }
             else
             {
-                if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON)
+
+                D2Class_33978080 entry = dyn;
+                result.Add(new VoicelineItem
                 {
-                    SAA078080 a = dyn;
+                    Narrator = GlobalStrings.Get().GetString(entry.NarratorString),
+                    Voiceline = entry.VoicelineM,
+                    Wem = entry.SoundM.TagData.Wems[0],
+                    RecursionDepth = recursionDepth,
+                    Duration = entry.SoundM.TagData.Wems[0].Duration
+                });
 
-                    if (a.Dialogue is null)
-                        continue;
-
-                    if (a.Strings is not null)
-                        GlobalStrings.Get().AddStrings(a.Strings);
-
-                    if (a.StringsF is not null)
-                        GlobalStrings.Get().AddStrings(a.StringsF);
-
-                    result.Add(new VoicelineItem
-                    {
-                        Narrator = GlobalStrings.Get().GetString(a.Narrator),
-                        Voiceline = GlobalStrings.Get().GetString(a.VoiceLine),
-                        Wem = a.Dialogue.TagData.Wems[0],
-                        RecursionDepth = recursionDepth,
-                        Duration = a.Dialogue.TagData.Wems[0].Duration
-                    });
-
-                    if (a.DialogueF is null)
-                        continue;
-
-                    // A lot of times the Male and Female voice lines are the exact same, so just skip
-                    if (GlobalStrings.Get().GetString(a.VoiceLineF) == GlobalStrings.Get().GetString(a.VoiceLine))
-                        continue;
-
-                    result.Add(new VoicelineItem
-                    {
-                        Narrator = GlobalStrings.Get().GetString(a.Narrator),
-                        Voiceline = GlobalStrings.Get().GetString(a.VoiceLineF),
-                        Wem = a.DialogueF.TagData.Wems[0],
-                        RecursionDepth = recursionDepth,
-                        Duration = a.DialogueF.TagData.Wems[0].Duration
-                    });
-                }
-                else
-                {
-                    D2Class_33978080 entry = dyn;
-                    result.Add(new VoicelineItem
-                    {
-                        Narrator = GlobalStrings.Get().GetString(entry.NarratorString),
-                        Voiceline = entry.GetVoiceline(),
-                        Wem = entry.SoundM.TagData.Wems[0],
-                        RecursionDepth = recursionDepth,
-                        Duration = entry.SoundM.TagData.Wems[0].Duration
-                    });
-                }
             }
         }
 

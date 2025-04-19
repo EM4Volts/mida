@@ -217,8 +217,6 @@ public class SchemaDeserializer : Strategy.StrategistSingleton<SchemaDeserialize
             // Check if attribute is null
             if (attribute == null)
                 Console.WriteLine($"Attribute for field {field.Name} is null. ({field.FieldType}, {field.ReflectedType.Name})");
-
-            Console.WriteLine($"{field.Name} {attribute.Strategy} || {_game}");
         }
 #endif
 

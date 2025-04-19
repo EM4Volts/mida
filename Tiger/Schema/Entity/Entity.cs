@@ -46,8 +46,6 @@ public class Entity : Tag<SEntity>
         //Debug.Assert(_tag.FileSize != 0); // Is this really needed?
         foreach (var resourceHash in _tag.EntityResources.Select(GetReader(), r => r.Resource))
         {
-            if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON && resourceHash.GetReferenceHash() != 0x80800861)
-                continue;
             EntityResource resource = FileResourcer.Get().GetFile<EntityResource>(resourceHash);
             switch (resource.TagData.Unk10.GetValue(resource.GetReader()))
             {
@@ -88,21 +86,19 @@ public class Entity : Tag<SEntity>
                     break;
 
                 case D2Class_DA5E8080: // Specific name
-                    var specificName = Strategy.CurrentStrategy != TigerStrategy.DESTINY1_RISE_OF_IRON ?
-                        ((D2Class_DB5E8080)resource.TagData.Unk18.GetValue(resource.GetReader())).Unk108.TagData.EntityName :
-                        ((D2Class_DB5E8080)resource.TagData.Unk18.GetValue(resource.GetReader())).EntityName;
+                    var specificName = ((D2Class_DB5E8080)resource.TagData.Unk18.GetValue(resource.GetReader())).Unk108.TagData.EntityName;
 
                     // Don't assign a name if the name hash doesnt return an actual string (returns the name hash instead)
                     if (GlobalStrings.Get().GetString(specificName) != specificName)
                         EntityName = GlobalStrings.Get().GetString(specificName);
                     break;
 
-                case D2Class_79948080 when Strategy.IsPreBL(): // No idea if this is SK only
-                    if (EntityChildren2 is null)
-                        EntityChildren2 = new();
+                //case D2Class_79948080 when Strategy.IsPreBL(): // No idea if this is SK only
+                //    if (EntityChildren2 is null)
+                //        EntityChildren2 = new();
 
-                    EntityChildren2.Add(resource);
-                    break;
+                //    EntityChildren2.Add(resource);
+                //    break;
 
                 case D2Class_12848080:
                     EntityChildren = resource;
@@ -151,16 +147,10 @@ public class Entity : Tag<SEntity>
         Directory.CreateDirectory($"{saveDirectory}/Textures/");
         var parentResource = (D2Class_8F6D8080)ModelParentResource.TagData.Unk18.GetValue(ModelParentResource.GetReader());
 
-        if (Strategy.CurrentStrategy >= TigerStrategy.DESTINY2_SHADOWKEEP_2601 && parentResource.TexturePlates is null)
+        if (parentResource.TexturePlates is null)
             return;
 
-        if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON && (parentResource.TexturePlatesROI.Count == 0 || parentResource.TexturePlatesROI[0].TexturePlates is null))
-            return;
-
-        var rsrc = Strategy.CurrentStrategy != TigerStrategy.DESTINY1_RISE_OF_IRON
-            ? parentResource.TexturePlates.TagData : parentResource.TexturePlatesROI[0].TexturePlates.TagData;
-
-
+        var rsrc = parentResource.TexturePlates.TagData;
         rsrc.AlbedoPlate?.SavePlatedTexture($"{saveDirectory}/Textures/{Hash}_albedo");
         rsrc.NormalPlate?.SavePlatedTexture($"{saveDirectory}/Textures/{Hash}_normal");
         rsrc.GStackPlate?.SavePlatedTexture($"{saveDirectory}/Textures/{Hash}_gstack");
@@ -200,60 +190,33 @@ public class Entity : Tag<SEntity>
         }
 
         List<Entity> entities = new List<Entity>();
-        if (Strategy.IsPreBL() && EntityChildren2 is not null)
-            entities.AddRange(GetEntityChildren2());
+        //if (Strategy.IsPreBL() && EntityChildren2 is not null)
+        //    entities.AddRange(GetEntityChildren2());
 
         if (EntityChildren is null)
             return entities;
 
-        if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON)
+        if (EntityChildren.TagData.Unk18.GetValue(EntityChildren.GetReader()) is D2Class_0E848080)
         {
-            foreach (var entry in ((D2Class_0E848080)EntityChildren.TagData.Unk18.GetValue(EntityChildren.GetReader())).Unk100)
+            foreach (var entry in ((D2Class_0E848080)EntityChildren.TagData.Unk18.GetValue(EntityChildren.GetReader())).Unk88)
             {
-                if (entry.Entity is null)
-                    continue;
-                Entity entity = FileResourcer.Get().GetFile<Entity>(entry.Entity);
-                if (entity.HasGeometry())
+                foreach (var entry2 in entry.Unk08)
                 {
-                    //entity.ModelParent = ModelParent;
-                    //var parent = entity.ModelParent.TagData.Meshes.Enumerate(entity.ModelParent.GetReader()).FirstOrDefault().ModelTranslation;
-                    //var offset = entry.Transforms.FirstOrDefault().Translation;
-                    //Console.WriteLine($"Entity {entity.Hash}");
-                    //Console.WriteLine($"ModelParent {parent}");
-                    //Console.WriteLine($"TranslationOffset {offset}");
+                    if (entry2.Entity is null)
+                        continue;
 
-                    //entity.Model.TranslationOffset = parent + new Vector4(offset.Z, offset.X, offset.Y);
-                    //entity.Model.RotationOffset = entry.Transforms.FirstOrDefault().Rotation;
-                    entities.Add(entity);
-                    //Just in case
-                    foreach (var child in entity.GetEntityChildren())
-                        entities.Add(child);
-                }
-            }
-        }
-        else
-        {
-            if (EntityChildren.TagData.Unk18.GetValue(EntityChildren.GetReader()) is D2Class_0E848080)
-            {
-                foreach (var entry in ((D2Class_0E848080)EntityChildren.TagData.Unk18.GetValue(EntityChildren.GetReader())).Unk88)
-                {
-                    foreach (var entry2 in entry.Unk08)
+                    Entity entity = FileResourcer.Get().GetFile<Entity>(entry2.Entity.Hash);
+                    if (entity.HasGeometry())
                     {
-                        if (entry2.Entity is null)
-                            continue;
-
-                        Entity entity = FileResourcer.Get().GetFile<Entity>(entry2.Entity.Hash);
-                        if (entity.HasGeometry())
-                        {
-                            entities.Add(entity);
-                            //Just in case
-                            foreach (var child in entity.GetEntityChildren())
-                                entities.Add(child);
-                        }
+                        entities.Add(entity);
+                        //Just in case
+                        foreach (var child in entity.GetEntityChildren())
+                            entities.Add(child);
                     }
                 }
             }
         }
+
 
         return entities;
     }

@@ -20,7 +20,7 @@ public class SkyObjects : Tag<SMapSkyObjects>
 
         foreach ((int i, var element) in _tag.Entries.Select((value, index) => (index, value)))
         {
-            if (element.Model.TagData.Model is null || (Strategy.CurrentStrategy >= TigerStrategy.DESTINY2_WITCHQUEEN_6307 && element.Unk70 == 5))
+            if (element.Model.TagData.Model is null || element.Unk70 == 5)
                 continue;
 
             Matrix4x4 matrix = element.Transform;
@@ -52,22 +52,17 @@ public class SkyObjects : Tag<SMapSkyObjects>
 /// </summary>
 /// Background entities/skybox resource
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "DA1B8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "916F8080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "A36A8080", 0x18)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "A36A8080", 0x18)]
 public struct SMapSkyObjectsResource
 {
-    [SchemaField(0xC, TigerStrategy.DESTINY1_RISE_OF_IRON), NoLoad]
-    [SchemaField(0x10, TigerStrategy.DESTINY2_SHADOWKEEP_2601), NoLoad]
+    [SchemaField(0x10, TigerStrategy.MARATHON_ALPHA), NoLoad]
     public SkyObjects SkyObjects;  // A76A8080
 }
 
 /// <summary>
 /// Background entities/skybox
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "1F1C8080", 0x68)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "956F8080", 0x68)]
-[SchemaStruct(TigerStrategy.DESTINY2_WITCHQUEEN_6307, "A76A8080", 0x60)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "A76A8080", 0x60)]
 public struct SMapSkyObjects
 {
     public long FileSize;
@@ -79,33 +74,24 @@ public struct SMapSkyObjects
     public Vector4 Unk50;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "1E1C8080", 0x80)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "976F8080", 0x80)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "A96A8080", 0x90)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "A96A8080", 0x90)]
 public struct D2Class_A96A8080
 {
     public Matrix4x4 Transform;
     public AABB Bounds;
     public Tag<D2Class_AE6A8080> Model;
 
-    [SchemaField(0x60, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x64, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
-    [SchemaField(0x68, TigerStrategy.DESTINY2_WITCHQUEEN_6307)]
+    [SchemaField(0x68, TigerStrategy.MARATHON_ALPHA)]
     public float Unk68; // Ordering?
 
-    [SchemaField(0x68, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x6C, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
-    [SchemaField(0x70, TigerStrategy.DESTINY2_WITCHQUEEN_6307)]
+    [SchemaField(0x70, TigerStrategy.MARATHON_ALPHA)]
     public int Unk70; // if 5, skip the model??
 
-    [SchemaField(0x78, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x7C, TigerStrategy.DESTINY2_WITCHQUEEN_6307)]
+    [SchemaField(0x7C, TigerStrategy.MARATHON_ALPHA)]
     public Tag<D2Class_C58A8080> Complex;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "4F068080", 0x1C)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "F08E8080", 0x1C)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "C58A8080", 0x1C)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "C58A8080", 0x1C)]
 public struct D2Class_C58A8080
 {
     public long FileSize;
@@ -114,20 +100,15 @@ public struct D2Class_C58A8080
     public ResourcePointer Pointer; // 438B8080
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "32048080", 0x80)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "728F8080", 0x80)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "438B8080", 0x80)]
-[SchemaStruct(TigerStrategy.DESTINY2_WITCHQUEEN_6307, "438B8080", 0x70)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "438B8080", 0x70)]
 public struct D2Class_438B8080
 {
     [SchemaField(0x10)]
-    public DynamicArray<D2Class_06008080> Unk00;
-    public DynamicArray<D2Class_06008080> Unk10;
+    public DynamicArray<S06008080> Unk00;
+    public DynamicArray<S06008080> Unk10;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "3A1B8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "9B6F8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "AE6A8080", 0x10)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "AE6A8080", 0x10)]
 public struct D2Class_AE6A8080
 {
     public long FileSize;

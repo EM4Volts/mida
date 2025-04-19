@@ -29,31 +29,6 @@ public class StaticPart : MeshPart
         PrimitiveType = (PrimitiveType)decalPartEntry.PrimitiveType;
     }
 
-    public StaticPart(SStaticMeshData_D1 staticPartEntry) : base()
-    {
-        IndexOffset = staticPartEntry.IndexOffset;
-        IndexCount = staticPartEntry.IndexCount;
-        LodCategory = (ELodCategory)staticPartEntry.DetailLevel;
-        PrimitiveType = (PrimitiveType)staticPartEntry.PrimitiveType;
-    }
-
-    public void GetAllData(SStaticMeshData_D1 mesh) // D1
-    {
-        Indices = mesh.Indices.GetIndexData(PrimitiveType, IndexOffset, IndexCount);
-        // Get unique vertex indices we need to get data for
-        HashSet<uint> uniqueVertexIndices = new HashSet<uint>();
-        foreach (UIntVector3 index in Indices)
-        {
-            uniqueVertexIndices.Add(index.X);
-            uniqueVertexIndices.Add(index.Y);
-            uniqueVertexIndices.Add(index.Z);
-        }
-        VertexIndices = uniqueVertexIndices.ToList();
-
-        mesh.Vertices0.ReadVertexDataFromLayout(this, uniqueVertexIndices, 0);
-        mesh.Vertices1?.ReadVertexDataFromLayout(this, uniqueVertexIndices, 1);
-    }
-
     public void GetAllData(SStaticMeshBuffers buffers, SStaticMesh container)
     {
         Indices = buffers.Indices.GetIndexData(PrimitiveType, IndexOffset, IndexCount);
@@ -96,27 +71,20 @@ public class StaticPart : MeshPart
 
     private void TransformData(SStaticMesh container)
     {
-        if (Strategy.CurrentStrategy >= TigerStrategy.DESTINY2_BEYONDLIGHT_3402)
-        {
-            var t = (container.StaticData as DESTINY2_BEYONDLIGHT_3402.StaticMeshData).TagData;
-            TransformPositions(t.ModelTransform);
-            TransformUVs(new Vector2(t.TexcoordScale, t.TexcoordScale), t.TexcoordTranslation);
 
-            if (VertexNormals.Count == 0 && VertexTangents.Count != 0)
-            {
-                // Don't question it, idk why or how this works either
-                VertexNormals = VertexTangents;
-            }
-            // Fallback vertex color
-            if (VertexColours.Count == 0)
-            {
-                VertexColours = new List<Vector4>(Enumerable.Repeat(new Vector4(0f, 0f, 0f, 1f), VertexPositions.Count));
-            }
-        }
-        else
+        var t = (container.StaticData as MARATHON_ALPHA.StaticMeshData).TagData;
+        TransformPositions(t.ModelTransform);
+        TransformUVs(new Vector2(t.TexcoordScale, t.TexcoordScale), t.TexcoordTranslation);
+
+        if (VertexNormals.Count == 0 && VertexTangents.Count != 0)
         {
-            TransformPositions(container.ModelTransform);
-            TransformUVs(container.TexcoordScale, container.TexcoordTranslation);
+            // Don't question it, idk why or how this works either
+            VertexNormals = VertexTangents;
+        }
+        // Fallback vertex color
+        if (VertexColours.Count == 0)
+        {
+            VertexColours = new List<Vector4>(Enumerable.Repeat(new Vector4(0f, 0f, 0f, 1f), VertexPositions.Count));
         }
 
         Debug.Assert(VertexPositions.Count == VertexTexcoords0.Count && VertexPositions.Count == VertexNormals.Count);

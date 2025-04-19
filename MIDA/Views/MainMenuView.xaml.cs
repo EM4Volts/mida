@@ -16,27 +16,27 @@ public partial class MainMenuView : UserControl
     private static MainWindow _mainWindow = null;
     private APITooltip ToolTip;
 
-    public MainMenuView()
+    public MainMenuView() // TODO buttons
     {
         InitializeComponent();
 
-        ApiButton.IsEnabled = ShowAPIButton(Strategy.CurrentStrategy);
-        BagsButton.IsEnabled = ShowWQButtons(Strategy.CurrentStrategy);
-        WeaponAudioButton.IsEnabled = ShowIfLatest(Strategy.CurrentStrategy) || ShowIfD1(Strategy.CurrentStrategy);
-        StaticsButton.IsEnabled = ShowIfD2(Strategy.CurrentStrategy);
-        SoundBanksButton.Visibility = ShowIfD1(Strategy.CurrentStrategy) ? Visibility.Visible : Visibility.Hidden;
-        CollectionsButton.IsEnabled = ShowIfLatest(Strategy.CurrentStrategy);
+        ApiButton.IsEnabled = false;
+        BagsButton.IsEnabled = false;
+        WeaponAudioButton.IsEnabled = false;
+        StaticsButton.IsEnabled = true;
+        SoundBanksButton.Visibility = Visibility.Hidden;
+        CollectionsButton.IsEnabled = false;
 
         Strategy.OnStrategyChangedEvent += delegate (StrategyEventArgs args)
         {
             Dispatcher.Invoke(() =>
             {
-                ApiButton.IsEnabled = ShowAPIButton(args.Strategy);
-                BagsButton.IsEnabled = ShowWQButtons(args.Strategy);
-                WeaponAudioButton.IsEnabled = ShowIfLatest(args.Strategy) || ShowIfD1(args.Strategy);
-                StaticsButton.IsEnabled = ShowIfD2(args.Strategy);
-                SoundBanksButton.Visibility = ShowIfD1(Strategy.CurrentStrategy) ? Visibility.Visible : Visibility.Hidden;
-                CollectionsButton.IsEnabled = ShowIfLatest(Strategy.CurrentStrategy);
+                ApiButton.IsEnabled = false;
+                BagsButton.IsEnabled = false;
+                WeaponAudioButton.IsEnabled = false;
+                StaticsButton.IsEnabled = true;
+                SoundBanksButton.Visibility = Visibility.Hidden;
+                CollectionsButton.IsEnabled = false;
             });
         };
     }
@@ -62,31 +62,6 @@ public partial class MainMenuView : UserControl
             _spinner.Offset = new(-1, -1);
             SpinnerContainer.Visibility = Visibility.Visible;
         }
-    }
-
-    private bool ShowWQButtons(TigerStrategy strategy)
-    {
-        return strategy > TigerStrategy.DESTINY2_BEYONDLIGHT_3402;
-    }
-
-    private bool ShowIfD2(TigerStrategy strategy)
-    {
-        return strategy != TigerStrategy.DESTINY1_RISE_OF_IRON;
-    }
-
-    private bool ShowIfD1(TigerStrategy strategy)
-    {
-        return strategy == TigerStrategy.DESTINY1_RISE_OF_IRON;
-    }
-
-    private bool ShowIfLatest(TigerStrategy strategy)
-    {
-        return Strategy.CurrentStrategy == TigerStrategy.DESTINY2_LATEST;
-    }
-
-    private bool ShowAPIButton(TigerStrategy strategy)
-    {
-        return strategy > TigerStrategy.DESTINY2_BEYONDLIGHT_3402 || strategy == TigerStrategy.DESTINY1_RISE_OF_IRON;
     }
 
     private void CategoryButton_MouseEnter(object sender, MouseEventArgs e)

@@ -1,9 +1,5 @@
 ﻿namespace Tiger.Schema;
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "D71A8080", 0x488)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "E8718080", 0x400)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "AA6D8080", 0x3B0)]
-[SchemaStruct(TigerStrategy.DESTINY2_WITCHQUEEN_6307, "AA6D8080", 0x3D0)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "808031D8", 0x3D0)]
 public struct SMaterial // Errm Ackchyually its called "technique" 🤓
 {
@@ -12,38 +8,17 @@ public struct SMaterial // Errm Ackchyually its called "technique" 🤓
     public uint Unk0C;
     public uint Unk10;
 
-    [SchemaField(0x18, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(TigerStrategy.DESTINY2_SHADOWKEEP_2601, Obsolete = true)]
-    public ScopeBitsD1 UsedScopesD1;
+    [SchemaField(0x20, TigerStrategy.MARATHON_ALPHA)]
+    public ScopeBitsBL UsedScopes;
 
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON, Obsolete = true)]
-    [SchemaField(0x18, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    public ScopeBitsSK UsedScopesSK;
+    //public ScopeBitsD1 CompatibleScopes; // Not really important, but they are there after each UsedScopes
 
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON, Obsolete = true)]
-    [SchemaField(0x20, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
-    public ScopeBitsBL UsedScopesBL;
-
-    //public ScopeBitsD1 CompatibleScopesD1; // Not really important, but they are there after each UsedScopes
-    //public ScopeBitsSK CompatibleScopesSK;
-    //public ScopeBitsBL CompatibleScopesBL;
-
-    [SchemaField(0x20, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x20, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    [SchemaField(0x30, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
+    [SchemaField(0x30, TigerStrategy.MARATHON_ALPHA)]
     public StateSelection RenderStates;
 
-    [SchemaField(0x28, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x48, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    [SchemaField(0x58, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
-    [SchemaField(0x70, TigerStrategy.DESTINY2_WITCHQUEEN_6307)]
     [SchemaField(0x58, TigerStrategy.MARATHON_ALPHA)]
     public DynamicStruct<SMaterialShader> Vertex;
 
-    [SchemaField(0x2A8, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x2C8, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    [SchemaField(0x298, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
-    [SchemaField(0x2B0, TigerStrategy.DESTINY2_WITCHQUEEN_6307)]
     [SchemaField(0x278, TigerStrategy.MARATHON_ALPHA)]
     public DynamicStruct<SMaterialShader> Pixel;
 
@@ -55,40 +30,28 @@ public struct SMaterial // Errm Ackchyually its called "technique" 🤓
 
     public dynamic GetScopeBits()
     {
-        if (Strategy.IsD1())
-            return UsedScopesD1;
-        else if (Strategy.IsPreBL())
-            return UsedScopesSK;
-        else
-            return UsedScopesBL;
+        return UsedScopes;
     }
 }
 
-[NonSchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, 0xA0)]
-[NonSchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, 0x90)]
+[NonSchemaStruct(TigerStrategy.MARATHON_ALPHA, 0x90)]
 public struct SMaterialShader
 {
-    [SchemaField(0x0, TigerStrategy.DESTINY1_RISE_OF_IRON)]
+    [SchemaField(0x0, TigerStrategy.MARATHON_ALPHA)]
     public ShaderBytecode Shader;
 
-    [SchemaField(0x10, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x8, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
+    [SchemaField(0x8, TigerStrategy.MARATHON_ALPHA)]
     public DynamicArray<STextureTag> Textures;
 
-    [SchemaField(0x28, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x20, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
+    [SchemaField(0x20, TigerStrategy.MARATHON_ALPHA)]
     public DynamicArray<D2Class_09008080> TFX_Bytecode;
     public DynamicArray<Vec4> TFX_Bytecode_Constants;
     public DynamicArray<SDirectXSamplerTag> Samplers;
     public DynamicArray<Vec4> CBuffers; // Fallback if Vector4Container doesn't exist, I guess..?
 
-    [SchemaField(0x7C, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x74, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    [SchemaField(0x64, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
+    [SchemaField(0x64, TigerStrategy.MARATHON_ALPHA)]
     public int Unk64;
 
-    [SchemaField(0x80, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x70, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
     [SchemaField(0x84, TigerStrategy.MARATHON_ALPHA)] // unsure
     public int BufferSlot;
     public FileHash Vector4Container;
@@ -146,39 +109,24 @@ public struct SMaterialShader
     }
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "281B8080", 0x8)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "11728080", 0x8)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "CF6D8080", 0x18)]
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "C6868080", 0x18)]
 public struct STextureTag
 {
     public uint TextureIndex;
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x8, TigerStrategy.DESTINY2_BEYONDLIGHT_3402, Tag64 = true)]
+
+    [SchemaField(0x8, TigerStrategy.MARATHON_ALPHA, Tag64 = true)]
     public Texture Texture;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "CC1A8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "F3738080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "3F018080", 0x10)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "3F018080", 0x10)]
 public struct SDirectXSamplerTag
 {
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, Obsolete = true)]
-    public DirectXSampler SamplerSK;
+    [SchemaField(TigerStrategy.MARATHON_ALPHA, Tag64 = true)]
+    public DirectXSampler Sampler;
 
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON, Obsolete = true)]
-    [SchemaField(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, Tag64 = true)]
-    public DirectXSampler SamplerBL;
-
-    public DirectXSampler GetSampler() // Leaving this one here since null for D1
+    public DirectXSampler GetSampler()
     {
-        if (Strategy.IsD1())
-            return null;
-        else if (Strategy.IsPreBL())
-            return SamplerSK;
-        else
-            return SamplerBL;
+        return Sampler;
     }
 }
 

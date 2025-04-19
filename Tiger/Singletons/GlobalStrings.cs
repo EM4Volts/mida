@@ -25,36 +25,16 @@ public class GlobalStrings : Strategy.StrategistSingleton<GlobalStrings>
     {
         AddFromWordlist();
 
-        if (Strategy.IsD1())
+
+        var vals = PackageResourcer.Get().GetAllHashes<D2Class_02218080>(); //TODO: Beyond Light
+        Parallel.ForEach(vals, val =>
         {
-            var vals = PackageResourcer.Get().GetAllHashes<S50058080>();
-            Parallel.ForEach(vals, val =>
+            var tag = FileResourcer.Get().GetSchemaTag<D2Class_02218080>(val);
+            foreach (var entry in tag.TagData.Unk28)
             {
-                var tag = FileResourcer.Get().GetSchemaTag<S50058080>(val);
-                AddStrings(tag.TagData.CharacterNames);
-                AddStrings(tag.TagData.ActivityGlobalStrings);
-            });
-        }
-        // surely this is fine..
-        else
-        {
-            var vals = PackageResourcer.Get().GetAllHashes<D2Class_02218080>(); //TODO: Beyond Light
-            Parallel.ForEach(vals, val =>
-            {
-                var tag = FileResourcer.Get().GetSchemaTag<D2Class_02218080>(val);
-                foreach (var entry in tag.TagData.Unk28)
-                {
-                    if ((Strategy.IsPostBL() || Strategy.IsBL()) && entry.Unk10 is not null && entry.Unk10.Hash.GetReferenceHash() == 0x808099EF) // EF998080
-                    {
-                        AddStrings(FileResourcer.Get().GetFile<LocalizedStrings>(entry.Unk10.Hash));
-                    }
-                    else if (Strategy.IsPreBL() && entry.Unk00 is not null && entry.Unk00.Hash.GetReferenceHash() == 0x80809A88)
-                    {
-                        AddStrings(FileResourcer.Get().GetFile<LocalizedStrings>(entry.Unk00.Hash));
-                    }
-                }
-            });
-        }
+                AddStrings(FileResourcer.Get().GetFile<LocalizedStrings>(entry.Unk10.Hash));
+            }
+        });
     }
 
     protected override void Reset()

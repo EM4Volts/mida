@@ -85,9 +85,6 @@ public partial class ActivityMapView : UserControl
         QuickControls.Visibility = Visibility.Hidden;
         ManualControls.Visibility = Visibility.Hidden;
         ExportControl.Visibility = Visibility.Hidden;
-
-        if (Strategy.IsD1() || Strategy.IsPreBL())
-            ActivityEntsButton.Visibility = Visibility.Hidden;
     }
 
     private ObservableCollection<DisplayBubble> GetMapList(IActivity activity)
@@ -138,25 +135,14 @@ public partial class ActivityMapView : UserControl
                             continue;
 
                         var tag = resource.StaticMapParent.TagData.StaticMap;
-                        if (Strategy.IsD1())
+
+                        items.Add(new DisplayStaticMap
                         {
-                            int instanceCount = tag.TagData.D1StaticMapData != null ? tag.TagData.D1StaticMapData.TagData.InstanceCounts : tag.TagData.Decals.Count;
-                            items.Add(new DisplayStaticMap
-                            {
-                                Hash = m.MapContainer.Hash,
-                                Name = $"{m.MapContainer.Hash}: {instanceCount} instances",
-                                Instances = instanceCount
-                            });
-                        }
-                        else
-                        {
-                            items.Add(new DisplayStaticMap
-                            {
-                                Hash = m.MapContainer.Hash,
-                                Name = $"{m.MapContainer.Hash}: {tag.TagData.Instances.Count} instances, {tag.TagData.Statics.Count} uniques",
-                                Instances = tag.TagData.Instances.Count
-                            });
-                        }
+                            Hash = m.MapContainer.Hash,
+                            Name = $"{m.MapContainer.Hash}: {tag.TagData.Instances.Count} instances, {tag.TagData.Statics.Count} uniques",
+                            Instances = tag.TagData.Instances.Count
+                        });
+
                     }
                 }
             }
@@ -198,15 +184,13 @@ public partial class ActivityMapView : UserControl
                 var maps = new ConcurrentDictionary<FileHash, List<FileHash>>();
                 var entries = _currentActivity.EnumerateActivityEntities().Where(x => x.BubbleName == _currentBubble.Name).ToList();
 
-                if (Strategy.IsPostBL() || Strategy.IsBL())
+                var tag = (_currentActivity as Tiger.Schema.Activity.MARATHON_ALPHA.Activity).TagData.AmbientActivity;
+                if (tag is not null)
                 {
-                    var tag = (_currentActivity as Tiger.Schema.Activity.DESTINY2_BEYONDLIGHT_3402.Activity).TagData.AmbientActivity;
-                    if (tag is not null)
-                    {
-                        var ambient = FileResourcer.Get().GetFileInterface<IActivity>(tag.Hash);
-                        entries.AddRange(ambient.EnumerateActivityEntities().Where(x => x.BubbleName == _currentBubble.Name).ToList());
-                    }
+                    var ambient = FileResourcer.Get().GetFileInterface<IActivity>(tag.Hash);
+                    entries.AddRange(ambient.EnumerateActivityEntities().Where(x => x.BubbleName == _currentBubble.Name).ToList());
                 }
+
 
                 foreach (var entry in entries)
                 {
@@ -319,7 +303,8 @@ public partial class ActivityMapView : UserControl
         {
             ActivityMapEntityView.ExportFull(hashes, container, savePath);
             MainWindow.Progress.CompleteStage();
-        };
+        }
+        ;
 
         Tiger.Exporters.Exporter.Get().Export(savePath);
         MainWindow.Progress.CompleteStage();

@@ -422,16 +422,8 @@ public static class FbxMeshExtensions
         foreach (var normal in part.MeshPart.VertexNormals)
         {
             FbxVector4 vec4;
-
-            if (Strategy.CurrentStrategy > TigerStrategy.DESTINY2_SHADOWKEEP_2999)
-            {
-                Vector3 euler = part.MeshPart is DynamicMeshPart ? new Vector3(normal.X, normal.Y, normal.Z) : Vector4.ConsiderQuatToEulerConvert(normal);
-                vec4 = new FbxVector4(euler.X, euler.Y, euler.Z);
-            }
-            else
-            {
-                vec4 = new FbxVector4(normal.X, normal.Y, normal.Z);
-            }
+            Vector3 euler = part.MeshPart is DynamicMeshPart ? new Vector3(normal.X, normal.Y, normal.Z) : Vector4.ConsiderQuatToEulerConvert(normal);
+            vec4 = new FbxVector4(euler.X, euler.Y, euler.Z);
             normalsLayer.GetDirectArray().Add(vec4);
         }
         fbxMesh.GetLayer(0).SetNormals(normalsLayer);
@@ -452,15 +444,9 @@ public static class FbxMeshExtensions
         {
             FbxVector4 vec4;
 
-            if (Strategy.CurrentStrategy > TigerStrategy.DESTINY2_SHADOWKEEP_2999)
-            {
-                Vector3 euler = Vector4.QuaternionToEulerAngles(tangent);
-                vec4 = new FbxVector4(euler.X, euler.Y, euler.Z);
-            }
-            else
-            {
-                vec4 = new FbxVector4(tangent.X, tangent.Y, tangent.Z);
-            }
+            Vector3 euler = Vector4.QuaternionToEulerAngles(tangent);
+            vec4 = new FbxVector4(euler.X, euler.Y, euler.Z);
+
             tangentsLayer.GetDirectArray().Add(vec4);
         }
         fbxMesh.GetLayer(0).SetTangents(tangentsLayer);

@@ -36,14 +36,14 @@ public class RoadDecals : Tag<SMapRoadDecals>
     }
 }
 
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "E8688080", 0x18)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "E8688080", 0x18)]
 public struct SMapRoadDecalsResource
 {
     [SchemaField(0x10), NoLoad]
     public RoadDecals RoadDecals; // Contrary to the name, it is more than just decals on roads
 }
 
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "EA688080", 0x58)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "EA688080", 0x58)]
 public struct SMapRoadDecals
 {
     public ulong FileSize;
@@ -53,7 +53,7 @@ public struct SMapRoadDecals
     public AABB UnkBounds;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "E3688080", 0x60)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "E3688080", 0x60)]
 public struct D2Class_E3688080
 {
     public Material Material;

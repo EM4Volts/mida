@@ -41,26 +41,10 @@ public class Texture : TigerReferenceFile<STextureHeader>
     public byte[] GetDDSBytes(DXGI_FORMAT format)
     {
         byte[] data;
-        if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON)
-        {
-            if (ReferenceHash.IsValid() && ReferenceHash.GetReferenceHash().IsValid())
-                data = PackageResourcer.Get().GetFileData(ReferenceHash.GetReferenceHash());
-            else
-                data = GetReferenceData();
-
-            if ((_tag.Flags1 & 0xC00) != 0x400 || IsCubemap())
-            {
-                var gcnformat = GcnSurfaceFormatExtensions.GetFormat(_tag.ROIFormat);
-                data = PS4SwizzleAlgorithm.UnSwizzle(data, _tag.Width, _tag.Height, _tag.ArraySize, gcnformat);
-            }
-        }
+        if (_tag.LargeTextureBuffer != null)
+            data = _tag.LargeTextureBuffer.GetData(false);
         else
-        {
-            if (_tag.LargeTextureBuffer != null)
-                data = _tag.LargeTextureBuffer.GetData(false);
-            else
-                data = GetReferenceData();
-        }
+            data = GetReferenceData();
 
         DirectXTexUtility.TexMetadata metadata = DirectXTexUtility.GenerateMetaData(_tag.Width, _tag.Height, _tag.Depth, 1, (DirectXTexUtility.DXGIFormat)format, _tag.ArraySize == 6);
         DirectXTexUtility.DDSHeader ddsHeader;
@@ -434,56 +418,31 @@ public enum TextureDimension
 public struct STextureHeader
 {
     public uint DataSize;
-    [SchemaField(0x06, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(TigerStrategy.DESTINY2_SHADOWKEEP_2601, Obsolete = true)]
-    public ushort ROIFormat;
 
-    [SchemaField(0x04, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    public uint Format;  // DXGI_FORMAT, ushort GcnSurfaceFormat for ROI
+    [SchemaField(0x04, TigerStrategy.MARATHON_ALPHA)]
+    public uint Format;
 
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON, Obsolete = true)]
-    [SchemaField(0x10, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
+    [SchemaField(0x10, TigerStrategy.MARATHON_ALPHA)]
     public Vector4 TilingScaleOffset;
 
-    [SchemaField(0x24, TigerStrategy.DESTINY1_RISE_OF_IRON)] // is BEEFCAFE (uint32) in D1
-    [SchemaField(0x0C, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    [SchemaField(0x20, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
+    [SchemaField(0x20, TigerStrategy.MARATHON_ALPHA)]
     public ushort CAFE;
 
-    [SchemaField(0x28, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x0E, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    [SchemaField(0x22, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
+    [SchemaField(0x22, TigerStrategy.MARATHON_ALPHA)]
     public ushort Width;
     public ushort Height;
     public ushort Depth;
     public ushort ArraySize;
 
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON, Obsolete = true)]
-    [SchemaField(TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
+    [SchemaField(TigerStrategy.MARATHON_ALPHA)]
     public ushort TileCount;
 
-    [SchemaField(0x30, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(TigerStrategy.DESTINY2_SHADOWKEEP_2601, Obsolete = true)]
-    public uint Flags1; // Flags for ROI
-    [SchemaField(TigerStrategy.DESTINY2_SHADOWKEEP_2601, Obsolete = true)]
-    public uint Flags2;
-    [SchemaField(TigerStrategy.DESTINY2_SHADOWKEEP_2601, Obsolete = true)]
-    public uint Flags3;
-
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON, Obsolete = true)]
-    [SchemaField(0x24, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    [SchemaField(0x3C, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
+    [SchemaField(0x3C, TigerStrategy.MARATHON_ALPHA)]
     public TigerFile? LargeTextureBuffer;
 
     public DXGI_FORMAT GetFormat()
     {
-        switch (Strategy.CurrentStrategy)
-        {
-            case TigerStrategy.DESTINY1_RISE_OF_IRON:
-                return GcnSurfaceFormatExtensions.ToDXGI(ROIFormat);
-            default:
-                return (DXGI_FORMAT)Format;
-        }
+        return (DXGI_FORMAT)Format;
     }
 }
 

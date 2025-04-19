@@ -32,8 +32,7 @@ public class LensFlare : Tag<SLensFlare>
 /// <summary>
 /// Light Lens Flares
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "BF6C8080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "B5678080", 0x1C)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B5678080", 0x1C)]
 public struct SMapLensFlareResource
 {
     [SchemaField(0x10)]
@@ -43,8 +42,7 @@ public struct SMapLensFlareResource
 /// <summary>
 /// Unk data resource.
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "686F8080", 0x38)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "786A8080", 0x38)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "786A8080", 0x38)]
 public struct SLensFlare
 {
     public ulong FileSize;
@@ -58,8 +56,7 @@ public struct SLensFlare
 /// <summary>
 /// Unk data resource.
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "6D6F8080", 0xC)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "7D6A8080", 0xC)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "7D6A8080", 0xC)]
 public struct SLensFlareEntry
 {
     public Material Material;

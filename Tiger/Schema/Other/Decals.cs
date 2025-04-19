@@ -130,22 +130,17 @@ public class Decals : Tag<SMapDecals>
 /// </summary>
 /// Map Decals Resource
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "701A8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "626E8080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "55698080", 0x18)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "55698080", 0x18)]
 public struct SMapDecalsResource
 {
-    [SchemaField(0xC, TigerStrategy.DESTINY1_RISE_OF_IRON), NoLoad]
-    [SchemaField(0x10, TigerStrategy.DESTINY2_SHADOWKEEP_2601), NoLoad]
+    [SchemaField(0x10, TigerStrategy.MARATHON_ALPHA), NoLoad]
     public Decals MapDecals;
 }
 
 /// <summary>
 /// Map Decals
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "401B8080", 0x68)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "686E8080", 0x78)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "5B698080", 0x78)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "5B698080", 0x78)]
 public struct SMapDecals
 {
     public ulong FileSize;
@@ -170,9 +165,7 @@ public struct SMapDecals
 /// <summary>
 /// Decal resources
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "831A8080", 0x8)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "6C6E8080", 0x8)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "63698080", 0x8)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "63698080", 0x8)]
 public struct D2Class_63698080
 {
     public Material Material;
@@ -183,9 +176,7 @@ public struct D2Class_63698080
 /// <summary>
 /// Decal Location
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "531A8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "6D6E8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "64698080", 0x10)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "64698080", 0x10)]
 public struct D2Class_64698080
 {
     public Vector4 Location;

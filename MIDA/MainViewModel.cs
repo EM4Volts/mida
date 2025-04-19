@@ -8,7 +8,6 @@ using HelixToolkit.SharpDX.Core.Model.Scene;
 using HelixToolkit.Wpf.SharpDX;
 using Microsoft.Toolkit.Mvvm.Input;
 using SharpDX;
-using Tiger;
 using Tiger.Schema;
 using Tiger.Schema.Entity;
 using Color4 = SharpDX.Color4;
@@ -309,11 +308,6 @@ public class MainViewModel : INotifyPropertyChanged, IDisposable
 
     private Vector3 ConsiderQuatToEulerConvert(Vector4 v4N)
     {
-        // shadowkeep and below don't have quaternion normals
-        if (Strategy.CurrentStrategy <= TigerStrategy.DESTINY2_SHADOWKEEP_2999)
-        {
-            return new Vector3(v4N.X, v4N.Y, v4N.Z);
-        }
         Vector3 res = new Vector3();
         if (Math.Abs(v4N.Magnitude - 1) < 0.01)  // Quaternion
         {

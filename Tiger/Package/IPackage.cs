@@ -7,9 +7,7 @@ using ConcurrentCollections;
 
 namespace Tiger;
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "029D8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "029D8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_WITCHQUEEN_6307, "C29E8080", 0x10)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "C29E8080", 0x10)]
 [StructLayout(LayoutKind.Sequential, Size = 0x10)]
 public struct SHash64Definition
 {
@@ -25,8 +23,8 @@ public interface IPackageHeader
     public uint GetTimestamp();
     public ushort GetPatchId();
     public uint GetFileCount();
-    public List<D2FileEntry> GetFileEntries(TigerReader reader);
-    public List<D2BlockEntry> GetBlockEntries(TigerReader reader);
+    public List<FileEntry> GetFileEntries(TigerReader reader);
+    public List<BlockEntry> GetBlockEntries(TigerReader reader);
     public List<SHash64Definition> GetHash64Definitions(TigerReader reader);
 
     public List<PackageActivityEntry> GetAllActivities(TigerReader reader);
@@ -65,9 +63,8 @@ public struct PackageActivityEntry
     public string Name;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "EC9E8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_WITCHQUEEN_6307, "C59E8080", 0x10)]
-public struct SD2PackageActivityEntry
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "C59E8080", 0x10)]
+public struct SPackageActivityEntry
 {
     public FileHash TagHash;
     public TagClassHash TagClassHash;
@@ -77,8 +74,8 @@ public struct SD2PackageActivityEntry
 public abstract class Package : IPackage
 {
     private static string PackageExtension = ".pkg";
-    private List<D2FileEntry> FileEntries;
-    private List<D2BlockEntry> BlockEntries;
+    private List<FileEntry> FileEntries;
+    private List<BlockEntry> BlockEntries;
     protected const int BlockSize = 0x40_000;
     public string PackagePath { get; }
     protected IPackageHeader Header;
@@ -93,11 +90,11 @@ public abstract class Package : IPackage
     public HashSet<int> GetRequiredPatches()
     {
         HashSet<int> requiredPatches = new HashSet<int>();
-        foreach (D2FileEntry fileEntry in FileEntries)
+        foreach (FileEntry fileEntry in FileEntries)
         {
             int blockCount = GetBlockCount(fileEntry);
-            List<D2BlockEntry> blocks = GetBlockEntries(fileEntry.StartingBlockIndex, blockCount);
-            foreach (D2BlockEntry blockEntry in blocks)
+            List<BlockEntry> blocks = GetBlockEntries(fileEntry.StartingBlockIndex, blockCount);
+            foreach (BlockEntry blockEntry in blocks)
             {
                 requiredPatches.Add(blockEntry.PatchId);
             }
@@ -271,7 +268,7 @@ public abstract class Package : IPackage
     //     {
     //         unseenBlockIndices.Remove(blockIndex);
     //         Span<byte> finalBytes;
-    //         D2BlockEntry blockEntry = BlockEntries[blockIndex];
+    //         BlockEntry blockEntry = BlockEntries[blockIndex];
     //         using (TigerReader packageHandle = GetPackageHandle(blockEntry.PatchId))
     //         {
     //             finalBytes = ReadBlockBufferSpan(packageHandle, blockEntry);
@@ -317,7 +314,7 @@ public abstract class Package : IPackage
     //                     for (int i = blockIndex; i < blockIndex + blocksRequired; i++)
     //                     {
     //                         unseenBlockIndices.Remove(i);
-    //                         D2BlockEntry blockEntryRec = BlockEntries[i];
+    //                         BlockEntry blockEntryRec = BlockEntries[i];
     //                         Span<byte> finalBytesRec = ReadBlockBufferSpan(packageHandle, blockEntryRec);
     //                         // Span<byte> finalBytesRec = DecryptAndDecompressBlockBufferIfRequired(bytes, blockEntry);
     //                         int lengthToRead = i == blockIndex + blocksRequired - 1 ? fileMetadata.Size - crossBlockSizeAlreadyRead : BlockSize;
@@ -346,10 +343,10 @@ public abstract class Package : IPackage
         // We know that basically all blocks are read, so we read then serially inside of each patch file but in parallel across patch files
 
         // Maps block index to a set of block (index, offset, size) to read
-        ConcurrentDictionary<ushort, ConcurrentHashSet<(int, D2BlockEntry)>> patchBlockEntryMap = new();
+        ConcurrentDictionary<ushort, ConcurrentHashSet<(int, BlockEntry)>> patchBlockEntryMap = new();
         for (ushort i = 0; i < Header.GetPatchId() + 1; i++)
         {
-            patchBlockEntryMap.TryAdd(i, new ConcurrentHashSet<(int, D2BlockEntry)>());
+            patchBlockEntryMap.TryAdd(i, new ConcurrentHashSet<(int, BlockEntry)>());
         }
         Parallel.For(0, BlockEntries.Count, blockIndex =>
         {
@@ -370,7 +367,7 @@ public abstract class Package : IPackage
         Parallel.ForEach(patchBlockEntryMap, pair =>
         {
             using TigerReader packageHandle = GetPackageHandle(pair.Key);
-            List<(int, D2BlockEntry)> sortedBlockIndices = pair.Value.OrderBy(x => x.Item2.Offset).ToList();
+            List<(int, BlockEntry)> sortedBlockIndices = pair.Value.OrderBy(x => x.Item2.Offset).ToList();
             foreach (var block in sortedBlockIndices)
             {
                 packageHandle.Seek(block.Item2.Offset, SeekOrigin.Begin);
@@ -387,7 +384,7 @@ public abstract class Package : IPackage
         ConcurrentDictionary<ushort, FileView> fileViews = new();
         Parallel.For(0, FileEntries.Count, fileIndex =>
         {
-            D2FileEntry fileEntry = FileEntries[fileIndex];
+            FileEntry fileEntry = FileEntries[fileIndex];
             byte[] finalFileBuffer = new byte[fileEntry.FileSize];
             int blockCount = GetBlockCount(fileEntry);
             int currentBufferOffset = 0;
@@ -505,14 +502,14 @@ public abstract class Package : IPackage
     /// </summary>
     public byte[] GetFileBytes(ushort fileIndex)
     {
-        D2FileEntry fileEntry = FileEntries[fileIndex];
+        FileEntry fileEntry = FileEntries[fileIndex];
         byte[] finalFileBuffer = new byte[fileEntry.FileSize];
         int blockCount = GetBlockCount(fileEntry);
         int currentBufferOffset = 0;
         int currentBlockId = 0;
 
-        List<D2BlockEntry> blocks = GetBlockEntries(fileEntry.StartingBlockIndex, blockCount);
-        foreach (D2BlockEntry blockEntry in blocks)
+        List<BlockEntry> blocks = GetBlockEntries(fileEntry.StartingBlockIndex, blockCount);
+        foreach (BlockEntry blockEntry in blocks)
         {
             //if ((blockEntry.BitFlag & 0x8) == 8)
             //{
@@ -592,9 +589,9 @@ public abstract class Package : IPackage
         return new FileMetadata(new FileHash(Header.GetPackageId(), fileIndex), FileEntries[fileIndex]);
     }
 
-    private List<D2BlockEntry> GetBlockEntries(int blockIndex, int blockCount) { return BlockEntries.GetRange(blockIndex, blockCount); }
+    private List<BlockEntry> GetBlockEntries(int blockIndex, int blockCount) { return BlockEntries.GetRange(blockIndex, blockCount); }
 
-    private int GetBlockCount(D2FileEntry fileEntry)
+    private int GetBlockCount(FileEntry fileEntry)
     {
         return 1 + (int)Math.Floor((double)(fileEntry.StartingBlockOffset + fileEntry.FileSize - 1) / BlockSize);
     }
@@ -620,7 +617,7 @@ public abstract class Package : IPackage
         return Path.Combine(pathWithNoPatchAndExtension + patchId.ToString("D") + ".pkg");
     }
 
-    private byte[] ReadBlockBuffer(TigerReader packageHandle, D2BlockEntry blockEntry)
+    private byte[] ReadBlockBuffer(TigerReader packageHandle, BlockEntry blockEntry)
     {
         packageHandle.Seek(blockEntry.Offset, SeekOrigin.Begin);
         byte[] blockBuffer = packageHandle.ReadBytes((int)blockEntry.Size);
@@ -631,7 +628,7 @@ public abstract class Package : IPackage
     public static extern bool OodleLZ_Decompress(byte[] buffer, int bufferSize, byte[] outputBuffer, int outputBufferSize, int a, int b,
         int c, IntPtr d, IntPtr e, IntPtr f, IntPtr g, IntPtr h, IntPtr i, int threadModule);
 
-    private byte[] DecryptAndDecompressBlockBufferIfRequired(byte[] blockBuffer, D2BlockEntry blockEntry)
+    private byte[] DecryptAndDecompressBlockBufferIfRequired(byte[] blockBuffer, BlockEntry blockEntry)
     {
         byte[] decryptedBuffer;
         if ((blockEntry.BitFlag & 0x8) != 0)
@@ -661,7 +658,7 @@ public abstract class Package : IPackage
         return decompressedBuffer;
     }
 
-    private unsafe byte[] DecryptBuffer(byte[] buffer, D2BlockEntry block, bool redacted = false)
+    private unsafe byte[] DecryptBuffer(byte[] buffer, BlockEntry block, bool redacted = false)
     {
         byte[] decryptedBuffer = new byte[buffer.Length];
         byte[] key;
@@ -696,7 +693,7 @@ public abstract class Package : IPackage
 
     protected abstract byte[] GenerateNonce();
 
-    private byte[] DecompressBuffer(byte[] buffer, D2BlockEntry block)
+    private byte[] DecompressBuffer(byte[] buffer, BlockEntry block)
     {
         return OodleDecompress(buffer, (int)block.Size);
     }
@@ -740,7 +737,7 @@ public struct FileMetadata
     public sbyte Type;
     public sbyte SubType;
 
-    public FileMetadata(FileHash fileHash, D2FileEntry fileEntry)
+    public FileMetadata(FileHash fileHash, FileEntry fileEntry)
     {
         FileIndex = fileHash.FileIndex;
         Hash = fileHash;
@@ -751,7 +748,7 @@ public struct FileMetadata
     }
 }
 
-public struct D2FileEntry
+public struct FileEntry
 {
     public TigerHash Reference;
     public sbyte NumType;
@@ -760,7 +757,7 @@ public struct D2FileEntry
     public int StartingBlockOffset;
     public int FileSize;
 
-    public D2FileEntry(D2FileEntryBitpacked entryBitpacked)
+    public FileEntry(FileEntryBitpacked entryBitpacked)
     {
         // EntryA
         Reference = new TigerHash(entryBitpacked.Reference);
@@ -779,15 +776,15 @@ public struct D2FileEntry
 };
 
 [StructLayout(LayoutKind.Sequential)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "F39E8080", 0x10)]
-public struct D2FileEntryBitpacked
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "F39E8080", 0x10)]
+public struct FileEntryBitpacked
 {
     public uint Reference;
     public uint EntryB;
     public uint EntryC;
     public uint EntryD;
 
-    public D2FileEntryBitpacked(uint reference, uint entryB, uint entryC, uint entryD)
+    public FileEntryBitpacked(uint reference, uint entryB, uint entryC, uint entryD)
     {
         Reference = reference;
         EntryB = entryB;
@@ -797,8 +794,8 @@ public struct D2FileEntryBitpacked
 }
 
 [StructLayout(LayoutKind.Sequential)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "EE9E8080", 0x30)]
-public unsafe struct D2BlockEntry
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "EE9E8080", 0x30)]
+public unsafe struct BlockEntry
 {
     public uint Offset;
     public uint Size;

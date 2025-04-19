@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Tiger;
-using Tiger.Schema.Activity.DESTINY2_BEYONDLIGHT_3402;
+using Tiger.Schema.Activity.MARATHON_ALPHA;
 using Tiger.Schema.Audio;
 using Tiger.Schema.Entity;
 

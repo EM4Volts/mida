@@ -27,32 +27,13 @@ public partial class EntityView : UserControl
         fbxHandler.Clear();
         Entity entity = FileResourcer.Get().GetFile<Entity>(entityHash);
 
-        // HelixToolkit is throwing a huge fit about a lot of D1 entities and just crashes when trying to load from fbx :))))))
-        // Only option is to load them as display parts instead. Won't show skeleton and won't look as nice but no other choice.
-        // On the plus side, things load slightly faster.
-        if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON)
+        List<Entity> entities = new List<Entity> { entity };
+        entities.AddRange(entity.GetEntityChildren());
+        entities.ForEach(entity =>
         {
-            var parts = MakeEntityDisplayParts(entity, ExportDetailLevel.MostDetailed);
-            Dispatcher.Invoke(() =>
-            {
-                MainViewModel MVM = (MainViewModel)ModelView.UCModelView.Resources["MVM"];
-                MVM.Clear();
-                MVM.SetChildren(parts);
-            });
-            parts.Clear();
-            return true;
-        }
-        else
-        {
-            List<Entity> entities = new List<Entity> { entity };
-            entities.AddRange(entity.GetEntityChildren());
-            entities.ForEach(entity =>
-            {
-                AddEntity(entity, ModelView.GetSelectedLod(), fbxHandler);
-            });
-            return LoadUI(fbxHandler);
-        }
-
+            AddEntity(entity, ModelView.GetSelectedLod(), fbxHandler);
+        });
+        return LoadUI(fbxHandler);
     }
 
     public bool LoadEntityModel(FileHash entityModelHash, FbxHandler fbxHandler)
@@ -164,24 +145,17 @@ public partial class EntityView : UserControl
 
         Directory.CreateDirectory(savePath);
         Directory.CreateDirectory($"{savePath}/Textures");
-        var scene = Tiger.Exporters.Exporter.Get().CreateScene(name, Strategy.IsD1() ? ExportType.D1API : ExportType.API);
+        var scene = Tiger.Exporters.Exporter.Get().CreateScene(name, ExportType.API);
 
         ExportGearShader(item, name, savePath);
 
         // Export the model
         // todo bad, should be replaced
         EntitySkeleton overrideSkeleton = null;
-        if (Strategy.CurrentStrategy >= TigerStrategy.DESTINY2_WITCHQUEEN_6307)
-        {
-            string skeleHash = item.ItemType == "Ghost Shell" ? "0000603046D31C68" : "0000670F342E9595";
-            Entity skele = FileResourcer.Get().GetFile<Entity>(new FileHash(Hash64Map.Get().GetHash32Checked(skeleHash))); // 64 bit more permanent
-            overrideSkeleton = new EntitySkeleton(skele.Skeleton.Hash);
-        }
-        else if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON)
-        {
-            Entity playerBase = FileResourcer.Get().GetFile<Entity>(new FileHash("0AE18481"));
-            overrideSkeleton = new EntitySkeleton(playerBase.Skeleton.Hash);
-        }
+
+        string skeleHash = item.ItemType == "Ghost Shell" ? "0000603046D31C68" : "0000670F342E9595";
+        Entity skele = FileResourcer.Get().GetFile<Entity>(new FileHash(Hash64Map.Get().GetHash32Checked(skeleHash))); // 64 bit more permanent
+        overrideSkeleton = new EntitySkeleton(skele.Skeleton.Hash);
 
         var val = Investment.Get().GetPatternEntityFromHash(item.Parent != null ? item.Parent.TagData.InventoryItemHash : item.Item.TagData.InventoryItemHash);
         if (val != null && val.Skeleton != null)
@@ -233,62 +207,34 @@ public partial class EntityView : UserControl
         var config = ConfigSubsystem.Get();
 
         Log.Info($"Exporting Gear Shader for: {item.ItemName}");
-        // Export the dye info
-        if (Strategy.IsD1())
-        {
-            Dictionary<TigerHash, DyeD1> dyes = new Dictionary<TigerHash, DyeD1>();
-            if (item.Item.TagData.Unk90.GetValue(item.Item.GetReader()) is D2Class_77738080 translationBlock)
-            {
-                foreach (var dyeEntry in translationBlock.DefaultDyes)
-                {
-                    DyeD1 dye = Investment.Get().GetD1DyeFromIndex(dyeEntry.DyeIndex);
-                    if (dye != null)
-                    {
-                        dyes.Add(Investment.Get().GetChannelHashFromIndex(dyeEntry.ChannelIndex), dye);
-                        dye.ExportTextures($"{savePath}/Textures", config.GetOutputTextureFormat());
-                    }
-                }
-                foreach (var dyeEntry in translationBlock.LockedDyes)
-                {
-                    DyeD1 dye = Investment.Get().GetD1DyeFromIndex(dyeEntry.DyeIndex);
-                    if (dye != null)
-                    {
-                        dyes.Add(Investment.Get().GetChannelHashFromIndex(dyeEntry.ChannelIndex), dye);
-                        dye.ExportTextures($"{savePath}/Textures", config.GetOutputTextureFormat());
-                    }
-                }
-            }
-            AutomatedExporter.SaveD1ShaderInfo(savePath, itemName, config.GetOutputTextureFormat(), dyes.Values.ToList());
-        }
-        else
-        {
-            Dictionary<TigerHash, Dye> dyes = new Dictionary<TigerHash, Dye>();
-            if (item.Item.TagData.Unk90.GetValue(item.Item.GetReader()) is D2Class_77738080 translationBlock)
-            {
-                foreach (var dyeEntry in translationBlock.DefaultDyes)
-                {
-                    Dye dye = Investment.Get().GetDyeFromIndex(dyeEntry.DyeIndex);
-                    dyes.Add(Investment.Get().GetChannelHashFromIndex(dyeEntry.ChannelIndex), dye);
-#if DEBUG
-                    System.Console.WriteLine($"{item.ItemName}: DefaultDye {dye.Hash}");
-#endif
-                }
-                foreach (var dyeEntry in translationBlock.LockedDyes)
-                {
-                    Dye dye = Investment.Get().GetDyeFromIndex(dyeEntry.DyeIndex);
-                    dyes.Add(Investment.Get().GetChannelHashFromIndex(dyeEntry.ChannelIndex), dye);
-#if DEBUG
-                    System.Console.WriteLine($"{item.ItemName}: LockedDye {dye.Hash}");
-#endif
-                }
-            }
 
-            AutomatedExporter.SaveBlenderApiFile(savePath, itemName,
-                config.GetOutputTextureFormat(), dyes.Values.ToList());
-
-            var iridesceneLookup = Globals.Get().RenderGlobals.TagData.Textures.TagData.IridescenceLookup;
-            TextureExtractor.SaveTextureToFile($"{savePath}/Textures/Iridescence_Lookup", iridesceneLookup.GetScratchImage());
+        Dictionary<TigerHash, Dye> dyes = new Dictionary<TigerHash, Dye>();
+        if (item.Item.TagData.Unk90.GetValue(item.Item.GetReader()) is D2Class_77738080 translationBlock)
+        {
+            foreach (var dyeEntry in translationBlock.DefaultDyes)
+            {
+                Dye dye = Investment.Get().GetDyeFromIndex(dyeEntry.DyeIndex);
+                dyes.Add(Investment.Get().GetChannelHashFromIndex(dyeEntry.ChannelIndex), dye);
+#if DEBUG
+                System.Console.WriteLine($"{item.ItemName}: DefaultDye {dye.Hash}");
+#endif
+            }
+            foreach (var dyeEntry in translationBlock.LockedDyes)
+            {
+                Dye dye = Investment.Get().GetDyeFromIndex(dyeEntry.DyeIndex);
+                dyes.Add(Investment.Get().GetChannelHashFromIndex(dyeEntry.ChannelIndex), dye);
+#if DEBUG
+                System.Console.WriteLine($"{item.ItemName}: LockedDye {dye.Hash}");
+#endif
+            }
         }
+
+        AutomatedExporter.SaveBlenderApiFile(savePath, itemName,
+            config.GetOutputTextureFormat(), dyes.Values.ToList());
+
+        var iridesceneLookup = Globals.Get().RenderGlobals.TagData.Textures.TagData.IridescenceLookup;
+        TextureExtractor.SaveTextureToFile($"{savePath}/Textures/Iridescence_Lookup", iridesceneLookup.GetScratchImage());
+
         Log.Info($"Exported Gear Shader for: {item.ItemName}");
     }
 

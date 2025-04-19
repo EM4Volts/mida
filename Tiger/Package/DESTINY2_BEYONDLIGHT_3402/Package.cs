@@ -55,31 +55,31 @@ public struct PackageHeader : IPackageHeader
         return FileEntryTableCount;
     }
 
-    public List<D2FileEntry> GetFileEntries(TigerReader reader)
+    public List<FileEntry> GetFileEntries(TigerReader reader)
     {
         reader.Seek(FileEntryTableOffset, SeekOrigin.Begin);
 
-        List<D2FileEntry> fileEntries = new();
-        int d2FileEntrySize = Marshal.SizeOf<D2FileEntryBitpacked>();
+        List<FileEntry> fileEntries = new();
+        int FileEntrySize = Marshal.SizeOf<FileEntryBitpacked>();
         for (int i = 0; i < FileEntryTableCount; i++)
         {
-            // D2FileEntryBitpacked fileEntryBitpacked = reader.ReadBytes(d2FileEntrySize).ToType<D2FileEntryBitpacked>();
-            D2FileEntryBitpacked fileEntryBitpacked = new(reader.ReadUInt32(), reader.ReadUInt32(), reader.ReadUInt32(), reader.ReadUInt32());
-            fileEntries.Add(new D2FileEntry(fileEntryBitpacked));
+            // FileEntryBitpacked fileEntryBitpacked = reader.ReadBytes(FileEntrySize).ToType<FileEntryBitpacked>();
+            FileEntryBitpacked fileEntryBitpacked = new(reader.ReadUInt32(), reader.ReadUInt32(), reader.ReadUInt32(), reader.ReadUInt32());
+            fileEntries.Add(new FileEntry(fileEntryBitpacked));
         }
 
         return fileEntries;
     }
 
-    public List<D2BlockEntry> GetBlockEntries(TigerReader reader)
+    public List<BlockEntry> GetBlockEntries(TigerReader reader)
     {
         reader.Seek(BlockEntryTableOffset, SeekOrigin.Begin);
 
-        List<D2BlockEntry> blockEntries = new();
-        int d2BlockEntrySize = Marshal.SizeOf<D2BlockEntry>();
+        List<BlockEntry> blockEntries = new();
+        int BlockEntrySize = Marshal.SizeOf<BlockEntry>();
         for (int i = 0; i < BlockEntryTableCount; i++)
         {
-            D2BlockEntry blockEntry = reader.ReadBytes(d2BlockEntrySize).ToType<D2BlockEntry>();
+            BlockEntry blockEntry = reader.ReadBytes(BlockEntrySize).ToType<BlockEntry>();
             blockEntries.Add(blockEntry);
         }
 
@@ -161,7 +161,7 @@ public struct PackageHeader : IPackageHeader
         for (int i = 0; i < ActivityTableCount; i++)
         {
             reader.Seek(ActivityTableOffset + 0x30 + 0x10 * i, SeekOrigin.Begin);
-            SD2PackageActivityEntry entry = SchemaDeserializer.Get().DeserializeSchema<SD2PackageActivityEntry>(reader);
+            SPackageActivityEntry entry = SchemaDeserializer.Get().DeserializeSchema<SPackageActivityEntry>(reader);
             activityEntries.Add(new PackageActivityEntry
             {
                 TagHash = entry.TagHash,
@@ -174,10 +174,10 @@ public struct PackageHeader : IPackageHeader
     }
 };
 
-[StrategyClass(TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
+[StrategyClass(TigerStrategy.MARATHON_ALPHA)]
 public class Package : Tiger.Package
 {
-    public Package(string packagePath) : base(packagePath, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)
+    public Package(string packagePath) : base(packagePath, TigerStrategy.MARATHON_ALPHA)
     {
     }
 

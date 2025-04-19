@@ -157,19 +157,14 @@ public class Decorator : Tag<SDecorator>
 }
 
 #region Decorator structs
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "361C8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "AD718080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "C36C8080", 0x18)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "C36C8080", 0x18)]
 public struct SDecoratorMapResource
 {
-    [SchemaField(0xC, TigerStrategy.DESTINY1_RISE_OF_IRON), NoLoad]
-    [SchemaField(0x10, TigerStrategy.DESTINY2_SHADOWKEEP_2601), NoLoad]
+    [SchemaField(0x10, TigerStrategy.MARATHON_ALPHA), NoLoad]
     public Decorator Decorator;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "CE1A8080", 0xA8)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "64718080", 0xA8)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "986C8080", 0xA8)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "986C8080", 0xA8)]
 public struct SDecorator
 {
     public ulong Size;
@@ -182,45 +177,34 @@ public struct SDecorator
     public DynamicArray<D2Class_07008080> Unk50;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "17488080", 0x4)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "7D718080", 0x4)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "B16C8080", 0x4)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B16C8080", 0x4)]
 public struct D2Class_B16C8080
 {
     public Tag<D2Class_B26C8080> DecoratorModel;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "221C8080", 0xD8)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "7E718080", 0xD8)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "B26C8080", 0xD8)]
-[SchemaStruct(TigerStrategy.DESTINY2_WITCHQUEEN_6307, "B26C8080", 0x100)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B26C8080", 0x100)]
 public struct D2Class_B26C8080
 {
     public long FileSize;
     public EntityModel Model;
     public int UnkC;
     //public AABB BoundingBox; not in pre-bl, dont really care about it tho
-    [SchemaField(0x10, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x30, TigerStrategy.DESTINY2_WITCHQUEEN_6307)]
+    [SchemaField(0x30, TigerStrategy.MARATHON_ALPHA)]
     public Tag Unk30;  // D2Class_B46C8080
-    [SchemaField(0x18, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x14, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
-    [SchemaField(0x34, TigerStrategy.DESTINY2_WITCHQUEEN_6307)]
+
+    [SchemaField(0x34, TigerStrategy.MARATHON_ALPHA)]
     public Tag<D2Class_B86C8080> SpeedTreeData; // Used for actual trees
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "D81B8080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "84718080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "B86C8080", 0x18)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B86C8080", 0x18)]
 public struct D2Class_B86C8080
 {
     [SchemaField(0x8)]
     public DynamicArray<D2Class_BA6C8080> Unk08;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "9A1A8080", 0x50)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "86718080", 0x50)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "BA6C8080", 0x50)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "BA6C8080", 0x50)]
 public struct D2Class_BA6C8080
 {
     // part of Speedtree cbuffer (cb10)
@@ -231,9 +215,7 @@ public struct D2Class_BA6C8080
     public Vector4 Unk40;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "CB1A8080", 0x20)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "70718080", 0x20)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "A46C8080", 0x20)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "A46C8080", 0x20)]
 public struct D2Class_A46C8080
 {
     public ulong Size;
@@ -246,34 +228,28 @@ public struct D2Class_A46C8080
     public Tag<SDecoratorInstanceData> InstanceData;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "321B8080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "73718080", 0x18)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "A76C8080", 0x18)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "A76C8080", 0x18)]
 public struct SDecoratorInstanceData
 {
     [SchemaField(0x8)]
     public DynamicArrayUnloaded<D2Class_A96C8080> InstanceElement;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "291B8080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "75718080", 0x10)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "A96C8080", 0x10)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "A96C8080", 0x10)]
 public struct D2Class_A96C8080
 {
     // Normalized position
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON, ArraySizeConst = 4)]
+    [SchemaField(TigerStrategy.MARATHON_ALPHA, ArraySizeConst = 4)]
     public ushort[] Position;
     // Rotation represented as an 8-bit quaternion
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON, ArraySizeConst = 4)]
+    [SchemaField(TigerStrategy.MARATHON_ALPHA, ArraySizeConst = 4)]
     public byte[] Rotation;
     // RGBA color
-    [SchemaField(TigerStrategy.DESTINY1_RISE_OF_IRON, ArraySizeConst = 4)]
+    [SchemaField(TigerStrategy.MARATHON_ALPHA, ArraySizeConst = 4)]
     public byte[] Color;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "721A8080", 0x60)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "6B718080", 0x60)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "9F6C8080", 0x60)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "9F6C8080", 0x60)]
 public struct D2Class_9F6C8080
 {
     // SpeedtreePlacements[2-7]

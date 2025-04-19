@@ -232,8 +232,8 @@ public class DynamicMeshPart : MeshPart
 
     private void TransformTexcoords(SEntityModelMesh mesh, SEntityModel header)
     {
-        Vector2 texcoordScale = !Strategy.IsD1() ? header.TexcoordScale : mesh.TexcoordScale;
-        Vector2 texcoordTranslation = !Strategy.IsD1() ? header.TexcoordTranslation : mesh.TexcoordTranslation;
+        Vector2 texcoordScale = header.TexcoordScale;
+        Vector2 texcoordTranslation = header.TexcoordTranslation;
         float yOffset = 0f;//5f / 3f; // idfk
 
         for (int i = 0; i < VertexTexcoords0.Count; i++)
@@ -292,8 +292,8 @@ public class DynamicMeshPart : MeshPart
 
     private void TransformPositions(SEntityModelMesh mesh, SEntityModel header)
     {
-        Vector4 modelScale = !Strategy.IsD1() ? header.ModelScale : mesh.ModelScale;
-        Vector4 modelTranslation = !Strategy.IsD1() ? header.ModelTranslation : mesh.ModelTranslation;
+        Vector4 modelScale = header.ModelScale;
+        Vector4 modelTranslation = header.ModelTranslation;
 
         for (int i = 0; i < VertexPositions.Count; i++)
         {

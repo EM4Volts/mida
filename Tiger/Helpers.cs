@@ -143,7 +143,7 @@ public static class Helpers
         var data = PackageResourcer.Get().GetFileData(hash);
         using (TigerReader br = new TigerReader(data))
         {
-            var offset = Strategy.IsD1() ? 0x28 : Strategy.IsPreBL() ? 0x0E : 0x22;
+            var offset = 0x22;
             br.Seek(offset, SeekOrigin.Begin);
             ushort width = br.ReadUInt16();
             ushort height = br.ReadUInt16();

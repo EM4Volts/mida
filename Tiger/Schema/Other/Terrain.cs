@@ -103,18 +103,6 @@ public class Terrain : Tag<STerrain>
         part.GroupIndex = entry.GroupIndex;
         part.Indices = _tag.Indices1.GetIndexData(PrimitiveType.TriangleStrip, entry.IndexOffset, entry.IndexCount);
         part.VertexLayoutIndex = 22;
-        switch (Strategy.CurrentStrategy)
-        {
-            case TigerStrategy.DESTINY1_RISE_OF_IRON:
-                part.VertexLayoutIndex = 61;
-                break;
-            case TigerStrategy.DESTINY2_SHADOWKEEP_2999:
-            case TigerStrategy.DESTINY2_SHADOWKEEP_2601:
-                part.VertexLayoutIndex = 60;
-                break;
-            default:
-                break;
-        }
 
         // Get unique vertex indices we need to get data for
         HashSet<uint> uniqueVertexIndices = new HashSet<uint>();
@@ -220,9 +208,7 @@ public class Terrain : Tag<STerrain>
 /// <summary>
 /// Terrain data resource.
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "371C8080", 0x20)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "4B718080", 0x20)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "7D6C8080", 0x20)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "7D6C8080", 0x20)]
 public struct SMapTerrainResource
 {
     [SchemaField(0x10)]
@@ -235,9 +221,7 @@ public struct SMapTerrainResource
 /// <summary>
 /// Terrain _tag.
 /// </summary>
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "2E1B8080", 0xB0)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "4F718080", 0xB0)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "816C8080", 0xB0)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "816C8080", 0xB0)]
 public struct STerrain
 {
     public long FileSize;
@@ -245,8 +229,8 @@ public struct STerrain
     public Vector4 Unk10;
     public Vector4 Unk20;
     public Vector4 Unk30;
-    [SchemaField(0x58, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x50, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
+
+    [SchemaField(0x50, TigerStrategy.MARATHON_ALPHA)]
     public DynamicArray<SMeshGroup> MeshGroups;
 
     public VertexBuffer Vertices1;
@@ -254,23 +238,15 @@ public struct STerrain
     public IndexBuffer Indices1;
     public Material Unk6C;
     public Material Unk70;
-    [SchemaField(0x80, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x78, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
+
+    [SchemaField(0x78, TigerStrategy.MARATHON_ALPHA)]
     public DynamicArray<STerrainPart> StaticParts;
     public VertexBuffer Vertices3;
     public VertexBuffer Vertices4;
     public IndexBuffer Indices2;
-
-    [SchemaField(0xA4, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(TigerStrategy.DESTINY2_SHADOWKEEP_2601, Obsolete = true)]
-    public Material UnkA4;
-    [SchemaField(TigerStrategy.DESTINY2_SHADOWKEEP_2601, Obsolete = true)]
-    public Texture UnkA8; // A top down view of the terrain in-game (assuming for LOD)
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "7F1A8080", 0x60)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "54718080", 0x60)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "866C8080", 0x60)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "866C8080", 0x60)]
 public struct SMeshGroup
 {
     //Location?
@@ -285,14 +261,12 @@ public struct SMeshGroup
     public uint Unk44;
     public uint Unk48;
     public uint Unk4C;
-    [SchemaField(0x58, TigerStrategy.DESTINY1_RISE_OF_IRON)]
-    [SchemaField(0x50, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
+
+    [SchemaField(0x50, TigerStrategy.MARATHON_ALPHA)]
     public Texture Dyemap;
 }
 
-[SchemaStruct(TigerStrategy.DESTINY1_RISE_OF_IRON, "481A8080", 0x0C)]
-[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "52718080", 0x0C)]
-[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "846C8080", 0x0C)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "846C8080", 0x0C)]
 public struct STerrainPart
 {
     public Material Material;

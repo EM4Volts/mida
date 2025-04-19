@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Tiger;
 
 namespace MIDA;
 
@@ -16,8 +15,6 @@ public partial class DareItemControl : UserControl
     private void OnControlLoaded(object sender, RoutedEventArgs routedEventArgs)
     {
         _mainWindow = Window.GetWindow(this) as MainWindow;
-        if (Strategy.CurrentStrategy == TigerStrategy.DESTINY1_RISE_OF_IRON) // TODO?
-            ItemInspectButton.Visibility = Visibility.Collapsed;
     }
 
     private void InspectAPIItem_OnClick(object sender, RoutedEventArgs e)

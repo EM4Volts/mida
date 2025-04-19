@@ -38,8 +38,7 @@ public class FontHandler : Strategy.StrategistSingleton<FontHandler>
 
     private static void SaveAllFonts()
     {
-        if (Strategy.CurrentStrategy != TigerStrategy.DESTINY2_LATEST)
-            return;
+        return; // TODO
 
         //0x80a00000 represents 0100 package
         //var vals = PackageHandler.GetAllEntriesOfReference(0x100, 0x80803c0f);

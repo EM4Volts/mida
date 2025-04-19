@@ -312,11 +312,11 @@ public static class Externs
     /// <exception cref="InvalidCastException"></exception>
     public static TfxExtern GetExtern(byte value)
     {
-        string name = Strategy.IsD1() ? ((TfxExternD1)value).ToString() : ((TfxExternD2)value).ToString();
+        string name = ((TfxExternD2)value).ToString();
         if (Enum.TryParse(name, out TfxExtern result))
             return result;
 
-        throw new InvalidCastException($"Couldn't cast extern value {value} ({(Strategy.IsD1() ? ((TfxExternD1)value).ToString() : ((TfxExternD2)value).ToString())}) for {Strategy.CurrentStrategy}");
+        throw new InvalidCastException($"Couldn't cast extern value {value} ({(((TfxExternD2)value).ToString())}) for {Strategy.CurrentStrategy}");
     }
 
     public static string GetExternFloat(TfxExtern extern_, int element, bool bInline = false)
