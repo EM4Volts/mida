@@ -43,7 +43,6 @@ public class Entity : Tag<SEntity>
         foreach (var resourceHash in _tag.EntityResources.Select(GetReader(), r => r.Resource))
         {
             EntityResource resource = FileResourcer.Get().GetFile<EntityResource>(resourceHash);
-            Console.WriteLine($"{resourceHash}");
             switch (resource.TagData.Unk10.GetValue(resource.GetReader()))
             {
                 case S73868080: // Entity model
@@ -103,8 +102,8 @@ public class Entity : Tag<SEntity>
                 //    break;
 
                 default:
-                    Console.WriteLine($"Unk10 {resource.TagData.Unk18.GetValue(resource.GetReader())}");
-                    Console.WriteLine($"Unk18 {resource.TagData.Unk18.GetValue(resource.GetReader())}");
+                    //Console.WriteLine($"Unk10 {resource.TagData.Unk18.GetValue(resource.GetReader())}");
+                    //Console.WriteLine($"Unk18 {resource.TagData.Unk18.GetValue(resource.GetReader())}");
                     // throw new NotImplementedException($"Implement parsing for {resource.Resource._tag.Unk08}");
                     break;
             }

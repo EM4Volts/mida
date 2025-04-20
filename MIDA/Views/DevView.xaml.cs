@@ -200,9 +200,7 @@ public partial class DevView : UserControl
         {
             switch (reference.Hash32)
             {
-                case 0x80800734:
-                case 0x80809C0F:
-                case 0x80809AD8:
+                case 0x8080BAAD: // Entity
                     EntityView entityView = new EntityView();
                     entityView.LoadEntity(hash, _fbxHandler);
 
@@ -215,7 +213,25 @@ public partial class DevView : UserControl
                     _mainWindow.SetNewestTabSelected();
                     break;
 
-                case 0x808071a7:
+                case 0x8080881C: //Entity model
+                    EntityModel entityModel = FileResourcer.Get().GetFile<EntityModel>(hash);
+                    ExporterScene scene = Exporter.Get().CreateScene(hash, ExportType.Entities);
+                    scene.AddModel(entityModel);
+                    var parts = entityModel.Load(ExportDetailLevel.MostDetailed, null);
+                    foreach (DynamicMeshPart part in parts)
+                    {
+                        if (part.Material == null) continue;
+                        scene.Materials.Add(new ExportMaterial(part.Material));
+                    }
+                    Exporter.Get().Export();
+
+                    EntityView entityModelView = new EntityView();
+                    entityModelView.LoadEntityModel(hash, _fbxHandler);
+                    _mainWindow.MakeNewTab(hash, entityModelView);
+                    _mainWindow.SetNewestTabSelected();
+                    break;
+
+
                 case 0x80806D44:
                     StaticView staticView = new StaticView();
                     staticView.LoadStatic(hash, ExportDetailLevel.MostDetailed, Window.GetWindow(this));
@@ -252,7 +268,6 @@ public partial class DevView : UserControl
                     _mainWindow.SetNewestTabSelected();
                     break;
 
-                case 0x808071E8:
                 case 0x80806DAA:
                     var materialView = new MaterialView();
                     materialView.Load(hash);
@@ -262,27 +277,6 @@ public partial class DevView : UserControl
                     material.Export($"{ConfigSubsystem.Get().GetExportSavePath()}/Materials/{hash}");
                     break;
 
-                case 0x80801AB5:
-                case 0x808073A5:
-                case 0x80806F07: //Entity model
-                    EntityModel entityModel = FileResourcer.Get().GetFile<EntityModel>(hash);
-                    ExporterScene scene = Exporter.Get().CreateScene(hash, ExportType.Entities);
-                    scene.AddModel(entityModel);
-                    var parts = entityModel.Load(ExportDetailLevel.MostDetailed, null);
-                    foreach (DynamicMeshPart part in parts)
-                    {
-                        if (part.Material == null) continue;
-                        scene.Materials.Add(new ExportMaterial(part.Material));
-                    }
-                    Exporter.Get().Export();
-
-                    EntityView entityModelView = new EntityView();
-                    entityModelView.LoadEntityModel(hash, _fbxHandler);
-                    _mainWindow.MakeNewTab(hash, entityModelView);
-                    _mainWindow.SetNewestTabSelected();
-                    break;
-
-                case 0x8080714F:
                 case 0x80806C81:
                     Terrain terrain = FileResourcer.Get().GetFile<Terrain>(hash);
                     ExporterScene terrainScene = Exporter.Get().CreateScene(hash, ExportType.Terrain);
@@ -290,7 +284,6 @@ public partial class DevView : UserControl
                     Exporter.Get().Export();
                     break;
 
-                case 0x80801ACE:
                 case 0x80806C98: // Decorator 986C8080
                     Decorator decorator = FileResourcer.Get().GetFile<Decorator>(hash);
                     ExporterScene decoratorScene = Exporter.Get().CreateScene(hash, ExportType.Decorators);
@@ -299,8 +292,6 @@ public partial class DevView : UserControl
                     break;
 
                 // Testing
-                case 0x80801AF2:
-                case 0x808071DC:
                 case 0x80806DA1:
                     Tag<SA16D8080> lightData = FileResourcer.Get().GetSchemaTag<SA16D8080>(hash);
                     TfxBytecodeInterpreter bytecode = new(TfxBytecodeOp.ParseAll(lightData.TagData.Bytecode));

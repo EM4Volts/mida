@@ -109,6 +109,16 @@ public partial class EntityView : UserControl
                 entity.Skeleton = overrideSkeleton;
 
             var dynamicParts = entity.Load(ExportDetailLevel.MostDetailed);
+
+            // TODO TEMP, add player skeleton for anything with no skeleton but has weights
+            if (entity.Skeleton == null && overrideSkeleton == null && dynamicParts.Any(x => x.VertexWeights.Any()))
+            {
+                string skeleHash = "00008E9C51120FCF";
+                Entity skele = FileResourcer.Get().GetFile<Entity>(new FileHash(Hash64Map.Get().GetHash32Checked(skeleHash))); // 64 bit more permanent
+                overrideSkeleton = new EntitySkeleton(skele.Skeleton.Hash);
+            }
+            //--------
+
             List<BoneNode> boneNodes = overrideSkeleton != null ? overrideSkeleton.GetBoneNodes() : new List<BoneNode>();
             if (entity.Skeleton != null && overrideSkeleton == null)
             {

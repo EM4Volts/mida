@@ -39,7 +39,6 @@ public class EntitySkeleton : EntityResource
         }
         else if (resource is SAF9F8080 weirdSkelInfo)
         {
-            Console.WriteLine($"Whack");
             for (int i = 0; i < weirdSkelInfo.NodeHierarchy.Count; i++)
             {
                 BoneNode node = new();
