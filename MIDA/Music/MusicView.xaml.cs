@@ -20,22 +20,22 @@ public partial class MusicView : UserControl
     {
         if (extra is Entity entity)
         {
-            List<D2Class_40668080> sounds = new();
+            List<S40668080> sounds = new();
             foreach (var resourceHash in entity.TagData.EntityResources.Select(entity.GetReader(), r => r.Resource))
             {
                 EntityResource e = FileResourcer.Get().GetFile<EntityResource>(resourceHash);
-                if (e.TagData.Unk18.GetValue(e.GetReader()) is D2Class_79818080 a)
+                if (e.TagData.Unk18.GetValue(e.GetReader()) is S79818080 a)
                 {
                     foreach (var d2ClassF1918080 in a.Array1)
                     {
-                        if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is D2Class_40668080 b)
+                        if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is S40668080 b)
                         {
                             sounds.Add(b);
                         }
                     }
                     foreach (var d2ClassF1918080 in a.Array2)
                     {
-                        if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is D2Class_40668080 b)
+                        if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is S40668080 b)
                         {
                             sounds.Add(b);
                         }
@@ -45,7 +45,7 @@ public partial class MusicView : UserControl
             WemsControl.Load(sounds);
             return;
         }
-        else if (extra is Tag<D2Class_A4BC8080> cine)
+        else if (extra is Tag<SA4BC8080> cine)
         {
             List<WwiseSound> sounds = new();
             if (cine.TagData.Unk08.Count != 0)
@@ -65,7 +65,7 @@ public partial class MusicView : UserControl
         //}
 
         var resource = music.TagData.Unk28[0].Unk00.GetValue(music.GetReader());
-        if (resource is D2Class_F5458080 f5458080)
+        if (resource is SF5458080 f5458080)
         {
             WemsControl.Load(f5458080);
             EventsControl.Load(f5458080);
@@ -74,7 +74,7 @@ public partial class MusicView : UserControl
             sbhash = f5458080.MusicLoopSound.TagData.Soundbank.TagData.SoundBank.Hash;
             SoundbankHash.Text = $"Soundbank: {sbhash} / {sbhash.PackageId:X4}-{sbhash.FileIndex:X4}";
         }
-        else if (resource is D2Class_F7458080 res)
+        else if (resource is SF7458080 res)
         {
             WemsControl.Load(res);
             EventsControl.Load(res);
@@ -90,7 +90,7 @@ public partial class MusicView : UserControl
         }
         else
         {
-            if (resource is not D2Class_F7458080)
+            if (resource is not SF7458080)
             {
                 //throw new NotImplementedException();
                 Log.Error($"Music Resource F7458080 Not Implemented");

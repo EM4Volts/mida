@@ -15,11 +15,11 @@ public struct SActivity
     public TigerHash Unk10;
     public TigerHash Unk14;
     public ResourcePointer Unk18;  // 6A988080 + 20978080
-    public FileHash64 Destination;  // D2Class_8B8E8080
+    public FileHash64 Destination;  // S8B8E8080
 
     [SchemaField(0x40, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_26898080> Unk40;
-    public DynamicArray<D2Class_24898080> Unk50;
+    public DynamicArray<S26898080> Unk40;
+    public DynamicArray<S24898080> Unk50;
 
     [SchemaField(0x60, TigerStrategy.MARATHON_ALPHA)]
     public TigerHash Unk60;
@@ -30,7 +30,7 @@ public struct SActivity
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "8B8E8080", 0x78)]
-public struct D2Class_8B8E8080
+public struct S8B8E8080
 {
     public long FileSize;
     public StringHash LocationName;
@@ -41,21 +41,21 @@ public struct D2Class_8B8E8080
     public FileHash Patrols;
     public uint Unk28;
     public FileHash Unk2C;
-    public DynamicArray<D2Class_DE448080> TagBags;
+    public DynamicArray<SDE448080> TagBags;
 
     [SchemaField(0x48, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_2E898080> Activities;
+    public DynamicArray<S2E898080> Activities;
     public StringPointer DestinationName;
 }
 
 [SchemaStruct("DE448080", 4)]
-public struct D2Class_DE448080
+public struct SDE448080
 {
     public Tag Unk00;
 }
 
 [SchemaStruct("2E898080", 0x18)]
-public struct D2Class_2E898080
+public struct S2E898080
 {
     public TigerHash ShortActivityName;
     [SchemaField(0x8)]
@@ -65,7 +65,7 @@ public struct D2Class_2E898080
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "26898080", 0x58)]
-public struct D2Class_26898080
+public struct S26898080
 {
     public TigerHash LocationName;
     public TigerHash ActivityName;
@@ -85,32 +85,32 @@ public struct D2Class_26898080
     public int Unk30;
 
     [SchemaField(0x38, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_48898080> Unk38;
+    public DynamicArray<S48898080> Unk38;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "63B48080", 0x18)]
-public struct D2Class_48898080
+public struct S48898080
 {
     public TigerHash LocationName;
     public TigerHash ActivityName;
     public StringHash BubbleName;
     public TigerHash ActivityPhaseName;
     public TigerHash ActivityPhaseName2;
-    public Tag<D2Class_898E8080> UnkEntityReference;
+    public Tag<S898E8080> UnkEntityReference;
 }
 
 [SchemaStruct("898E8080", 0x30)]
-public struct D2Class_898E8080
+public struct S898E8080
 {
     public long FileSize;
     public long Unk08;
     public ResourcePointer Unk10;  // 46938080 has dialogue table, 45938080 unk, 19978080 unk
     [SchemaField(0x18)]
-    public Tag Unk18;  // D2Class_898E8080 entity script stuff
+    public Tag Unk18;  // S898E8080 entity script stuff
 }
 
 [SchemaStruct("46938080", 0x58)]
-public struct D2Class_46938080
+public struct S46938080
 {
     [SchemaField(Tag64 = true)]
     public Tag DialogueTable;
@@ -120,7 +120,7 @@ public struct D2Class_46938080
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "19978080", 0x20)]
-public struct D2Class_19978080
+public struct S19978080
 {
     [SchemaField(TigerStrategy.MARATHON_ALPHA, Tag64 = true)]
     public Tag DialogueTable;
@@ -128,17 +128,17 @@ public struct D2Class_19978080
 }
 
 [SchemaStruct("C39F8080", 0x18)]
-public struct D2Class_C39F8080
+public struct SC39F8080
 {
     // TODO: are these actually obsolete in wq+?
     //[SchemaField(TigerStrategy.DESTINY2_WITCHQUEEN_6307, Obsolete = true)]
     public StringPointer DirectiveTableContentString;
     //[SchemaField(TigerStrategy.DESTINY2_WITCHQUEEN_6307, Obsolete = true)]
-    public Tag<D2Class_C78E8080> DirectiveTable;
+    public Tag<SC78E8080> DirectiveTable;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "18978080", 0x20)]
-public struct D2Class_18978080
+public struct S18978080
 {
     [SchemaField(TigerStrategy.MARATHON_ALPHA, Tag64 = true)]
     public Tag DialogueTable;
@@ -154,7 +154,7 @@ public struct D2Class_18978080
 }
 
 [SchemaStruct("17978080", 0x20)]
-public struct D2Class_17978080
+public struct S17978080
 {
     [SchemaField(Tag64 = true)]
     public Tag DialogueTable;
@@ -165,24 +165,24 @@ public struct D2Class_17978080
 }
 
 [SchemaStruct("45938080", 0x58)]
-public struct D2Class_45938080
+public struct S45938080
 {
     [SchemaField(Tag64 = true)]
     public Tag DialogueTable;
     [SchemaField(0x18)]
-    public DynamicArray<D2Class_28998080> Unk18;
+    public DynamicArray<S28998080> Unk18;
     [SchemaField(0x3C)]
     public int Unk3C;
     public float Unk40;
 }
 
 [SchemaStruct("44938080", 0x58)]
-public struct D2Class_44938080
+public struct S44938080
 {
     [SchemaField(Tag64 = true)]
     public Tag DialogueTable;
     [SchemaField(0x18)]
-    public DynamicArray<D2Class_28998080> Unk18;
+    public DynamicArray<S28998080> Unk18;
     [SchemaField(0x3C)]
     public int Unk3C;
     public float Unk40;
@@ -196,7 +196,7 @@ public struct D2Class_44938080
 /// </summary>
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "D5908080", 0x50)]
 
-public struct D2Class_D5908080
+public struct SD5908080
 {
     [SchemaField(TigerStrategy.MARATHON_ALPHA, Tag64 = true)]
     public Tag DialogueTable;
@@ -205,11 +205,11 @@ public struct D2Class_D5908080
     public Tag<SMusicTemplate> Music;
 
     [SchemaField(0x18, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_28998080> Unk20;
+    public DynamicArray<S28998080> Unk20;
 }
 
 [SchemaStruct("28998080", 0x10)]
-public struct D2Class_28998080
+public struct S28998080
 {
     public TigerHash Unk00;
     public TigerHash Unk04;
@@ -217,14 +217,14 @@ public struct D2Class_28998080
 }
 
 [SchemaStruct("1A978080", 0x18)]
-public struct D2Class_1A978080
+public struct S1A978080
 {
     [SchemaField(Tag64 = true)]
     public Tag Unk00;
 }
 
 [SchemaStruct("478F8080", 0x18)]
-public struct D2Class_478F8080
+public struct S478F8080
 {
     [SchemaField(Tag64 = true)]
     public Tag Unk00;
@@ -234,7 +234,7 @@ public struct D2Class_478F8080
 /// Stores static map data for activities
 /// </summary>
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "3EAB8080", 0x48)]
-public struct D2Class_24898080
+public struct S24898080
 {
     public TigerHash LocationName;
     public TigerHash ActivityName;
@@ -242,21 +242,21 @@ public struct D2Class_24898080
 
     [SchemaField(0x10, TigerStrategy.MARATHON_ALPHA)]
     public ResourcePointer Unk10;  // 0F978080, 53418080
-    public DynamicArray<D2Class_48898080> Unk18;
+    public DynamicArray<S48898080> Unk18;
 
     [SchemaField(TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_1D898080> MapReferences;
+    public DynamicArray<S1D898080> MapReferences;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "26AB8080", 0x10)]
-public struct D2Class_1D898080
+public struct S1D898080
 {
     [SchemaField(Tag64 = true)]
     public Tag<SBubbleParent> MapReference;
 }
 
 [SchemaStruct("53418080", 0x20)]
-public struct D2Class_53418080
+public struct S53418080
 {
     public TigerHash Unk00;
     public TigerHash Unk04;
@@ -265,7 +265,7 @@ public struct D2Class_53418080
 }
 
 [SchemaStruct("54418080", 0x40)]
-public struct D2Class_54418080
+public struct S54418080
 {
     public TigerHash Unk00;
     public TigerHash Unk04;
@@ -274,7 +274,7 @@ public struct D2Class_54418080
 }
 
 [SchemaStruct("0F978080", 0x40)]
-public struct D2Class_0F978080
+public struct S0F978080
 {
     public StringPointer BubbleName;
     public TigerHash Unk08;
@@ -282,11 +282,11 @@ public struct D2Class_0F978080
     public TigerHash Unk10;
     [SchemaField(0x28)]
     public long Unk28;
-    public DynamicArray<D2Class_DD978080> Unk30;
+    public DynamicArray<SDD978080> Unk30;
 }
 
 [SchemaStruct("DD978080", 0x10)]
-public struct D2Class_DD978080
+public struct SDD978080
 {
     public TigerHash Unk00;
     public TigerHash Unk04;
@@ -298,10 +298,10 @@ public struct D2Class_DD978080
 /// </summary>
 /// 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "6A988080", 0x84)]
-public struct D2Class_6A988080
+public struct S6A988080
 {
-    public DynamicArray<D2Class_28898080> DirectiveTables;
-    public DynamicArray<D2Class_B7978080> DialogueTables;
+    public DynamicArray<S28898080> DirectiveTables;
+    public DynamicArray<SB7978080> DialogueTables;
     public TigerHash StartingBubbleName;
     public TigerHash Unk24;
 
@@ -319,14 +319,14 @@ public struct D2Class_6A988080
 }
 
 [SchemaStruct("A4BC8080", 0x18)]
-public struct D2Class_A4BC8080
+public struct SA4BC8080
 {
     [SchemaField(0x8)]
-    public DynamicArray<D2Class_A6BC8080> Unk08;
+    public DynamicArray<SA6BC8080> Unk08;
 }
 
 [SchemaStruct("A6BC8080", 0x18)]
-public struct D2Class_A6BC8080
+public struct SA6BC8080
 {
     [SchemaField(Tag64 = true)]
     public WwiseSound Sound;
@@ -336,9 +336,9 @@ public struct D2Class_A6BC8080
 /// Directive table for public events so no audio linked.
 /// </summary>
 [SchemaStruct("20978080", 0x38)]
-public struct D2Class_20978080
+public struct S20978080
 {
-    public DynamicArray<D2Class_28898080> PEDirectiveTables;
+    public DynamicArray<S28898080> PEDirectiveTables;
     [SchemaField(0x20)]
     public TigerHash StartingBubbleName;
     [SchemaField(0x2C)]
@@ -346,27 +346,27 @@ public struct D2Class_20978080
 }
 
 [SchemaStruct("28898080", 4)]
-public struct D2Class_28898080
+public struct S28898080
 {
-    public Tag<D2Class_C78E8080> DirectiveTable;
+    public Tag<SC78E8080> DirectiveTable;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B7978080", 0x14)]
-public struct D2Class_B7978080
+public struct SB7978080
 {
     [SchemaField(Tag64 = true)]
     public Tag<SDialogueTable> DialogueTable;
 }
 
 [SchemaStruct("C78E8080", 0x18)]
-public struct D2Class_C78E8080
+public struct SC78E8080
 {
     public long FileSize;
-    public DynamicArray<D2Class_C98E8080> DirectiveTable;
+    public DynamicArray<SC98E8080> DirectiveTable;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "C98E8080", 0x80)]
-public struct D2Class_C98E8080
+public struct SC98E8080
 {
     public TigerHash Hash;
 
@@ -387,18 +387,18 @@ public struct D2Class_C98E8080
 }
 
 [SchemaStruct("0B978080", 0x38)]
-public struct D2Class_0B978080
+public struct S0B978080
 {
     public StringPointer BubbleName;
     public TigerHash Unk08;
     public TigerHash Unk0C;
     public TigerHash Unk10;
     [SchemaField(0x40)]
-    public DynamicArray<D2Class_0C008080> Unk40;
+    public DynamicArray<S0C008080> Unk40;
 }
 
 [SchemaStruct("0C008080", 8)]
-public struct D2Class_0C008080
+public struct S0C008080
 {
     public TigerHash Unk00;
     public TigerHash Unk04;
@@ -416,45 +416,45 @@ public struct SMusicTemplate
     public Tag MusicTemplateTag; // F0458080
 
     [SchemaField(0x28, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_ED458080> Unk28;
+    public DynamicArray<SED458080> Unk28;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "ED458080", 8)]
-public struct D2Class_ED458080
+public struct SED458080
 {
     public ResourcePointer Unk00;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "F5458080", 0x30)]
-public struct D2Class_F5458080
+public struct SF5458080
 {
     [SchemaField(TigerStrategy.MARATHON_ALPHA)]
     public StringPointer WwiseMusicLoopName;
     public WwiseSound MusicLoopSound;
 
     [SchemaField(0x18, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_FB458080> Unk18;
+    public DynamicArray<SFB458080> Unk18;
 }
 
 [SchemaStruct("F7458080", 0x28)]
-public struct D2Class_F7458080
+public struct SF7458080
 {
     public StringPointer AmbientMusicSetName;
     [SchemaField(0x8, Tag64 = true)]
-    public Tag<D2Class_50968080> AmbientMusicSet;
-    public DynamicArray<D2Class_FA458080> Unk18;
+    public Tag<S50968080> AmbientMusicSet;
+    public DynamicArray<SFA458080> Unk18;
 }
 
 [SchemaStruct("50968080", 0x20)]
-public struct D2Class_50968080
+public struct S50968080
 {
     public long FileSize;
-    public DynamicArray<D2Class_318A8080> Unk08;
+    public DynamicArray<S318A8080> Unk08;
     public TigerHash Unk18;
 }
 
 [SchemaStruct("318A8080", 0x30)]
-public struct D2Class_318A8080
+public struct S318A8080
 {
     [SchemaField(Tag64 = true)]
     public WwiseSound MusicLoopSound;
@@ -468,7 +468,7 @@ public struct D2Class_318A8080
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "FA458080", 0x20)]
-public struct D2Class_FA458080
+public struct SFA458080
 {
     public TigerHash Unk00;
     [SchemaField(8, TigerStrategy.MARATHON_ALPHA)]
@@ -479,7 +479,7 @@ public struct D2Class_FA458080
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "FB458080", 0x20)]
-public struct D2Class_FB458080
+public struct SFB458080
 {
     public TigerHash Unk00;
 
@@ -491,7 +491,7 @@ public struct D2Class_FB458080
 }
 
 [SchemaStruct("F0458080", 0x28)]
-public struct D2Class_F0458080
+public struct SF0458080
 {
     public long FileSize;
     public int Unk08;
@@ -520,20 +520,20 @@ public struct SUnkMusicE8BF8080
 }
 
 [SchemaStruct("BE8E8080", 0x20)]
-public struct D2Class_BE8E8080
+public struct SBE8E8080
 {
     public long FileSize;
-    public DynamicArray<D2Class_42898080> EntityResources;
+    public DynamicArray<S42898080> EntityResources;
 }
 
 [SchemaStruct("42898080", 0x4)]
-public struct D2Class_42898080
+public struct S42898080
 {
-    public Tag<D2Class_43898080> EntityResourceParent;
+    public Tag<S43898080> EntityResourceParent;
 }
 
 [SchemaStruct("43898080", 0x28)]
-public struct D2Class_43898080
+public struct S43898080
 {
     public long FileSize;
     public TigerHash Unk08;

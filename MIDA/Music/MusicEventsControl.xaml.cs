@@ -13,13 +13,13 @@ public partial class MusicEventsControl : UserControl
         InitializeComponent();
     }
 
-    public void Load(D2Class_F5458080 res)
+    public void Load(SF5458080 res)
     {
         MusicLoopName.Text = res.WwiseMusicLoopName?.Value;
         EventList.ItemsSource = GetEventItems(res.Unk18);
     }
 
-    public void Load(D2Class_F7458080 res)
+    public void Load(SF7458080 res)
     {
         MusicLoopName.Text = res.AmbientMusicSetName?.Value;
         EventList.ItemsSource = GetEventItems(res.Unk18);
@@ -49,7 +49,7 @@ public partial class MusicEventsControl : UserControl
 
     // both of these are lists to maintain the original order
 
-    private List<EventItem> GetEventItems(List<D2Class_FB458080> array)
+    private List<EventItem> GetEventItems(List<SFB458080> array)
     {
         var items = new List<EventItem>();
         foreach (var entry in array)
@@ -64,7 +64,7 @@ public partial class MusicEventsControl : UserControl
         return items;
     }
 
-    private List<EventItem> GetEventItems(List<D2Class_FA458080> array)
+    private List<EventItem> GetEventItems(List<SFA458080> array)
     {
         var items = new List<EventItem>();
         foreach (var entry in array)

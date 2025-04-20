@@ -67,7 +67,7 @@ public class Lights : Tag<SMapLights>
         }
     }
 
-    public Vector4 GetColor(Tag<D2Class_A16D8080> data)
+    public Vector4 GetColor(Tag<SA16D8080> data)
     {
         //Console.WriteLine($"{data.TagData.Buffer2[0].Vec} : {data.TagData.Buffer2[1].Vec} : {data.TagData.Buffer2.Count(x => x.Vec.Magnitude != 0)}");
         //if ((Strategy.IsD1() || Strategy.IsPreBL()) && data.TagData.Buffer2.Count != 0 && !data.TagData.Buffer2[2].Vec.IsZero())
@@ -203,7 +203,7 @@ public struct SMapLights
     public Vector4 Unk10;
     public Vector4 Unk20;
     public DynamicArrayUnloaded<SMapLightCollection> LightData;
-    public DynamicArrayUnloaded<D2Class_4F9F8080> Transforms;
+    public DynamicArrayUnloaded<S4F9F8080> Transforms;
 
     [SchemaField(0x58, TigerStrategy.MARATHON_ALPHA)]
     public Tag<SOcclusionBounds> Bounds;
@@ -221,8 +221,8 @@ public struct SMapLightCollection
     public Material Shading;
 
     [SchemaField(0xCC, TigerStrategy.MARATHON_ALPHA)]
-    public Tag<D2Class_A16D8080> BufferData;
+    public Tag<SA16D8080> BufferData;
 
     [SchemaField(0xD0, TigerStrategy.MARATHON_ALPHA)]
-    public Tag<D2Class_A16D8080> BufferData2;
+    public Tag<SA16D8080> BufferData2;
 }

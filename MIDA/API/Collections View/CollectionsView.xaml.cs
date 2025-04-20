@@ -12,8 +12,8 @@ public partial class CollectionsView : UserControl
 {
     private static MainWindow _mainWindow = null;
 
-    public Tag<D2Class_D7788080> PresentationNodes = Investment.Get()._presentationNodeDefinitionMap;
-    public Tag<D2Class_03588080> PresentationNodeStrings = Investment.Get()._presentationNodeDefinitionStringMap;
+    public Tag<SD7788080> PresentationNodes = Investment.Get()._presentationNodeDefinitionMap;
+    public Tag<S03588080> PresentationNodeStrings = Investment.Get()._presentationNodeDefinitionStringMap;
     public int TotalItemAmount { get; set; }
     private APITooltip ToolTip;
 

@@ -63,7 +63,7 @@ namespace Tiger.Schema.Activity.MARATHON_ALPHA
 
         public IEnumerable<Bubble> EnumerateBubbles()
         {
-            var stringContainer = FileResourcer.Get().GetSchemaTag<D2Class_8B8E8080>(_tag.Destination).TagData.StringContainer;
+            var stringContainer = FileResourcer.Get().GetSchemaTag<S8B8E8080>(_tag.Destination).TagData.StringContainer;
             foreach (var mapEntry in _tag.Unk50)
             {
                 foreach (var mapReference in mapEntry.MapReferences)
@@ -87,7 +87,7 @@ namespace Tiger.Schema.Activity.MARATHON_ALPHA
 
         public IEnumerable<ActivityEntities> EnumerateActivityEntities(FileHash UnkActivity = null)
         {
-            var stringContainer = FileResourcer.Get().GetSchemaTag<D2Class_8B8E8080>(_tag.Destination).TagData.StringContainer;
+            var stringContainer = FileResourcer.Get().GetSchemaTag<S8B8E8080>(_tag.Destination).TagData.StringContainer;
             foreach (var entry in _tag.Unk50)
             {
                 foreach (var resource in entry.Unk18)
@@ -108,8 +108,8 @@ namespace Tiger.Schema.Activity.MARATHON_ALPHA
         private List<FileHash> CollapseResourceParent(FileHash hash)
         {
             ConcurrentBag<FileHash> items = new();
-            var entry = FileResourcer.Get().GetSchemaTag<D2Class_898E8080>(hash);
-            var Unk18 = FileResourcer.Get().GetSchemaTag<D2Class_BE8E8080>(entry.TagData.Unk18.Hash);
+            var entry = FileResourcer.Get().GetSchemaTag<S898E8080>(hash);
+            var Unk18 = FileResourcer.Get().GetSchemaTag<SBE8E8080>(entry.TagData.Unk18.Hash);
 
             foreach (var resource in Unk18.TagData.EntityResources)
             {
@@ -118,16 +118,16 @@ namespace Tiger.Schema.Activity.MARATHON_ALPHA
                     var resourceValue = resource.EntityResourceParent.TagData.EntityResource.TagData.Unk18.GetValue(resource.EntityResourceParent.TagData.EntityResource.GetReader());
                     switch (resourceValue)
                     {
-                        case D2Class_D8928080:
-                            var tag = (D2Class_D8928080)resourceValue;
+                        case SD8928080:
+                            var tag = (SD8928080)resourceValue;
                             if (tag.Unk84 is not null && tag.Unk84.TagData.DataEntries.Count > 0)
                             {
                                 items.Add(tag.Unk84.Hash);
                             }
                             break;
 
-                        case D2Class_EF8C8080:
-                            var tag2 = (D2Class_EF8C8080)resourceValue;
+                        case SEF8C8080:
+                            var tag2 = (SEF8C8080)resourceValue;
                             if (tag2.Unk58 is not null && tag2.Unk58.TagData.DataEntries.Count > 0)
                             {
                                 items.Add(tag2.Unk58.Hash);
@@ -144,8 +144,8 @@ namespace Tiger.Schema.Activity.MARATHON_ALPHA
         {
             Dictionary<ulong, ActivityEntity> items = new();
             Dictionary<uint, string> strings = new();
-            var entry = FileResourcer.Get().GetSchemaTag<D2Class_898E8080>(hash);
-            var Unk18 = FileResourcer.Get().GetSchemaTag<D2Class_BE8E8080>(entry.TagData.Unk18.Hash);
+            var entry = FileResourcer.Get().GetSchemaTag<S898E8080>(hash);
+            var Unk18 = FileResourcer.Get().GetSchemaTag<SBE8E8080>(entry.TagData.Unk18.Hash);
 
             foreach (var resource in Unk18.TagData.EntityResources)
             {
@@ -155,15 +155,15 @@ namespace Tiger.Schema.Activity.MARATHON_ALPHA
                     switch (resourceValue)
                     {
                         //This is kinda dumb 
-                        case D2Class_95468080:
-                        case D2Class_26988080:
-                        case D2Class_6F418080:
-                        case D2Class_EF988080:
-                        case D2Class_F88C8080:
-                        case D2Class_FA988080:
+                        case S95468080:
+                        case S26988080:
+                        case S6F418080:
+                        case SEF988080:
+                        case SF88C8080:
+                        case SFA988080:
                             if (resource.EntityResourceParent.TagData.EntityResource.TagData.UnkHash80 != null)
                             {
-                                var unk80 = FileResourcer.Get().GetSchemaTag<D2Class_6B908080>(resource.EntityResourceParent.TagData.EntityResource.TagData.UnkHash80.Hash);
+                                var unk80 = FileResourcer.Get().GetSchemaTag<S6B908080>(resource.EntityResourceParent.TagData.EntityResource.TagData.UnkHash80.Hash);
                                 foreach (var a in unk80.TagData.Unk08)
                                 {
                                     if (a.Unk00.Value?.Name.Value is not null)

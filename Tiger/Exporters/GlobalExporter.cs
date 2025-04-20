@@ -74,7 +74,7 @@ public class GlobalExporter : AbstractExporter
                 Unk108 = atmosphere.Unk108,
             };
 
-            if (Exporter.Get().GetOrCreateGlobalScene().TryGetItem<D2Class_716A8080>(out D2Class_716A8080 dayCycle))
+            if (Exporter.Get().GetOrCreateGlobalScene().TryGetItem<S716A8080>(out S716A8080 dayCycle))
             {
                 data.DayCycle = new()
                 {
@@ -267,13 +267,13 @@ public class GlobalExporter : AbstractExporter
 
     private void ExportGlobalChannels()
     {
-        if (GlobalScene.Any<D2Class_D1918080>())
+        if (GlobalScene.Any<SD1918080>())
         {
             List<GlobalChannelData> channels = new();
             string dataSavePath = $"{SavePath}/Rendering";
             Directory.CreateDirectory(dataSavePath);
 
-            foreach (var globals in GlobalScene.GetAllOfType<D2Class_D1918080>())
+            foreach (var globals in GlobalScene.GetAllOfType<SD1918080>())
             {
                 channels.Add(new GlobalChannelData
                 {

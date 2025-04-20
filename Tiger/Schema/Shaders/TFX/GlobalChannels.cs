@@ -55,7 +55,7 @@ public static class GlobalChannels
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "D1918080", 0x68)]
-public struct D2Class_D1918080
+public struct SD1918080
 {
     [SchemaField(0x0, TigerStrategy.MARATHON_ALPHA)]
     public TigerHash Unk00; // Assuming name
@@ -70,14 +70,14 @@ public struct D2Class_D1918080
     public int ChannelIndex;
 
     [SchemaField(0x30, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_09008080> UnkBytecode;
+    public DynamicArray<S09008080> UnkBytecode;
     public DynamicArray<Vec4> Values;
 }
 
 //[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "D3938080", 0x50)]
 //[SchemaStruct(TigerStrategy.DESTINY2_BEYONDLIGHT_3402, "DF918080", 0x38)]
 //[SchemaStruct(TigerStrategy.DESTINY2_WITCHQUEEN_6307, "DD918080", 0x38)]
-//public struct D2Class_DD918080
+//public struct SDD918080
 //{
 //    [SchemaField(0x10, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
 //    [SchemaField(0x0, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
@@ -85,12 +85,12 @@ public struct D2Class_D1918080
 
 //    [SchemaField(0x38, TigerStrategy.DESTINY2_SHADOWKEEP_2601)]
 //    [SchemaField(0x20, TigerStrategy.DESTINY2_BEYONDLIGHT_3402)]
-//    public DynamicArray<D2Class_E9948080> Unk20;
+//    public DynamicArray<SE9948080> Unk20;
 //}
 
 //[SchemaStruct(TigerStrategy.DESTINY2_SHADOWKEEP_2601, "FB938080", 0x4)]
 //[SchemaStruct(TigerStrategy.DESTINY2_WITCHQUEEN_6307, "E9948080", 0x4)]
-//public struct D2Class_E9948080
+//public struct SE9948080
 //{
 //    public short Unk00;
 //    public short Unk02;

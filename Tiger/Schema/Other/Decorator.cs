@@ -106,7 +106,7 @@ public class Decorator : Tag<SDecorator>
         var mesh = model.TagData.Meshes[model.GetReader(), 0];
         exportPartRange = EntityModel.GetExportRanges(mesh);
 
-        foreach ((int i, D2Class_CB6E8080 part) in dynamicParts[0])
+        foreach ((int i, SCB6E8080 part) in dynamicParts[0])
         {
             if (!exportPartRange.Contains(i))
                 continue;
@@ -132,19 +132,19 @@ public class Decorator : Tag<SDecorator>
         return parts;
     }
 
-    private Dictionary<int, Dictionary<int, D2Class_CB6E8080>> GetPartsOfDetailLevel(EntityModel model)
+    private Dictionary<int, Dictionary<int, SCB6E8080>> GetPartsOfDetailLevel(EntityModel model)
     {
-        Dictionary<int, Dictionary<int, D2Class_CB6E8080>> parts = new();
+        Dictionary<int, Dictionary<int, SCB6E8080>> parts = new();
         using TigerReader reader = model.GetReader();
 
         int meshIndex = 0;
         int partIndex = 0;
         var mesh = model.TagData.Meshes[reader, 0];
 
-        parts.Add(meshIndex, new Dictionary<int, D2Class_CB6E8080>());
+        parts.Add(meshIndex, new Dictionary<int, SCB6E8080>());
         for (int i = 0; i < mesh.Parts.Count; i++)
         {
-            D2Class_CB6E8080 part = mesh.Parts[reader, i];
+            SCB6E8080 part = mesh.Parts[reader, i];
             if (part.LodCategory is ELodCategory.MainGeom0 or ELodCategory.GripStock0 or ELodCategory.Stickers0 or ELodCategory.InternalGeom0 or ELodCategory.Detail0)
                 parts[meshIndex].Add(partIndex, part);
 
@@ -168,44 +168,44 @@ public struct SDecoratorMapResource
 public struct SDecorator
 {
     public ulong Size;
-    public DynamicArray<D2Class_B16C8080> DecoratorModels;
-    public DynamicArray<D2Class_07008080> InstanceRanges;
-    public DynamicArray<D2Class_07008080> Unk28;
-    public DynamicArray<D2Class_07008080> Unk38;
-    public Tag<D2Class_A46C8080> BufferData;
+    public DynamicArray<SB16C8080> DecoratorModels;
+    public DynamicArray<S07008080> InstanceRanges;
+    public DynamicArray<S07008080> Unk28;
+    public DynamicArray<S07008080> Unk38;
+    public Tag<SA46C8080> BufferData;
     public Tag<SOcclusionBounds> OcculusionBounds;
-    public DynamicArray<D2Class_07008080> Unk50;
+    public DynamicArray<S07008080> Unk50;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B16C8080", 0x4)]
-public struct D2Class_B16C8080
+public struct SB16C8080
 {
-    public Tag<D2Class_B26C8080> DecoratorModel;
+    public Tag<SB26C8080> DecoratorModel;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B26C8080", 0x100)]
-public struct D2Class_B26C8080
+public struct SB26C8080
 {
     public long FileSize;
     public EntityModel Model;
     public int UnkC;
     //public AABB BoundingBox; not in pre-bl, dont really care about it tho
     [SchemaField(0x30, TigerStrategy.MARATHON_ALPHA)]
-    public Tag Unk30;  // D2Class_B46C8080
+    public Tag Unk30;  // SB46C8080
 
     [SchemaField(0x34, TigerStrategy.MARATHON_ALPHA)]
-    public Tag<D2Class_B86C8080> SpeedTreeData; // Used for actual trees
+    public Tag<SB86C8080> SpeedTreeData; // Used for actual trees
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B86C8080", 0x18)]
-public struct D2Class_B86C8080
+public struct SB86C8080
 {
     [SchemaField(0x8)]
-    public DynamicArray<D2Class_BA6C8080> Unk08;
+    public DynamicArray<SBA6C8080> Unk08;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "BA6C8080", 0x50)]
-public struct D2Class_BA6C8080
+public struct SBA6C8080
 {
     // part of Speedtree cbuffer (cb10)
     public Vector4 Unk00;
@@ -216,13 +216,13 @@ public struct D2Class_BA6C8080
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "A46C8080", 0x20)]
-public struct D2Class_A46C8080
+public struct SA46C8080
 {
     public ulong Size;
     public TigerHash Unk08;
     public TigerHash UnkC;
     public int Unk10;
-    public Tag<D2Class_9F6C8080> Unk14;
+    public Tag<S9F6C8080> Unk14;
     public VertexBuffer InstanceBuffer;
     [NoLoad]
     public Tag<SDecoratorInstanceData> InstanceData;
@@ -232,11 +232,11 @@ public struct D2Class_A46C8080
 public struct SDecoratorInstanceData
 {
     [SchemaField(0x8)]
-    public DynamicArrayUnloaded<D2Class_A96C8080> InstanceElement;
+    public DynamicArrayUnloaded<SA96C8080> InstanceElement;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "A96C8080", 0x10)]
-public struct D2Class_A96C8080
+public struct SA96C8080
 {
     // Normalized position
     [SchemaField(TigerStrategy.MARATHON_ALPHA, ArraySizeConst = 4)]
@@ -250,7 +250,7 @@ public struct D2Class_A96C8080
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "9F6C8080", 0x60)]
-public struct D2Class_9F6C8080
+public struct S9F6C8080
 {
     // SpeedtreePlacements[2-7]
     public Vector4 Unk00;

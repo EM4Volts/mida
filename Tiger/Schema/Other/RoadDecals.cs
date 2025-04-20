@@ -47,14 +47,14 @@ public struct SMapRoadDecalsResource
 public struct SMapRoadDecals
 {
     public ulong FileSize;
-    public DynamicArray<D2Class_E3688080> Entries;
+    public DynamicArray<SE3688080> Entries;
     public FileHash OcclusionBounds;
     [SchemaField(0x20)]
     public AABB UnkBounds;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "E3688080", 0x60)]
-public struct D2Class_E3688080
+public struct SE3688080
 {
     public Material Material;
     public IndexBuffer IndexBuffer;

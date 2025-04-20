@@ -31,8 +31,8 @@ public partial class CategoryView : UserControl
 
     private List<SubcategoryChild> _subcategoriesChildren;
 
-    public Tag<D2Class_D7788080> PresentationNodes = Investment.Get()._presentationNodeDefinitionMap;
-    public Tag<D2Class_03588080> PresentationNodeStrings = Investment.Get()._presentationNodeDefinitionStringMap;
+    public Tag<SD7788080> PresentationNodes = Investment.Get()._presentationNodeDefinitionMap;
+    public Tag<S03588080> PresentationNodeStrings = Investment.Get()._presentationNodeDefinitionStringMap;
 
     private const int ItemsPerPage = 21;
     private const int ItemSetsPerPage = 7;
@@ -183,7 +183,7 @@ public partial class CategoryView : UserControl
             var itemStrings = Investment.Get().GetItemStrings(Investment.Get().GetItemIndex(item.Value.TagData.InventoryItemHash)).TagData;
 
             TigerHash plugCategoryHash = null;
-            if (item.Value.TagData.Unk48.GetValue(item.Value.GetReader()) is D2Class_A1738080 plug)
+            if (item.Value.TagData.Unk48.GetValue(item.Value.GetReader()) is SA1738080 plug)
                 plugCategoryHash = plug.PlugCategoryHash;
 
             var newItem = new ApiItem
@@ -202,7 +202,7 @@ public partial class CategoryView : UserControl
             };
             if (newItem.ItemDamageType == DestinyDamageTypeEnum.None)
             {
-                if (newItem.Item.TagData.Unk70.GetValue(newItem.Item.GetReader()) is D2Class_C0778080 sockets)
+                if (newItem.Item.TagData.Unk70.GetValue(newItem.Item.GetReader()) is SC0778080 sockets)
                 {
                     sockets.SocketEntries.ForEach(entry =>
                     {
@@ -271,7 +271,7 @@ public partial class CategoryView : UserControl
                 var itemStrings = Investment.Get().GetItemStrings(Investment.Get().GetItemIndex(item.Value.TagData.InventoryItemHash)).TagData;
 
                 TigerHash plugCategoryHash = null;
-                if (item.Value.TagData.Unk48.GetValue(item.Value.GetReader()) is D2Class_A1738080 plug)
+                if (item.Value.TagData.Unk48.GetValue(item.Value.GetReader()) is SA1738080 plug)
                     plugCategoryHash = plug.PlugCategoryHash;
 
                 var newItem = new ApiItem
@@ -642,7 +642,7 @@ public partial class CategoryView : UserControl
             MainWindow.Progress.SetProgressStages(new() { $"Exporting {item.ItemName}" });
             await Task.Run(() =>
             {
-                if ((item.ItemType == "Artifact" || item.ItemType == "Seasonal Artifact") && item.Item.TagData.Unk28.GetValue(item.Item.GetReader()) is D2Class_C5738080 gearSet)
+                if ((item.ItemType == "Artifact" || item.ItemType == "Seasonal Artifact") && item.Item.TagData.Unk28.GetValue(item.Item.GetReader()) is SC5738080 gearSet)
                 {
                     if (gearSet.ItemList.Count != 0)
                         item.Item = Investment.Get().GetInventoryItem(gearSet.ItemList.First().ItemIndex);

@@ -144,10 +144,10 @@ public struct SMapDecalsResource
 public struct SMapDecals
 {
     public ulong FileSize;
-    public DynamicArrayUnloaded<D2Class_63698080> DecalResources;
+    public DynamicArrayUnloaded<S63698080> DecalResources;
 
     [SchemaField(0x18)]
-    public DynamicArrayUnloaded<D2Class_64698080> UnkLocations;
+    public DynamicArrayUnloaded<S64698080> UnkLocations;
 
     [SchemaField(0x28)]
     public VertexBuffer Transforms;
@@ -166,7 +166,7 @@ public struct SMapDecals
 /// Decal resources
 /// </summary>
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "63698080", 0x8)]
-public struct D2Class_63698080
+public struct S63698080
 {
     public Material Material;
     public short StartIndex;
@@ -177,7 +177,7 @@ public struct D2Class_63698080
 /// Decal Location
 /// </summary>
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "64698080", 0x10)]
-public struct D2Class_64698080
+public struct S64698080
 {
     public Vector4 Location;
 }

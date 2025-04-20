@@ -14,7 +14,6 @@ public class Terrain : Tag<STerrain>
 
     }
 
-    // To test use edz.strike_hmyn and alleys_a adf6ae80
     public void LoadIntoExporter(ExporterScene scene, string saveDirectory, ulong? identifier = null)
     {
         var _config = ConfigSubsystem.Get();
@@ -196,7 +195,6 @@ public class Terrain : Tag<STerrain>
     public void TransformVertexColors(StaticPart part)
     {
         //Helper for dyemap assignment
-        //ROI and Pre-BL can have a max of 16 per terrain part
         float alpha = part.GroupIndex / 15.0f;
         for (int i = 0; i < part.VertexPositions.Count; i++)
         {
@@ -208,7 +206,7 @@ public class Terrain : Tag<STerrain>
 /// <summary>
 /// Terrain data resource.
 /// </summary>
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "7D6C8080", 0x20)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "80808563", 0x20)]
 public struct SMapTerrainResource
 {
     [SchemaField(0x10)]
@@ -221,7 +219,7 @@ public struct SMapTerrainResource
 /// <summary>
 /// Terrain _tag.
 /// </summary>
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "816C8080", 0xB0)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "80808567", 0xB0)]
 public struct STerrain
 {
     public long FileSize;
@@ -246,7 +244,7 @@ public struct STerrain
     public IndexBuffer Indices2;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "866C8080", 0x60)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "8080856C", 0x60)]
 public struct SMeshGroup
 {
     //Location?
@@ -266,7 +264,7 @@ public struct SMeshGroup
     public Texture Dyemap;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "846C8080", 0x0C)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "8080856A", 0x0C)]
 public struct STerrainPart
 {
     public Material Material;

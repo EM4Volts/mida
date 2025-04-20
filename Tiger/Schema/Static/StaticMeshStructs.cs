@@ -32,23 +32,10 @@ public struct SMaterialHash
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "1F868080", 0x20)]
 public struct SStaticMeshDecal
 {
-    [SchemaField(TigerStrategy.MARATHON_ALPHA)]
-    public byte RenderStageBL;
-    [SchemaField(TigerStrategy.MARATHON_ALPHA)]
-    public byte VertexLayoutIndexBL;
-
-    //----------------
-
-    [SchemaField(2, TigerStrategy.MARATHON_ALPHA)]
+    public byte RenderStage;
+    public byte VertexLayoutIndex;
     public sbyte LODLevel;
-
-    [SchemaField(TigerStrategy.MARATHON_ALPHA, Obsolete = true)]
-    public sbyte Unk03;
-
-    [SchemaField(3, TigerStrategy.MARATHON_ALPHA)]
     public byte PrimitiveType;
-
-    [SchemaField(0x4, TigerStrategy.MARATHON_ALPHA)]
     public IndexBuffer Indices;
     public VertexBuffer Vertices0;
     public VertexBuffer Vertices1;
@@ -59,17 +46,17 @@ public struct SStaticMeshDecal
 
     public int GetVertexLayoutIndex()
     {
-        return VertexLayoutIndexBL;
+        return VertexLayoutIndex;
     }
 
     public int GetRenderStage()
     {
-        return RenderStageBL;
+        return RenderStage;
     }
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "80808620", 0x60)]
-public struct SStaticMeshData_BL
+public struct SStaticMeshData
 {
     public long FileSize;
     public DynamicArray<SStaticMeshMaterialAssignment_WQ> MaterialAssignments;

@@ -374,14 +374,14 @@ public partial class ActivityMapEntityView : UserControl
                         EntityResource resource = FileResourcer.Get().GetFile<EntityResource>(resourceHash);
                         switch (resource.TagData.Unk10.GetValue(resource.GetReader()))
                         {
-                            case D2Class_79948080:
-                                var a = ((D2Class_79818080)resource.TagData.Unk18.GetValue(resource.GetReader()));
+                            case S79948080:
+                                var a = ((S79818080)resource.TagData.Unk18.GetValue(resource.GetReader()));
                                 var b = a.Array1;
                                 b.AddRange(a.Array2);
 
                                 foreach (var c in b)
                                 {
-                                    if (c.Unk10.GetValue(resource.GetReader()) is D2Class_D1918080 globals)
+                                    if (c.Unk10.GetValue(resource.GetReader()) is SD1918080 globals)
                                     {
                                         globalScene.AddToGlobalScene(globals);
                                     }
@@ -465,7 +465,7 @@ public partial class ActivityMapEntityView : UserControl
                         roadDecals.RoadDecals.LoadIntoExporter(roadDecalsScene);
                         break;
 
-                    case D2Class_716A8080 dayCycle:
+                    case S716A8080 dayCycle:
                         globalScene.AddToGlobalScene(dayCycle, true);
                         break;
 

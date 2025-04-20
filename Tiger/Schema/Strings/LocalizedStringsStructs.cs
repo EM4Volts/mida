@@ -56,14 +56,14 @@ public struct SStringPartDefinition
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "02218080", 0x68)]
-public struct D2Class_02218080
+public struct S02218080
 {
     [SchemaField(0x28, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_0E3C8080> Unk28;
+    public DynamicArray<S0E3C8080> Unk28;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "0E3C8080", 0x28)]
-public struct D2Class_0E3C8080
+public struct S0E3C8080
 {
     //[SchemaField(Tag64 = true)]
     //public Tag Unk00; // Always FFFFFFFF?

@@ -13,7 +13,7 @@ public class EntitySkeleton : EntityResource
     {
         using TigerReader reader = GetReader();
         var nodes = new List<BoneNode>();
-        D2Class_DE818080 skelInfo = (D2Class_DE818080)_tag.Unk18.GetValue(reader);
+        SDE818080 skelInfo = (SDE818080)_tag.Unk18.GetValue(reader);
         for (int i = 0; i < skelInfo.NodeHierarchy.Count; i++)
         {
             BoneNode node = new();

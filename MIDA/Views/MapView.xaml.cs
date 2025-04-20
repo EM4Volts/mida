@@ -203,7 +203,7 @@ public partial class MapView : UserControl
     {
         ConcurrentBag<MainViewModel.DisplayPart> displayParts = new ConcurrentBag<MainViewModel.DisplayPart>();
 
-        Parallel.ForEach(staticMap.TagData.InstanceCounts_Marathon, c =>
+        Parallel.ForEach(staticMap.TagData.InstanceCounts, c =>
         {
             // inefficiency as sometimes there are two instance count entries with same hash. why? idk
             var model = staticMap.TagData.Statics[c.StaticIndex].Static;

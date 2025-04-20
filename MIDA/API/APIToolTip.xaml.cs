@@ -51,7 +51,7 @@ public partial class APITooltip : UserControl
                 InfoBox.DataContext = item;
             });
 
-            if (itemStrings?.TagData.Unk38.GetValue(itemStrings.GetReader()) is D2Class_D8548080 warning)
+            if (itemStrings?.TagData.Unk38.GetValue(itemStrings.GetReader()) is SD8548080 warning)
             {
                 foreach (var rule in warning.InsertionRules)
                 {
@@ -71,7 +71,7 @@ public partial class APITooltip : UserControl
             //    AddToTooltip(item, TooltipType.Element);
             //}
 
-            if (itemStrings?.TagData.Unk40.GetValue(itemStrings.GetReader()) is D2Class_D7548080 preview)
+            if (itemStrings?.TagData.Unk40.GetValue(itemStrings.GetReader()) is SD7548080 preview)
             {
                 if (preview.ScreenStyle == DestinyScreenStyle.Emblem)
                 {
@@ -100,7 +100,7 @@ public partial class APITooltip : UserControl
 
             if (item.Item is not null)
             {
-                if (item.Item.TagData.Unk38.GetValue(item.Item.GetReader()) is D2Class_B0738080 objectives)
+                if (item.Item.TagData.Unk38.GetValue(item.Item.GetReader()) is SB0738080 objectives)
                 {
                     foreach (var objective in objectives.Objectives)
                     {
@@ -135,7 +135,7 @@ public partial class APITooltip : UserControl
                     }
                 }
 
-                if (item.Item.TagData.Unk78.GetValue(item.Item.GetReader()) is D2Class_81738080 stats)
+                if (item.Item.TagData.Unk78.GetValue(item.Item.GetReader()) is S81738080 stats)
                 {
                     if (item.PlugStyle == DestinySocketCategoryStyle.Reusable)
                         return;

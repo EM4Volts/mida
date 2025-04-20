@@ -167,7 +167,7 @@ public partial class DareView : UserControl
             // Parallel.ForEach(_selectedItems, item =>
             {
 
-                if (item.ItemType == "Artifact" && item.Item.TagData.Unk28.GetValue(item.Item.GetReader()) is D2Class_C5738080 gearSet)
+                if (item.ItemType == "Artifact" && item.Item.TagData.Unk28.GetValue(item.Item.GetReader()) is SC5738080 gearSet)
                 {
                     if (gearSet.ItemList.Count != 0)
                         item.Item = Investment.Get().GetInventoryItem(gearSet.ItemList.First().ItemIndex);
@@ -313,7 +313,7 @@ public partial class DareView : UserControl
         var a = Investment.Get().GetItemStrings(Investment.Get().GetItemIndex(item.TagData.InventoryItemHash));
         var b = a.TagData.ItemType.Value.ToString();
         return (((b == "Artifact" || b == "Seasonal Artifact")
-            && item.TagData.Unk28.GetValue(a.GetReader()) is D2Class_C5738080)
+            && item.TagData.Unk28.GetValue(a.GetReader()) is SC5738080)
             || item.GetArtArrangementIndex() != -1
             ||
             // Whitelist

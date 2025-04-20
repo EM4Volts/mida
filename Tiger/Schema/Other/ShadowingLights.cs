@@ -51,7 +51,7 @@ public class ShadowingLights : Tag<SMapShadowingLight>
         Exporter.Get().GetGlobalScene().AddToGlobalScene(lightData);
     }
 
-    public Vector4 GetColor(Tag<D2Class_A16D8080> data)
+    public Vector4 GetColor(Tag<SA16D8080> data)
     {
         //if (Strategy.IsD1() && data.TagData.Buffer2.Count != 0 && !data.TagData.Buffer2[2].Vec.IsZero())
         //{
@@ -148,8 +148,8 @@ public struct SMapShadowingLight
     //public Material Lightprobe_Shadowing;
 
     [SchemaField(0xE8, TigerStrategy.MARATHON_ALPHA)]
-    public Tag<D2Class_A16D8080> BufferData;
+    public Tag<SA16D8080> BufferData;
 
     [SchemaField(0xEC, TigerStrategy.MARATHON_ALPHA)]
-    public Tag<D2Class_A16D8080> BufferData2;
+    public Tag<SA16D8080> BufferData2;
 }

@@ -747,13 +747,13 @@ public partial class TagListView : UserControl
     private async Task LoadDestinationGlobalTagBagList()
     {
         _allTagItems = new ConcurrentBag<TagItem>();
-        var vals = await PackageResourcer.Get().GetAllHashesAsync<D2Class_1D478080>();
+        var vals = await PackageResourcer.Get().GetAllHashesAsync<S1D478080>();
         Parallel.ForEach(vals, val =>
         {
-            Tag<D2Class_1D478080> dgtbParent = FileResourcer.Get().GetSchemaTag<D2Class_1D478080>(val);
+            Tag<S1D478080> dgtbParent = FileResourcer.Get().GetSchemaTag<S1D478080>(val);
             if (dgtbParent.TagData.DestinationGlobalTagBags.Count < 1)
                 return;
-            foreach (D2Class_D3598080 destinationGlobalTagBag in dgtbParent.TagData.DestinationGlobalTagBags)
+            foreach (SD3598080 destinationGlobalTagBag in dgtbParent.TagData.DestinationGlobalTagBags)
             {
                 if (!destinationGlobalTagBag.DestinationGlobalTagBag.IsValid())
                     continue;
@@ -771,7 +771,7 @@ public partial class TagListView : UserControl
 
     private void LoadDestinationGlobalTagBag(FileHash hash)
     {
-        Tag<D2Class_30898080> destinationGlobalTagBag = FileResourcer.Get().GetSchemaTag<D2Class_30898080>(hash);
+        Tag<S30898080> destinationGlobalTagBag = FileResourcer.Get().GetSchemaTag<S30898080>(hash);
 
         _allTagItems = new ConcurrentBag<TagItem>();
         Parallel.ForEach(destinationGlobalTagBag.TagData.Unk18, val =>
@@ -816,8 +816,8 @@ public partial class TagListView : UserControl
 
     private void LoadBudgetSet(FileHash hash)
     {
-        Tag<D2Class_7E988080> budgetSetHeader = FileResourcer.Get().GetSchemaTag<D2Class_7E988080>(hash);
-        Tag<D2Class_ED9E8080> budgetSet = FileResourcer.Get().GetSchemaTag<D2Class_ED9E8080>(budgetSetHeader.TagData.Unk00.Hash);
+        Tag<S7E988080> budgetSetHeader = FileResourcer.Get().GetSchemaTag<S7E988080>(hash);
+        Tag<SED9E8080> budgetSet = FileResourcer.Get().GetSchemaTag<SED9E8080>(budgetSetHeader.TagData.Unk00.Hash);
         _allTagItems = new ConcurrentBag<TagItem>();
         Parallel.ForEach(budgetSet.TagData.Unk28, val =>
         {
@@ -909,7 +909,7 @@ public partial class TagListView : UserControl
     /// To check they have a model, I take an approach that means processing 40k entities happens quickly.
     /// To do so, I can't use the tag parser as this is way too slow. Instead, I check
     /// 1. at least 2 resources
-    /// 2. the first or second resource contains a Unk0x10 == D2Class_8A6D8080
+    /// 2. the first or second resource contains a Unk0x10 == S8A6D8080
     /// If someone wants to make this list work for entities with other things like skeletons etc, this is easy to
     /// customise to desired system.
     /// </summary>
@@ -1015,7 +1015,7 @@ public partial class TagListView : UserControl
                 var entry = FileResourcer.Get().GetSchemaTag<SMapDataTable>(val);
                 foreach (var dataEntry in entry.TagData.DataEntries)
                 {
-                    if (dataEntry.DataResource.GetValue(entry.GetReader()) is D2Class_19808080 name)
+                    if (dataEntry.DataResource.GetValue(entry.GetReader()) is S19808080 name)
                     {
                         if (name.EntityName.IsValid())
                         {
@@ -1046,14 +1046,14 @@ public partial class TagListView : UserControl
                 if (val.ContainsHash(0x8080470E))//if (reference == 0x8080470E)
                 {
                     var resource = FileResourcer.Get().GetFile<EntityResource>(val);
-                    foreach (var entry in ((D2Class_B5468080)resource.TagData.Unk18.GetValue(resource.GetReader())).Unk80)
+                    foreach (var entry in ((SB5468080)resource.TagData.Unk18.GetValue(resource.GetReader())).Unk80)
                     {
                         if (entry.DataTable is null)
                             continue;
 
                         foreach (var dataEntry in entry.DataTable.TagData.DataEntries)
                         {
-                            if (dataEntry.DataResource.GetValue(entry.DataTable.GetReader()) is D2Class_19808080 name)
+                            if (dataEntry.DataResource.GetValue(entry.DataTable.GetReader()) is S19808080 name)
                             {
                                 if (entry.Name.IsValid())
                                 {
@@ -1089,10 +1089,10 @@ public partial class TagListView : UserControl
         ConcurrentDictionary<string, StringHash> nameHashes = new();
         ConcurrentDictionary<string, string> names = new();
 
-        var valsChild = await PackageResourcer.Get().GetAllHashesAsync<D2Class_8B8E8080>();
+        var valsChild = await PackageResourcer.Get().GetAllHashesAsync<S8B8E8080>();
         Parallel.ForEach(valsChild, val =>
         {
-            Tag<D2Class_8B8E8080> tag = FileResourcer.Get().GetSchemaTag<D2Class_8B8E8080>(val);
+            Tag<S8B8E8080> tag = FileResourcer.Get().GetSchemaTag<S8B8E8080>(val);
             nameHashes.TryAdd(tag.TagData.DestinationName, tag.TagData.LocationName);
             GlobalStrings.Get().AddStrings(tag.TagData.StringContainer);
         });
@@ -1279,7 +1279,7 @@ public partial class TagListView : UserControl
         // Dialogue tables can be in the 0x80808948 entries
         ConcurrentDictionary<string, FileHash> dialogueTables = new();
         Activity activity = FileResourcer.Get().GetFile<Activity>(fileHash);
-        if (activity.TagData.Unk18.GetValue(activity.GetReader()) is D2Class_6A988080 entry)
+        if (activity.TagData.Unk18.GetValue(activity.GetReader()) is S6A988080 entry)
         {
             foreach (var dirtable in entry.DialogueTables)
             {
@@ -1292,8 +1292,8 @@ public partial class TagListView : UserControl
             foreach (var d2Class48898080 in val.Unk18)
             {
                 var resource = d2Class48898080.UnkEntityReference.TagData.Unk10.GetValue(d2Class48898080.UnkEntityReference.GetReader());
-                if (resource is D2Class_D5908080 || resource is D2Class_44938080 || resource is D2Class_45938080 ||
-                    resource is D2Class_18978080 || resource is D2Class_19978080)
+                if (resource is SD5908080 || resource is S44938080 || resource is S45938080 ||
+                    resource is S18978080 || resource is S19978080)
                 {
                     if (resource.DialogueTable != null)
                         dialogueTables.TryAdd(resource.DialogueTable.Hash, resource.DialogueTable.Hash);
@@ -1332,7 +1332,7 @@ public partial class TagListView : UserControl
         // Dialogue tables can be in the 0x80808948 entries
 
         Activity activityWQ = FileResourcer.Get().GetFile<Activity>(fileHash);
-        if (activityWQ.TagData.Unk18.GetValue(activityWQ.GetReader()) is D2Class_6A988080 a988080)
+        if (activityWQ.TagData.Unk18.GetValue(activityWQ.GetReader()) is S6A988080 a988080)
         {
             var directiveTables = a988080.DirectiveTables.Select(x => x.DirectiveTable.Hash);
 
@@ -1346,7 +1346,7 @@ public partial class TagListView : UserControl
                 });
             });
         }
-        else if (activityWQ.TagData.Unk18.GetValue(activityWQ.GetReader()) is D2Class_20978080 class20978080)
+        else if (activityWQ.TagData.Unk18.GetValue(activityWQ.GetReader()) is S20978080 class20978080)
         {
             var directiveTables = class20978080.PEDirectiveTables.Select(x => x.DirectiveTable.Hash);
 
@@ -1661,14 +1661,14 @@ public partial class TagListView : UserControl
             foreach (var d2Class48898080 in val.Unk18)
             {
                 var resource = d2Class48898080.UnkEntityReference.TagData.Unk10.GetValue(d2Class48898080.UnkEntityReference.GetReader());
-                if (resource is D2Class_D5908080 res)
+                if (resource is SD5908080 res)
                 {
                     if (res.Music != null)
                     {
                         musics.Add(res.Music.Hash);
                     }
                 }
-                else if (resource is D2Class_18978080 res2)
+                else if (resource is S18978080 res2)
                 {
                     if (res2.Unk1C != null)
                     {
@@ -1677,7 +1677,7 @@ public partial class TagListView : UserControl
                 }
             }
         });
-        if (activity.TagData.Unk18.GetValue(activity.GetReader()) is D2Class_6A988080 res)
+        if (activity.TagData.Unk18.GetValue(activity.GetReader()) is S6A988080 res)
         {
             if (res.Music != null)
                 musics.Add(res.Music.Hash);
@@ -1704,7 +1704,7 @@ public partial class TagListView : UserControl
                 });
             }
         }
-        if (activity.TagData.Unk18.GetValue(activity.GetReader()) is D2Class_20978080 res2)
+        if (activity.TagData.Unk18.GetValue(activity.GetReader()) is S20978080 res2)
         {
             if (res2.Music != null)
                 musics.Add(res2.Music.Hash);
@@ -1787,21 +1787,21 @@ public partial class TagListView : UserControl
         _weaponItemName = Investment.Get().GetItemNameSanitized(Investment.Get().GetInventoryItem(apiHash));
 
         var resourceUnnamedReader = val.PatternAudioUnnamed.GetReader();
-        var resourceUnnamed = (D2Class_F42C8080)val.PatternAudioUnnamed.TagData.Unk18.GetValue(resourceUnnamedReader);
-        var resource = (D2Class_6E358080)val.PatternAudio.TagData.Unk18.GetValue(val.PatternAudio.GetReader());
+        var resourceUnnamed = (SF42C8080)val.PatternAudioUnnamed.TagData.Unk18.GetValue(resourceUnnamedReader);
+        var resource = (S6E358080)val.PatternAudio.TagData.Unk18.GetValue(val.PatternAudio.GetReader());
         var item = Investment.Get().GetInventoryItem(apiHash);
         var weaponContentGroupHash = Investment.Get().GetWeaponContentGroupHash(item);
 
         Log.Verbose($"Loading weapon entity audio {val.Hash}, ContentGroupHash {weaponContentGroupHash}");
         // Named
-        Tag<D2Class_0D8C8080>? audioGroup = null;
+        Tag<S0D8C8080>? audioGroup = null;
 
         if (!resource.PatternAudioGroups.Where(x => x.WeaponContentGroup1Hash == weaponContentGroupHash).Any())
         {
             Log.Verbose($"No PatterAudioGroups with matching Content Group Hash {weaponContentGroupHash}, trying fallback audio");
             //if (resource.FallbackAudioGroup != null)
             //{
-            //    audioGroup = FileResourcer.Get().GetSchemaTag<D2Class_0D8C8080>(resource.FallbackAudioGroup.TagData.EntityData);
+            //    audioGroup = FileResourcer.Get().GetSchemaTag<S0D8C8080>(resource.FallbackAudioGroup.TagData.EntityData);
             //}
         }
         else
@@ -1810,7 +1810,7 @@ public partial class TagListView : UserControl
             {
                 if (entry.WeaponContentGroup1Hash.Equals(weaponContentGroupHash) && entry.AudioGroup != null)
                 {
-                    audioGroup = FileResourcer.Get().GetSchemaTag<D2Class_0D8C8080>(entry.AudioGroup.TagData.EntityData);
+                    audioGroup = FileResourcer.Get().GetSchemaTag<S0D8C8080>(entry.AudioGroup.TagData.EntityData);
                 }
             }
         }
@@ -1859,7 +1859,7 @@ public partial class TagListView : UserControl
         RefreshItemList();
     }
 
-    public List<WwiseSound> GetWeaponUnnamedSounds(D2Class_F42C8080 resource, TigerHash weaponContentGroupHash, TigerReader reader)
+    public List<WwiseSound> GetWeaponUnnamedSounds(SF42C8080 resource, TigerHash weaponContentGroupHash, TigerReader reader)
     {
         List<WwiseSound> sounds = new();
         List<Entity> entities = new();
@@ -1883,9 +1883,9 @@ public partial class TagListView : UserControl
 
                 List<TigerFile> entitiesParents = new() { entry.Unk60, entry.Unk78, entry.Unk90, entry.UnkA8, entry.UnkC0, entry.UnkD8, entry.AudioEntityParent, entry.Unk130, entry.Unk148, entry.Unk1C0, entry.Unk1D8, entry.Unk248 };
 
-                if (entry.Unk118.GetValue(reader) is D2Class_0A2D8080)
+                if (entry.Unk118.GetValue(reader) is S0A2D8080)
                 {
-                    dynamic resourceUnk118 = (D2Class_0A2D8080)entry.Unk118.GetValue(reader);
+                    dynamic resourceUnk118 = (S0A2D8080)entry.Unk118.GetValue(reader);
                     if (resourceUnk118.Unk08 != null)
                         entities.Add(resourceUnk118.Unk08);
                     if (resourceUnk118.Unk20 != null)
@@ -1902,11 +1902,11 @@ public partial class TagListView : UserControl
                     var reference = tag.Hash.GetReferenceHash();
                     if (reference == 0x80806fa3 || reference == 0x80803463)
                     {
-                        var entityData = FileResourcer.Get().GetSchemaTag<D2Class_A36F8080>(tag.Hash).TagData.EntityData;
+                        var entityData = FileResourcer.Get().GetSchemaTag<SA36F8080>(tag.Hash).TagData.EntityData;
                         var reference2 = entityData.GetReferenceHash();
                         if (reference2 == 0x80802d09 || reference2 == 0x80803165)
                         {
-                            var tagInner = FileResourcer.Get().GetSchemaTag<D2Class_092D8080>(entityData);
+                            var tagInner = FileResourcer.Get().GetSchemaTag<S092D8080>(entityData);
                             if (tagInner.TagData.Unk18 != null)
                                 entities.Add(tagInner.TagData.Unk18);
                             if (tagInner.TagData.Unk30 != null)
@@ -1942,18 +1942,18 @@ public partial class TagListView : UserControl
             foreach (var resourceHash in entity.TagData.EntityResources.Select(entity.GetReader(), r => r.Resource))
             {
                 EntityResource e = FileResourcer.Get().GetFile<EntityResource>(resourceHash);
-                if (e.TagData.Unk18.GetValue(e.GetReader()) is D2Class_79818080 a)
+                if (e.TagData.Unk18.GetValue(e.GetReader()) is S79818080 a)
                 {
                     foreach (var d2ClassF1918080 in a.Array1)
                     {
-                        if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is D2Class_40668080 b)
+                        if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is S40668080 b)
                         {
                             sounds.Add(b.Sound);
                         }
                     }
                     foreach (var d2ClassF1918080 in a.Array2)
                     {
-                        if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is D2Class_40668080 b)
+                        if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is S40668080 b)
                         {
                             sounds.Add(b.Sound);
                         }

@@ -14,11 +14,11 @@ public partial class DirectiveView : UserControl
 
     public void Load(FileHash hash)
     {
-        Tag<D2Class_C78E8080> directive = FileResourcer.Get().GetSchemaTag<D2Class_C78E8080>(hash);
+        Tag<SC78E8080> directive = FileResourcer.Get().GetSchemaTag<SC78E8080>(hash);
         ListView.ItemsSource = GetDirectiveItems(directive, directive.TagData.DirectiveTable);
     }
 
-    public List<DirectiveItem> GetDirectiveItems(Tag<D2Class_C78E8080> directiveTag, DynamicArray<D2Class_C98E8080> directiveTable)
+    public List<DirectiveItem> GetDirectiveItems(Tag<SC78E8080> directiveTag, DynamicArray<SC98E8080> directiveTable)
     {
         // List to maintain order of directives
         var items = new List<DirectiveItem>();

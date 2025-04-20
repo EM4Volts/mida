@@ -2,20 +2,20 @@
 
 // C7478080 shadowkeep
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "0F3C8080", 0x18)]
-public struct D2Class_0F3C8080
+public struct S0F3C8080
 {
     public long FileSize;
-    public DynamicArray<D2Class_113C8080> FontParents;
+    public DynamicArray<S113C8080> FontParents;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "113C8080", 0x04)]
-public struct D2Class_113C8080
+public struct S113C8080
 {
-    public Tag<D2Class_123C8080> FontParent;
+    public Tag<S123C8080> FontParent;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "123C8080", 0x20)]
-public struct D2Class_123C8080
+public struct S123C8080
 {
     public long FileSize;
     public TigerFile FontFile;

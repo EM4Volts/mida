@@ -209,7 +209,7 @@ public partial class EntityView : UserControl
         Log.Info($"Exporting Gear Shader for: {item.ItemName}");
 
         Dictionary<TigerHash, Dye> dyes = new Dictionary<TigerHash, Dye>();
-        if (item.Item.TagData.Unk90.GetValue(item.Item.GetReader()) is D2Class_77738080 translationBlock)
+        if (item.Item.TagData.Unk90.GetValue(item.Item.GetReader()) is S77738080 translationBlock)
         {
             foreach (var dyeEntry in translationBlock.DefaultDyes)
             {

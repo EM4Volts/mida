@@ -26,10 +26,10 @@ public class GlobalStrings : Strategy.StrategistSingleton<GlobalStrings>
         AddFromWordlist();
 
 
-        var vals = PackageResourcer.Get().GetAllHashes<D2Class_02218080>(); //TODO: Beyond Light
+        var vals = PackageResourcer.Get().GetAllHashes<S02218080>(); //TODO: Beyond Light
         Parallel.ForEach(vals, val =>
         {
-            var tag = FileResourcer.Get().GetSchemaTag<D2Class_02218080>(val);
+            var tag = FileResourcer.Get().GetSchemaTag<S02218080>(val);
             foreach (var entry in tag.TagData.Unk28)
             {
                 AddStrings(FileResourcer.Get().GetFile<LocalizedStrings>(entry.Unk10.Hash));

@@ -9,9 +9,9 @@ public struct SMaterial // Errm Ackchyually its called "technique" 🤓
     public uint Unk10;
 
     [SchemaField(0x20, TigerStrategy.MARATHON_ALPHA)]
-    public ScopeBitsBL UsedScopes;
+    public ScopeBits UsedScopes;
 
-    //public ScopeBitsD1 CompatibleScopes; // Not really important, but they are there after each UsedScopes
+    //public ScopeBits CompatibleScopes; // Not really important, but they are there after each UsedScopes
 
     [SchemaField(0x30, TigerStrategy.MARATHON_ALPHA)]
     public StateSelection RenderStates;
@@ -44,7 +44,7 @@ public struct SMaterialShader
     public DynamicArray<STextureTag> Textures;
 
     [SchemaField(0x20, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_09008080> TFX_Bytecode;
+    public DynamicArray<S09008080> TFX_Bytecode;
     public DynamicArray<Vec4> TFX_Bytecode_Constants;
     public DynamicArray<SDirectXSamplerTag> Samplers;
     public DynamicArray<Vec4> CBuffers; // Fallback if Vector4Container doesn't exist, I guess..?
@@ -131,20 +131,20 @@ public struct SDirectXSamplerTag
 }
 
 
-[SchemaStruct("09008080", 1)]
-public struct D2Class_09008080
+[SchemaStruct("80800009", 1)]
+public struct S09008080
 {
     public byte Value;
 }
 
-[SchemaStruct("90008080", 0x10)]
+[SchemaStruct("80800090", 0x10)]
 public struct Vec4
 {
     public Vector4 Vec;
 }
 
 [Flags]
-public enum ScopeBitsBL : ulong
+public enum ScopeBits : ulong
 {
     FRAME = 1UL << 0,
     VIEW = 1UL << 1,
@@ -187,69 +187,4 @@ public enum ScopeBitsBL : ulong
     PLAYER_CENTERED_CASCADED_GRID = 1UL << 38,
     GEAR_DYE_012 = 1UL << 39,
     COLOR_GRADING_UBERSHADER = 1UL << 40,
-}
-
-[Flags]
-public enum ScopeBitsSK : uint
-{
-    FRAME = 1U << 0,
-    VIEW = 1U << 1,
-    RIGID_MODEL = 1U << 2,
-    EDITOR_MESH = 1U << 3,
-    EDITOR_TERRAIN = 1U << 4,
-    CUI_VIEW = 1U << 5,
-    CUI_OBJECT = 1U << 6,
-    SKINNING = 1U << 7,
-    SPEEDTREE = 1U << 8,
-    CHUNK_MODEL = 1U << 9,
-    DECAL = 1U << 10,
-    INSTANCES = 1U << 11,
-    SPEEDTREE_LOD_DRAWCALL_DATA = 1U << 12,
-    TRANSPARENT = 1U << 13,
-    TRANSPARENT_ADVANCED = 1U << 14,
-    SDSM_BIAS_AND_SCALE_TEXTURES = 1U << 15,
-    TERRAIN = 1U << 16,
-    POSTPROCESS = 1U << 17,
-    CUI_BITMAP = 1U << 18,
-    CUI_STANDARD = 1U << 19,
-    UI_FONT = 1U << 20,
-    CUI_HUD = 1U << 21,
-    PARTICLE_TRANSFORMS = 1U << 22,
-    PARTICLE_LOCATION_METADATA = 1U << 23,
-    CUBEMAP_VOLUME = 1U << 24,
-    GEAR_PLATED_TEXTURES = 1U << 25,
-    GEAR_DYE_0 = 1U << 26,
-    GEAR_DYE_1 = 1U << 27,
-    GEAR_DYE_2 = 1U << 28,
-    GEAR_DYE_DECAL = 1U << 29,
-    GENERIC_ARRAY = 1U << 30,
-    WEATHER = 1U << 31
-}
-
-[Flags]
-public enum ScopeBitsD1 : uint
-{
-    FRAME = 1U << 0,
-    VIEW = 1U << 1,
-    RIGID_MODEL = 1U << 2,
-    EDITOR_MESH = 1U << 3,
-    EDITOR_TERRAIN = 1U << 4,
-    CUI_VIEW = 1U << 5,
-    CUI_OBJECT = 1U << 6,
-    SKINNING = 1U << 7,
-    SPEEDTREE = 1U << 8,
-    CHUNK_MODEL = 1U << 9,
-    DECAL = 1U << 10,
-    INSTANCES = 1U << 11,
-    SPEEDTREE_INSTANCE_DATA = 1U << 12,
-    SPEEDTREE_LOD_DRAWCALL_DATA = 1U << 13,
-    TRANSPARENT = 1U << 14,
-    TRANSPARENT_ADVANCED = 1U << 15,
-    SDSM_BIAS_AND_SCALE_TEXTURES = 1U << 16,
-    TERRAIN = 1U << 17,
-    POSTPROCESS = 1U << 18,
-    CUI_BITMAP = 1U << 19,
-    CUI_STANDARD = 1U << 20,
-    UI_FONT = 1U << 21,
-    CUI_HUD = 1U << 22,
 }

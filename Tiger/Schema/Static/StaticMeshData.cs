@@ -32,7 +32,7 @@ namespace Tiger.Schema.Static
 
 namespace Tiger.Schema.Static.MARATHON_ALPHA
 {
-    public class StaticMeshData : Tag<SStaticMeshData_BL>, IStaticMeshData
+    public class StaticMeshData : Tag<SStaticMeshData>, IStaticMeshData
     {
         public StaticMeshData(FileHash hash) : base(hash)
         {
@@ -129,10 +129,13 @@ namespace Tiger.Schema.Static.MARATHON_ALPHA
                     switch (detailLevel)
                     {
                         case ExportDetailLevel.MostDetailed:
-                            if (part.DetailLevel == 1 || part.DetailLevel == 2 || part.DetailLevel == 10)
-                            {
-                                staticPartEntries.Add(i, part);
-                            }
+                            Debug.Assert(part.DetailLevel != 0);
+                            Console.WriteLine($"{part.DetailLevel} {part.DetailLevel / 4}");
+                            //if (part.DetailLevel == 1 || part.DetailLevel == 2 || part.DetailLevel == 10)
+                            //{
+                            //    staticPartEntries.Add(i, part);
+                            //}
+                            staticPartEntries.Add(i, part);
                             break;
                         case ExportDetailLevel.LeastDetailed:
                             if (part.DetailLevel != 1 && part.DetailLevel != 2 && part.DetailLevel != 10)

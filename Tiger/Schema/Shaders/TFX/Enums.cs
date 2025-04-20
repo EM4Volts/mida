@@ -21,11 +21,11 @@ public enum TfxRenderStage
     Reticle = 16,
     WaterRipples = 17,
     MaskSunLight = 18,
-    Volumetrics = 19, // Rest not in D1
+    Volumetrics = 19,
     Cubemaps = 20,
     PostprocessScreen = 21,
     WorldForces = 22,
-    ComputeSkinning = 23, // Not in Pre-BL
+    ComputeSkinning = 23,
 }
 
 public enum TfxFeatureRenderer

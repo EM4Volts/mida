@@ -66,20 +66,20 @@ public struct SMapSkyObjectsResource
 public struct SMapSkyObjects
 {
     public long FileSize;
-    public DynamicArray<D2Class_A96A8080> Entries;
-    //public DynamicArray<D2Class_B3938080> Unk18;
-    //public DynamicArray<D2Class_07008080> Unk28;
+    public DynamicArray<SA96A8080> Entries;
+    //public DynamicArray<SB3938080> Unk18;
+    //public DynamicArray<S07008080> Unk28;
     [SchemaField(0x40)]
     public Vector4 Unk40;
     public Vector4 Unk50;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "A96A8080", 0x90)]
-public struct D2Class_A96A8080
+public struct SA96A8080
 {
     public Matrix4x4 Transform;
     public AABB Bounds;
-    public Tag<D2Class_AE6A8080> Model;
+    public Tag<SAE6A8080> Model;
 
     [SchemaField(0x68, TigerStrategy.MARATHON_ALPHA)]
     public float Unk68; // Ordering?
@@ -88,11 +88,11 @@ public struct D2Class_A96A8080
     public int Unk70; // if 5, skip the model??
 
     [SchemaField(0x7C, TigerStrategy.MARATHON_ALPHA)]
-    public Tag<D2Class_C58A8080> Complex;
+    public Tag<SC58A8080> Complex;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "C58A8080", 0x1C)]
-public struct D2Class_C58A8080
+public struct SC58A8080
 {
     public long FileSize;
     public int Unk08;
@@ -101,7 +101,7 @@ public struct D2Class_C58A8080
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "438B8080", 0x70)]
-public struct D2Class_438B8080
+public struct S438B8080
 {
     [SchemaField(0x10)]
     public DynamicArray<S06008080> Unk00;
@@ -109,7 +109,7 @@ public struct D2Class_438B8080
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "AE6A8080", 0x10)]
-public struct D2Class_AE6A8080
+public struct SAE6A8080
 {
     public long FileSize;
     public EntityModel Model;

@@ -333,7 +333,7 @@ public class Texture : TigerReferenceFile<STextureHeader>
 }
 
 // todo move this
-public class TexturePlate : Tag<D2Class_919E8080>
+public class TexturePlate : Tag<S919E8080>
 {
     public TexturePlate(FileHash hash) : base(hash)
     {

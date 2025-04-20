@@ -29,7 +29,7 @@ public class StaticMapData : Tag<SStaticMapData>
             s.Static.SaveMaterialsFromParts(scene, parts);
         });
 
-        foreach (var c in _tag.InstanceCounts_Marathon)
+        foreach (var c in _tag.InstanceCounts)
         {
             var model = _tag.Statics[c.StaticIndex].Static;
             scene.AddStaticInstancesToMesh(model.Hash, _tag.Instances.Skip(c.InstanceOffset).Take(c.InstanceCount).ToList());
@@ -55,7 +55,7 @@ public struct SStaticMapData
     public DynamicArray<SStaticMeshHash> Statics;
 
     [SchemaField(0x88, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<SStaticMeshInstanceMap_Marathon> InstanceCounts_Marathon;
+    public DynamicArray<SStaticMeshInstanceMap> InstanceCounts;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "0B008080", 0x04)]
@@ -95,7 +95,7 @@ public struct SStaticMeshHash
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "18868080", 0x10)]
-public struct SStaticMeshInstanceMap_Marathon
+public struct SStaticMeshInstanceMap
 {
     public int InstanceOffset;
     public int InstanceCount;
@@ -122,7 +122,7 @@ public struct SBubbleParent
     public int Unk1C;
 
     [SchemaField(0x40, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<D2Class_C9968080> Unk40;
+    public DynamicArray<SC9968080> Unk40;
 
     [SchemaField(TigerStrategy.MARATHON_ALPHA, Tag64 = true)]
     public Tag Unk50;  // some kind of parent thing, very strange weird idk
@@ -133,7 +133,7 @@ public struct SBubbleParent
 /// Basically same table as in the child tag, but in a weird format. Never understood what its for.
 /// </summary>
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B2B08080", 0x10)]
-public struct D2Class_C9968080
+public struct SC9968080
 {
     [SchemaField(Tag64 = true)]
     public Tag Unk00;
@@ -171,7 +171,7 @@ public struct SMapContainer
     public DynamicArray<SMapDataTableEntry> MapDataTables;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "C3A78080", 4)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "8080A7C3", 4)]
 public struct SMapDataTableEntry
 {
     public Tag<SMapDataTable> MapDataTable;
@@ -191,7 +191,7 @@ public struct SMapDataTable
 /// <summary>
 /// A data entry. Can be static maps, entities, etc. with a defined world transform.
 /// </summary>
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "F5B38080", 0x90)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "8080B3F5", 0x90)]
 public struct SMapDataEntry
 {
     [SchemaField(0, TigerStrategy.MARATHON_ALPHA)]
@@ -213,7 +213,7 @@ public struct SMapDataEntry
 /// <summary>
 /// Data resource containing a static map.
 /// </summary>
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B0858080", 0x18)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "808085B0", 0x18)]
 public struct SMapDataResource
 {
     [SchemaField(0x8, TigerStrategy.MARATHON_ALPHA)]
@@ -226,27 +226,26 @@ public struct SMapDataResource
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "808082D5", 0x30)]
 public struct SStaticMapParent
 {
-    // no filesize
     [SchemaField(0x8)]
-    public StaticMapData StaticMap;  // could make it StaticMapData but dont want it to load it, could have a NoLoad option
+    public StaticMapData StaticMap;
 }
 
 /// <summary>
 /// Unk data resource.
 /// </summary>
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "A16D8080", 0x80)]
-public struct D2Class_A16D8080
+public struct SA16D8080
 {
     public ulong FileSize;
     [SchemaField(0x30)]
-    public DynamicArray<D2Class_09008080> Bytecode;
+    public DynamicArray<S09008080> Bytecode;
     public DynamicArray<Vec4> Buffer1; // bytecode constants?
     [SchemaField(0x60)]
     public DynamicArray<Vec4> Buffer2;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B3938080", 0x30)]
-public struct D2Class_B3938080
+public struct SB3938080
 {
     //Bounds
     public Vector4 Unk00;
@@ -257,7 +256,7 @@ public struct D2Class_B3938080
 // /// Boss entity data resource?
 // /// </summary>
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "19808080", 0x50)]
-public struct D2Class_19808080
+public struct S19808080
 {
     // todo rest of this
     // [DestinyField(FieldType.ResourcePointer)]
@@ -298,10 +297,10 @@ public struct SMapAtmosphere
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "716A8080", 0x28)]
-public struct D2Class_716A8080
+public struct S716A8080
 {
     [SchemaField(0x10, TigerStrategy.MARATHON_ALPHA)]
-    public Tag<D2Class_746A8080> Unk10;
+    public Tag<S746A8080> Unk10;
     public float Unk14; // always 3600? (one hour as seconds)
     public float Unk18; // some kind of multiplier maybe?
     public FileHash Unk1C; // Lens dirt or something
@@ -309,20 +308,20 @@ public struct D2Class_716A8080
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "746A8080", 0x20)]
-public struct D2Class_746A8080
+public struct S746A8080
 {
     [SchemaField(0x0, TigerStrategy.MARATHON_ALPHA)]
     public Vector4 Unk00;
 
     [SchemaField(0x10, TigerStrategy.MARATHON_ALPHA)]
-    public Tag<D2Class_C88A8080> Unk10;
-    public Tag<D2Class_C88A8080> Unk14;
-    public Tag<D2Class_C88A8080> Unk18;
-    public Tag<D2Class_C88A8080> Unk1C;
+    public Tag<SC88A8080> Unk10;
+    public Tag<SC88A8080> Unk14;
+    public Tag<SC88A8080> Unk18;
+    public Tag<SC88A8080> Unk1C;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "C88A8080", 0x48)]
-public struct D2Class_C88A8080
+public struct SC88A8080
 {
     [SchemaField(0x8)]
     public int Unk08; // always 1800? (1/2 hour as seconds)
@@ -369,10 +368,10 @@ public struct SStaticAmbientOcclusionMappings
 // /// Unk data resource, maybe lights for entities?
 // /// </summary>
 // [SchemaStruct("636A8080", 0x18)]
-// public struct D2Class_636A8080
+// public struct S636A8080
 // {
 //     [SchemaField(0x10), DestinyField(FieldType.FileHash)]
-//     public Tag Unk10;  // D2Class_656C8080, might be related to lights for entities?
+//     public Tag Unk10;  // S656C8080, might be related to lights for entities?
 // }
 //
 //
@@ -380,7 +379,7 @@ public struct SStaticAmbientOcclusionMappings
 // /// Audio data resource.
 // /// </summary>
 // [SchemaStruct("6F668080", 0x30)]
-// public struct D2Class_6F668080
+// public struct S6F668080
 // {
 //     [SchemaField(0x10), DestinyField(FieldType.TagHash64)]
 //     public Tag AudioContainer;  // 38978080 audio container
@@ -390,17 +389,17 @@ public struct SStaticAmbientOcclusionMappings
 // /// Spatial audio data resource, contains a list of positions to play an audio container.
 // /// </summary>
 // [SchemaStruct("6D668080", 0x48)]
-// public struct D2Class_6D668080
+// public struct S6D668080
 // {
 //     [SchemaField(0x10), DestinyField(FieldType.TagHash64)]
 //     public Tag AudioContainer;  // 38978080 audio container
 //     [SchemaField(0x30), DestinyField(FieldType.TablePointer)]
-//     public List<D2Class_94008080> AudioPositions;
+//     public List<S94008080> AudioPositions;
 //     public float Unk40;
 // }
 //
 // [SchemaStruct("94008080", 0x10)]
-// public struct D2Class_94008080
+// public struct S94008080
 // {
 //     public Vector4 Translation;
 // }
@@ -409,7 +408,7 @@ public struct SStaticAmbientOcclusionMappings
 // /// Unk data resource.
 // /// </summary>
 // [SchemaStruct("B58C8080", 0x18)]
-// public struct D2Class_B58C8080
+// public struct SB58C8080
 // {
 //     [SchemaField(0x10), DestinyField(FieldType.FileHash)]
 //     public Tag Unk10;  // B78C8080
@@ -419,7 +418,7 @@ public struct SStaticAmbientOcclusionMappings
 // /// Unk data resource.
 // /// </summary>
 // [SchemaStruct("55698080", 0x18)]
-// public struct D2Class_55698080
+// public struct S55698080
 // {
 //     [SchemaField(0x10), DestinyField(FieldType.FileHash)]
 //     public Tag Unk10;  // 5B698080, lights/volumes/smth maybe cubemaps idk
@@ -429,7 +428,7 @@ public struct SStaticAmbientOcclusionMappings
 // /// Unk data resource.
 // /// </summary>
 // [SchemaStruct("7B918080", 0x18)]
-// public struct D2Class_7B918080
+// public struct S7B918080
 // {
 //     [DestinyField(FieldType.RelativePointer)]
 //     public dynamic? Unk00;
@@ -439,7 +438,7 @@ public struct SStaticAmbientOcclusionMappings
 // /// Havok volume data resource.
 // /// </summary>
 // [SchemaStruct("21918080", 0x20)]
-// public struct D2Class_21918080
+// public struct S21918080
 // {
 //     [SchemaField(0x10), DestinyField(FieldType.FileHash)]
 //     public Tag HavokVolume;  // type 27 subtype 0
@@ -450,7 +449,7 @@ public struct SStaticAmbientOcclusionMappings
 // /// Unk data resource.
 // /// </summary>
 // [SchemaStruct("C0858080", 0x18)]
-// public struct D2Class_C0858080
+// public struct SC0858080
 // {
 //     [SchemaField(0x10), DestinyField(FieldType.FileHash)]
 //     public Tag Unk10;  // C2858080
@@ -460,7 +459,7 @@ public struct SStaticAmbientOcclusionMappings
 // /// Unk data resource.
 // /// </summary>
 // [SchemaStruct("C26A8080", 0x18)]
-// public struct D2Class_C26A8080
+// public struct SC26A8080
 // {
 //     [SchemaField(0x10), DestinyField(FieldType.FileHash)]
 //     public Tag Unk10;  // C46A8080
@@ -471,7 +470,7 @@ public struct SStaticAmbientOcclusionMappings
 // /// Unk data resource.
 // /// </summary>
 // [SchemaStruct("222B8080", 0x18)]
-// public struct D2Class_222B8080
+// public struct S222B8080
 // {
 //     [SchemaField(0x10)]
 //     public TigerHash Unk10;
@@ -481,7 +480,7 @@ public struct SStaticAmbientOcclusionMappings
 // /// Unk data resource.
 // /// </summary>
 // [SchemaStruct("04868080", 0x18)]
-// public struct D2Class_04868080
+// public struct S04868080
 // {
 //     [SchemaField(0x10), DestinyField(FieldType.FileHash)]
 //     public Tag Unk10;  // 24878080, smth related to havok volumes
