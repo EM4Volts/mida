@@ -425,7 +425,7 @@ public struct SED458080
     public ResourcePointer Unk00;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "F5458080", 0x30)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "FFFFFFFF", 0x0)] // TODO FIX HASH AND SIZE, CURRENT CONFLICT WITH OLD CLASS HASH
 public struct SF5458080
 {
     [SchemaField(TigerStrategy.MARATHON_ALPHA)]

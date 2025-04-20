@@ -203,7 +203,7 @@ public struct SMapLights
     public Vector4 Unk10;
     public Vector4 Unk20;
     public DynamicArrayUnloaded<SMapLightCollection> LightData;
-    public DynamicArrayUnloaded<S4F9F8080> Transforms;
+    public DynamicArrayUnloaded<S47BF8080> Transforms;
 
     [SchemaField(0x58, TigerStrategy.MARATHON_ALPHA)]
     public Tag<SOcclusionBounds> Bounds;

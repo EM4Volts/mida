@@ -14,24 +14,6 @@ public struct SEntity
     public DynamicArrayUnloaded<SCD9A8080> EntityResources;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "F09A8080", 8)]
-public struct SF09A8080
-{
-    public TigerHash Unk00;
-    public ushort Unk04;
-    public ushort Unk06;
-}
-
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "ED9A8080", 0x28)]
-public struct SED9A8080
-{
-}
-
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "EB9A8080", 0x18)]
-public struct SEB9A8080
-{
-}
-
 [SchemaStruct("06008080", 0x2)]
 public struct S06008080
 {
@@ -62,36 +44,36 @@ public struct S8080BADB  // Entity resource
  * The external material map provides the mapping of external material index -> material tag
  * could be these external materials are dynamic themselves - we'll extract them all but select the first
  */
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "8F6D8080", 0x450)]
-public struct S8F6D8080
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "78868080", 0x450)]
+public struct S78868080
 {
-    [SchemaField(0x224, TigerStrategy.MARATHON_ALPHA)]
+    [SchemaField(0x244, TigerStrategy.MARATHON_ALPHA)]
     public EntityModel Model;
 
-    [SchemaField(0x310, TigerStrategy.MARATHON_ALPHA)]
-    public Tag<S1C6E8080> TexturePlates;
+    //[SchemaField(0x310, TigerStrategy.MARATHON_ALPHA)] // Not used currently?
+    //public Tag<S1C6E8080> TexturePlates;
 
-    [SchemaField(0x3C0, TigerStrategy.MARATHON_ALPHA)]
+    [SchemaField(0x3E0, TigerStrategy.MARATHON_ALPHA)]
     public DynamicArrayUnloaded<SExternalMaterialMapEntry> ExternalMaterialsMap;
 
-    [SchemaField(0x3F0, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArrayUnloaded<S986D8080> Unk3F0;
+    [SchemaField(0x410, TigerStrategy.MARATHON_ALPHA)]
+    public DynamicArrayUnloaded<S82868080> Unk410;
 
-    [SchemaField(0x400, TigerStrategy.MARATHON_ALPHA)]
+    [SchemaField(0x420, TigerStrategy.MARATHON_ALPHA)]
     public DynamicArrayUnloaded<S14008080> ExternalMaterials;
 }
 
 // Physics model resource, same layout as normal model resource?
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "6C6D8080", 0x480)]
-public struct S6C6D8080
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "55868080", 0x4A0)]
+public struct S55868080
 {
-    [SchemaField(0x224, TigerStrategy.MARATHON_ALPHA)]
+    [SchemaField(0x244, TigerStrategy.MARATHON_ALPHA)]
     public EntityModel PhysicsModel;
 
-    [SchemaField(0x3C0, TigerStrategy.MARATHON_ALPHA)]
+    [SchemaField(0x3E0, TigerStrategy.MARATHON_ALPHA)]
     public DynamicArrayUnloaded<SExternalMaterialMapEntry> ExternalMaterialsMap;
 
-    [SchemaField(0x400, TigerStrategy.MARATHON_ALPHA)]
+    [SchemaField(0x420, TigerStrategy.MARATHON_ALPHA)]
     public DynamicArrayUnloaded<S14008080> ExternalMaterials;
 }
 
@@ -133,8 +115,8 @@ public struct S939E8080
 
 #endregion
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "986D8080", 0x8)]
-public struct S986D8080
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "82868080", 0x8)]
+public struct S82868080
 {
     public ushort Unk00;
     public ushort Unk02;
@@ -142,7 +124,7 @@ public struct S986D8080
     public ushort Unk06;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "976D8080", 0xC)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "81868080", 0xC)]
 public struct SExternalMaterialMapEntry
 {
     public int MaterialCount;
@@ -156,65 +138,80 @@ public struct S14008080
     public Material Material;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "8A6D8080", 0x2E0)]
-public struct S8A6D8080
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "73868080", 0x2E0)]
+public struct S73868080
 {
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "DD818080", 0x100)]
-public struct SDD818080
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B69F8080", 0x140)]
+public struct SB69F8080
 {
     [SchemaField(0x30)]
-    public DynamicArray<SDC818080> Unk30;
-    public DynamicArray<S40868080> Unk40;
+    public DynamicArray<SB59F8080> Unk30;
+    public DynamicArray<S40AF8080> Unk40;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "DC818080", 0x40)]
-public struct SDC818080
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B59F8080", 0x40)]
+public struct SB59F8080
 {
     [SchemaField(0x20, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<S4F9F8080> Unk20;
+    public DynamicArray<S47BF8080> Unk20;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "4F9F8080", 0x20)]
-public struct S4F9F8080
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "47BF8080", 0x20)]
+public struct S47BF8080
 {
     public Tiger.Schema.Vector4 Rotation;
     public Tiger.Schema.Vector4 Translation;
 }
 
-[SchemaStruct("40868080", 8)]
-public struct S40868080
+[SchemaStruct("40AF8080", 8)]
+public struct S40AF8080
 {
     public ushort Unk00;
     public ushort Unk02;
     public uint Unk04;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "DE818080", 0x108)]
-public struct SDE818080
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "AE9F8080", 0xC0)]
+public struct SAE9F8080
 {
-    [SchemaField(0x88, TigerStrategy.MARATHON_ALPHA)]
-    public TigerHash Unk88;
-    public TigerHash Unk8C;  // this is actually zeros in SK
+    [SchemaField(0x38, TigerStrategy.MARATHON_ALPHA)]
+    public DynamicArrayUnloaded<S07008080> Unk38;
+    public DynamicArrayUnloaded<S07008080> Unk48;
+    public DynamicArrayUnloaded<S47BF8080> Unk58;
+    public DynamicArrayUnloaded<S40AF8080> Unk68;
+}
 
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "AF9F8080", 0xC0)]
+public struct SAF9F8080
+{
+    [SchemaField(0x90)]
+    public DynamicArrayUnloaded<S42AF8080> NodeHierarchy;
+    public DynamicArrayUnloaded<S47BF8080> DefaultInverseObjectSpaceTransforms;
+    //public DynamicArrayUnloaded<S06008080> RangeIndexMap;
+    //public DynamicArrayUnloaded<S06008080> InnerIndexMap;
+}
 
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B79F8080", 0x110)]
+public struct SB79F8080
+{
     [SchemaField(0x90, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArrayUnloaded<S42868080> NodeHierarchy;
-    public DynamicArrayUnloaded<S4F9F8080> DefaultObjectSpaceTransforms;
-    public DynamicArrayUnloaded<S4F9F8080> DefaultInverseObjectSpaceTransforms;
+    public DynamicArrayUnloaded<S42AF8080> NodeHierarchy;
+    public DynamicArrayUnloaded<S47BF8080> DefaultObjectSpaceTransforms;
+    public DynamicArrayUnloaded<S47BF8080> DefaultInverseObjectSpaceTransforms;
     public DynamicArrayUnloaded<S06008080> RangeIndexMap;
     public DynamicArrayUnloaded<S06008080> InnerIndexMap;
 
     [SchemaField(TigerStrategy.MARATHON_ALPHA)]
-    public Vector4 UnkE0;
-
-    [SchemaField(0xF0, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArrayUnloaded<SE1818080> UnkF0; // lod distance?
+    public Vector2 UnkE0;
+    public Vector2 UnkE8;
+    public Vector2 UnkF0;
+    //public DynamicArrayUnloaded<SE1818080> UnkF8; // lod distance?
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "42868080", 0x10)]
-public struct S42868080
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "42AF8080", 0x10)]
+public struct S42AF8080
 {
     public TigerHash NodeHash;
     public int ParentNodeIndex;
@@ -229,21 +226,21 @@ public struct SE1818080
     public long Unk10;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "076F8080", 0xA0)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "8080881C", 0x110)]
 public struct SEntityModel  // Entity model
 {
     public long FileSize;
     [SchemaField(0x10)]
     public DynamicArrayUnloaded<SEntityModelMesh> Meshes;
 
-    [SchemaField(0x20)]
-    public Vector4 Unk20;
-    public long Unk30;
+    //[SchemaField(0x20)]
+    //public Vector4 Unk20;
+    //public long Unk30;
 
-    [SchemaField(0x38)]
-    public long UnkFlags38;
+    //[SchemaField(0x38)]
+    //public long UnkFlags38;
 
-    [SchemaField(0x50, TigerStrategy.MARATHON_ALPHA)]
+    [SchemaField(0xA0, TigerStrategy.MARATHON_ALPHA)]
     public Vector4 ModelScale;
     public Vector4 ModelTranslation;
     public Vector2 TexcoordScale;
@@ -254,7 +251,7 @@ public struct SEntityModel  // Entity model
     public TigerHash Unk94;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "C56E8080", 0x80)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "CB878080", 0x80)]
 public struct SEntityModelMesh
 {
     public VertexBuffer Vertices1;  // vert file 1 (positions)
@@ -265,7 +262,7 @@ public struct SEntityModelMesh
     public VertexBuffer VertexColour;  // vertex colour
     public VertexBuffer SinglePassSkinningBuffer;  // single pass skinning buffer
     public int Zeros1C;
-    public DynamicArrayUnloaded<SCB6E8080> Parts;
+    public DynamicArrayUnloaded<SD1878080> Parts;
 
     /// Range of parts to render per render stage
     /// Can be obtained as follows:
@@ -277,10 +274,7 @@ public struct SEntityModelMesh
     public short[] PartRangePerRenderStage;
 
     [SchemaField(TigerStrategy.MARATHON_ALPHA, ArraySizeConst = 24)]
-    public byte[] InputLayoutPerRenderStageBL;
-
-    [SchemaField(TigerStrategy.MARATHON_ALPHA, Obsolete = true)]
-    public short[] InputLayoutPerRenderStageSK;
+    public byte[] InputLayoutPerRenderStage;
 
     public Range GetRangeForStage(int stage)
     {
@@ -291,44 +285,30 @@ public struct SEntityModelMesh
 
     public int GetInputLayoutForStage(int stage)
     {
-        return InputLayoutPerRenderStageBL[stage];
+        return InputLayoutPerRenderStage[stage];
     }
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "CB6E8080", 0x24)]
-public struct SCB6E8080  // TODO use DCG to figure out what this is
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "D1878080", 0x28)]
+public struct SD1878080
 {
-    public Material Material;  // AA6D8080
-    public short VariantShaderIndex;  // variant_shader_index
+    public Material Material;
+    public short VariantShaderIndex;
     public short PrimitiveType;
     public uint IndexOffset;
     public uint IndexCount;
-    public uint Unk10;  // might be number of strips?
 
     [SchemaField(0x14, TigerStrategy.MARATHON_ALPHA)]
-    public short ExternalIdentifier;  // external_identifier
-    public byte Unk16;
-    public byte Unk17;
-
-    // need to check this on WQ, theres no way its an int
-    [SchemaField(TigerStrategy.MARATHON_ALPHA)]
-    public int FlagsD2;
+    public short ExternalIdentifier;  // Unsure
 
     [SchemaField(0x1C, TigerStrategy.MARATHON_ALPHA)]
-    public byte GearDyeChangeColorIndex;   // sbyte gear_dye_change_color_index
+    public int Flags; // Unsure
+    public byte GearDyeChangeColorIndex;
     public ELodCategory LodCategory;
-    public byte Unk1E;
-    public byte LodRun;  // lod_run
-    public int Unk20; // variant_shader_index?
-
-    public int GetFlags()
-    {
-        return FlagsD2;
-    }
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "5B6D8080", 0x320)]
-public struct S5B6D8080
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "44868080", 0x320)]
+public struct S44868080
 {
 }
 
@@ -626,11 +606,11 @@ public struct SF62C8080
 {
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "F42C8080", 0x338)]
+[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "FFFFFFFF", 0x0)] // TODO FIX HASH AND SIZE, CURRENT CONFLICT WITH OLD CLASS HASH
 public struct SF42C8080
 {
-    [SchemaField(0x2C8, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<SFA2C8080> PatternAudioGroups;
+    //[SchemaField(0x2C8, TigerStrategy.MARATHON_ALPHA)]
+    //public DynamicArray<SFA2C8080> PatternAudioGroups;
 
     //[SchemaField(0xD0, TigerStrategy.DESTINY1_RISE_OF_IRON)]
     //[SchemaField(TigerStrategy.DESTINY2_WITCHQUEEN_6307, Obsolete = true)]

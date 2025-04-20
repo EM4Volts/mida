@@ -106,7 +106,7 @@ public class Decorator : Tag<SDecorator>
         var mesh = model.TagData.Meshes[model.GetReader(), 0];
         exportPartRange = EntityModel.GetExportRanges(mesh);
 
-        foreach ((int i, SCB6E8080 part) in dynamicParts[0])
+        foreach ((int i, SD1878080 part) in dynamicParts[0])
         {
             if (!exportPartRange.Contains(i))
                 continue;
@@ -116,7 +116,7 @@ public class Decorator : Tag<SDecorator>
                 Index = i,
                 GroupIndex = part.ExternalIdentifier,
                 LodCategory = part.LodCategory,
-                bAlphaClip = (part.GetFlags() & 0x8) != 0,
+                bAlphaClip = (part.Flags & 0x8) != 0,
                 VertexLayoutIndex = mesh.GetInputLayoutForStage(0)
             };
 
@@ -132,19 +132,19 @@ public class Decorator : Tag<SDecorator>
         return parts;
     }
 
-    private Dictionary<int, Dictionary<int, SCB6E8080>> GetPartsOfDetailLevel(EntityModel model)
+    private Dictionary<int, Dictionary<int, SD1878080>> GetPartsOfDetailLevel(EntityModel model)
     {
-        Dictionary<int, Dictionary<int, SCB6E8080>> parts = new();
+        Dictionary<int, Dictionary<int, SD1878080>> parts = new();
         using TigerReader reader = model.GetReader();
 
         int meshIndex = 0;
         int partIndex = 0;
         var mesh = model.TagData.Meshes[reader, 0];
 
-        parts.Add(meshIndex, new Dictionary<int, SCB6E8080>());
+        parts.Add(meshIndex, new Dictionary<int, SD1878080>());
         for (int i = 0; i < mesh.Parts.Count; i++)
         {
-            SCB6E8080 part = mesh.Parts[reader, i];
+            SD1878080 part = mesh.Parts[reader, i];
             if (part.LodCategory is ELodCategory.MainGeom0 or ELodCategory.GripStock0 or ELodCategory.Stickers0 or ELodCategory.InternalGeom0 or ELodCategory.Detail0)
                 parts[meshIndex].Add(partIndex, part);
 

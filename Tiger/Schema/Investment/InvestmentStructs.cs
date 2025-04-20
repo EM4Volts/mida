@@ -514,7 +514,7 @@ public struct SB4548080
     public int StatGroupIndex;
 }
 
-[SchemaStruct("2D548080", 0x18)]
+[SchemaStruct("FFFFFFFF", 0x0)] // TODO FIX HASH AND SIZE, CURRENT CONFLICT WITH OLD CLASS HASH
 public struct S2D548080
 {
     public long FileSize;

@@ -1,6 +1,6 @@
 ﻿namespace Tiger.Schema.Entity;
 
-public class EntityResource : Tag<S069B8080>
+public class EntityResource : Tag<S8080BADB>
 {
     public EntityResource(FileHash hash) : base(hash)
     {

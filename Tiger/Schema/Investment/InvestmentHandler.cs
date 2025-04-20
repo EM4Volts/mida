@@ -684,7 +684,7 @@ public class Investment : Strategy.LazyStrategistSingleton<Investment>
                     continue;
                 foreach (var entry in entity.Model.TagData.Meshes[entity.Model.GetReader(), 0].Parts)
                 {
-                    foreach (var field in typeof(SCB6E8080).GetFields())
+                    foreach (var field in typeof(SD1878080).GetFields())
                     {
                         if (!data.ContainsKey(field.Name))
                         {

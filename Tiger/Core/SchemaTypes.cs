@@ -90,19 +90,27 @@ public class DynamicArray<T> : List<T>, ITigerDeserialize
 
     public virtual void Deserialize(TigerReader reader)
     {
-        Count = reader.ReadInt32();
-        reader.Seek(4, SeekOrigin.Current);
-        Offset = reader.ReadSchemaType<RelativePointer>();
-        Offset.AddExtraOffset(0x10);
-        reader.Seek(4, SeekOrigin.Current);
-
-        _elementSize = SchemaDeserializer.Get().GetSchemaStructSize<T>();
-
-        for (int i = 0; i < Count; i++)
+        try
         {
-            reader.Seek(Offset.AbsoluteOffset + i * _elementSize, SeekOrigin.Begin);
-            Add(ReadElement(reader, i));
+            Count = reader.ReadInt32();
+            reader.Seek(4, SeekOrigin.Current);
+            Offset = reader.ReadSchemaType<RelativePointer>();
+            Offset.AddExtraOffset(0x10);
+            reader.Seek(4, SeekOrigin.Current);
+
+            _elementSize = SchemaDeserializer.Get().GetSchemaStructSize<T>();
+
+            for (int i = 0; i < Count; i++)
+            {
+                reader.Seek(Offset.AbsoluteOffset + i * _elementSize, SeekOrigin.Begin);
+                Add(ReadElement(reader, i));
+            }
         }
+        catch (EndOfStreamException ex)
+        {
+            throw new EndOfStreamException($"[{reader.Hash:X2}] Failed to read at position {reader.BaseStream.Position:X}. Stream length: {reader.BaseStream.Length}", ex);
+        }
+
     }
 
     protected T ReadElement(TigerReader reader, int index)
@@ -133,13 +141,20 @@ public class DynamicArrayUnloaded<T> : DynamicArray<T>
 {
     public override void Deserialize(TigerReader reader)
     {
-        Count = reader.ReadInt32();
-        reader.Seek(4, SeekOrigin.Current);
-        Offset = reader.ReadSchemaType<RelativePointer>();
-        Offset.AddExtraOffset(0x10);
-        reader.Seek(4, SeekOrigin.Current);
+        try
+        {
+            Count = reader.ReadInt32();
+            reader.Seek(4, SeekOrigin.Current);
+            Offset = reader.ReadSchemaType<RelativePointer>();
+            Offset.AddExtraOffset(0x10);
+            reader.Seek(4, SeekOrigin.Current);
 
-        _elementSize = SchemaDeserializer.Get().GetSchemaStructSize<T>();
+            _elementSize = SchemaDeserializer.Get().GetSchemaStructSize<T>();
+        }
+        catch (EndOfStreamException ex)
+        {
+            throw new EndOfStreamException($"[{reader.Hash:X2}] Failed to read at position {reader.BaseStream.Position:X}. Stream length: {reader.BaseStream.Length}", ex);
+        }
     }
 
     public IEnumerable<T> Enumerate(TigerReader reader)
@@ -375,8 +390,15 @@ public class RelativePointer : ITigerDeserialize
 
     public virtual void Deserialize(TigerReader reader)
     {
-        _basePosition = reader.BaseStream.Position;
-        _relativeOffset = reader.ReadInt64();
+        try
+        {
+            _basePosition = reader.BaseStream.Position;
+            _relativeOffset = reader.ReadInt64();
+        }
+        catch (EndOfStreamException ex)
+        {
+            throw new EndOfStreamException($"[{reader.Hash:X2}] Failed to read at position {reader.BaseStream.Position:X}. Stream length: {reader.BaseStream.Length}", ex);
+        }
     }
 
     public void AddExtraOffset(int extraOffset)
@@ -393,13 +415,20 @@ public class GlobalPointer<T> : ITigerDeserialize where T : struct
 
     public virtual void Deserialize(TigerReader reader)
     {
-        AbsoluteOffset = reader.ReadInt32();
-        if (AbsoluteOffset == 0)
+        try
         {
-            return;
+            AbsoluteOffset = reader.ReadInt32();
+            if (AbsoluteOffset == 0)
+            {
+                return;
+            }
+            reader.Seek(AbsoluteOffset, SeekOrigin.Begin);
+            Value = reader.ReadSchemaStruct<T>();
         }
-        reader.Seek(AbsoluteOffset, SeekOrigin.Begin);
-        Value = reader.ReadSchemaStruct<T>();
+        catch (EndOfStreamException ex)
+        {
+            throw new EndOfStreamException($"[{reader.Hash:X2}] Failed to read at position {reader.BaseStream.Position:X}. Stream length: {reader.BaseStream.Length}", ex);
+        }
     }
 }
 
@@ -415,19 +444,26 @@ public class ResourcePointer : RelativePointer
     // and use that instead
     public dynamic? GetValue(TigerReader reader)
     {
-        if (ResourceClassHash == TigerHash.InvalidHash32)
+        try
         {
-            return null;
+            if (ResourceClassHash == TigerHash.InvalidHash32)
+            {
+                return null;
+            }
+            if (SchemaDeserializer.Get().TryGetSchemaType(ResourceClassHash, out Type schemaType))
+            {
+                reader.Seek(AbsoluteOffset, SeekOrigin.Begin);
+                return reader.ReadSchemaStruct(schemaType);
+            }
+            else
+            {
+                // Log.Debug($"Unknown resource class hash {ResourceClassHash:X8}");
+                return null;
+            }
         }
-        if (SchemaDeserializer.Get().TryGetSchemaType(ResourceClassHash, out Type schemaType))
+        catch (EndOfStreamException ex)
         {
-            reader.Seek(AbsoluteOffset, SeekOrigin.Begin);
-            return reader.ReadSchemaStruct(schemaType);
-        }
-        else
-        {
-            // Log.Debug($"Unknown resource class hash {ResourceClassHash:X8}");
-            return null;
+            throw new EndOfStreamException($"[{reader.Hash:X2}] Failed to read at position {reader.BaseStream.Position:X}. Stream length: {reader.BaseStream.Length}", ex);
         }
     }
 
@@ -438,19 +474,26 @@ public class ResourcePointer : RelativePointer
 
     public override void Deserialize(TigerReader reader)
     {
-        base.Deserialize(reader);
-
-        if (_relativeOffset == 0)
+        try
         {
-            return;
+            base.Deserialize(reader);
+
+            if (_relativeOffset == 0)
+            {
+                return;
+            }
+
+            reader.Seek(AbsoluteOffset - 4, SeekOrigin.Begin);
+            ResourceClassHash = reader.ReadUInt32();
+            if (ResourceClassHash == 0)
+            {
+                // Debug.Fail("Resource class hash is 0");
+                ResourceClassHash = TigerHash.InvalidHash32;
+            }
         }
-
-        reader.Seek(AbsoluteOffset - 4, SeekOrigin.Begin);
-        ResourceClassHash = reader.ReadUInt32();
-        if (ResourceClassHash == 0)
+        catch (EndOfStreamException ex)
         {
-            // Debug.Fail("Resource class hash is 0");
-            ResourceClassHash = TigerHash.InvalidHash32;
+            throw new EndOfStreamException($"[{reader.Hash:X2}] Failed to read at position {reader.BaseStream.Position:X}. Stream length: {reader.BaseStream.Length}", ex);
         }
     }
 }

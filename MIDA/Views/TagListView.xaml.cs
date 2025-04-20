@@ -1859,108 +1859,109 @@ public partial class TagListView : UserControl
         RefreshItemList();
     }
 
+    // TODO FOR MARATHON
     public List<WwiseSound> GetWeaponUnnamedSounds(SF42C8080 resource, TigerHash weaponContentGroupHash, TigerReader reader)
     {
         List<WwiseSound> sounds = new();
         List<Entity> entities = new();
 
-        if (!resource.PatternAudioGroups.Where(x => x.WeaponContentGroupHash == weaponContentGroupHash).Any())
-        {
-            Log.Verbose($"No unnamed PatterAudioGroups with matching Content Group Hash {weaponContentGroupHash}, trying fallback audio");
-            //if (resource.FallbackAudio1 != null)
-            //    entities.Add(resource.FallbackAudio1);
-            //if (resource.FallbackAudio2 != null)
-            //    entities.Add(resource.FallbackAudio2);
-            //if (resource.FallbackAudio3 != null)
-            //    entities.Add(resource.FallbackAudio3);
-        }
-        else
-        {
-            resource.PatternAudioGroups.ForEach(entry =>
-            {
-                if (!entry.WeaponContentGroupHash.Equals(weaponContentGroupHash))
-                    return;
+        //if (!resource.PatternAudioGroups.Where(x => x.WeaponContentGroupHash == weaponContentGroupHash).Any())
+        //{
+        //    Log.Verbose($"No unnamed PatterAudioGroups with matching Content Group Hash {weaponContentGroupHash}, trying fallback audio");
+        //    //if (resource.FallbackAudio1 != null)
+        //    //    entities.Add(resource.FallbackAudio1);
+        //    //if (resource.FallbackAudio2 != null)
+        //    //    entities.Add(resource.FallbackAudio2);
+        //    //if (resource.FallbackAudio3 != null)
+        //    //    entities.Add(resource.FallbackAudio3);
+        //}
+        //else
+        //{
+        //    resource.PatternAudioGroups.ForEach(entry =>
+        //    {
+        //        if (!entry.WeaponContentGroupHash.Equals(weaponContentGroupHash))
+        //            return;
 
-                List<TigerFile> entitiesParents = new() { entry.Unk60, entry.Unk78, entry.Unk90, entry.UnkA8, entry.UnkC0, entry.UnkD8, entry.AudioEntityParent, entry.Unk130, entry.Unk148, entry.Unk1C0, entry.Unk1D8, entry.Unk248 };
+        //        List<TigerFile> entitiesParents = new() { entry.Unk60, entry.Unk78, entry.Unk90, entry.UnkA8, entry.UnkC0, entry.UnkD8, entry.AudioEntityParent, entry.Unk130, entry.Unk148, entry.Unk1C0, entry.Unk1D8, entry.Unk248 };
 
-                if (entry.Unk118.GetValue(reader) is S0A2D8080)
-                {
-                    dynamic resourceUnk118 = (S0A2D8080)entry.Unk118.GetValue(reader);
-                    if (resourceUnk118.Unk08 != null)
-                        entities.Add(resourceUnk118.Unk08);
-                    if (resourceUnk118.Unk20 != null)
-                        entities.Add(resourceUnk118.Unk20);
-                    if (resourceUnk118.Unk38 != null)
-                        entities.Add(resourceUnk118.Unk38);
-                }
+        //        if (entry.Unk118.GetValue(reader) is S0A2D8080)
+        //        {
+        //            dynamic resourceUnk118 = (S0A2D8080)entry.Unk118.GetValue(reader);
+        //            if (resourceUnk118.Unk08 != null)
+        //                entities.Add(resourceUnk118.Unk08);
+        //            if (resourceUnk118.Unk20 != null)
+        //                entities.Add(resourceUnk118.Unk20);
+        //            if (resourceUnk118.Unk38 != null)
+        //                entities.Add(resourceUnk118.Unk38);
+        //        }
 
-                foreach (var tag in entitiesParents)
-                {
-                    if (tag == null)
-                        continue;
+        //        foreach (var tag in entitiesParents)
+        //        {
+        //            if (tag == null)
+        //                continue;
 
-                    var reference = tag.Hash.GetReferenceHash();
-                    if (reference == 0x80806fa3 || reference == 0x80803463)
-                    {
-                        var entityData = FileResourcer.Get().GetSchemaTag<SA36F8080>(tag.Hash).TagData.EntityData;
-                        var reference2 = entityData.GetReferenceHash();
-                        if (reference2 == 0x80802d09 || reference2 == 0x80803165)
-                        {
-                            var tagInner = FileResourcer.Get().GetSchemaTag<S092D8080>(entityData);
-                            if (tagInner.TagData.Unk18 != null)
-                                entities.Add(tagInner.TagData.Unk18);
-                            if (tagInner.TagData.Unk30 != null)
-                                entities.Add(tagInner.TagData.Unk30);
-                            if (tagInner.TagData.Unk48 != null)
-                                entities.Add(tagInner.TagData.Unk48);
-                            if (tagInner.TagData.Unk60 != null)
-                                entities.Add(tagInner.TagData.Unk60);
-                            if (tagInner.TagData.Unk78 != null)
-                                entities.Add(tagInner.TagData.Unk78);
-                            if (tagInner.TagData.Unk90 != null)
-                                entities.Add(tagInner.TagData.Unk90);
-                        }
-                        else
-                        {
-                            throw new NotImplementedException();
-                        }
-                    }
-                    else if (reference == 0x80809ad8)
-                    {
-                        entities.Add(FileResourcer.Get().GetFile<Entity>(tag.Hash));
-                    }
-                    else if (reference != 0x8080325a)  // 0x8080325a materials,
-                    {
-                        throw new NotImplementedException();
-                    }
-                }
-            });
-        }
+        //            var reference = tag.Hash.GetReferenceHash();
+        //            if (reference == 0x80806fa3 || reference == 0x80803463)
+        //            {
+        //                var entityData = FileResourcer.Get().GetSchemaTag<SA36F8080>(tag.Hash).TagData.EntityData;
+        //                var reference2 = entityData.GetReferenceHash();
+        //                if (reference2 == 0x80802d09 || reference2 == 0x80803165)
+        //                {
+        //                    var tagInner = FileResourcer.Get().GetSchemaTag<S092D8080>(entityData);
+        //                    if (tagInner.TagData.Unk18 != null)
+        //                        entities.Add(tagInner.TagData.Unk18);
+        //                    if (tagInner.TagData.Unk30 != null)
+        //                        entities.Add(tagInner.TagData.Unk30);
+        //                    if (tagInner.TagData.Unk48 != null)
+        //                        entities.Add(tagInner.TagData.Unk48);
+        //                    if (tagInner.TagData.Unk60 != null)
+        //                        entities.Add(tagInner.TagData.Unk60);
+        //                    if (tagInner.TagData.Unk78 != null)
+        //                        entities.Add(tagInner.TagData.Unk78);
+        //                    if (tagInner.TagData.Unk90 != null)
+        //                        entities.Add(tagInner.TagData.Unk90);
+        //                }
+        //                else
+        //                {
+        //                    throw new NotImplementedException();
+        //                }
+        //            }
+        //            else if (reference == 0x80809ad8)
+        //            {
+        //                entities.Add(FileResourcer.Get().GetFile<Entity>(tag.Hash));
+        //            }
+        //            else if (reference != 0x8080325a)  // 0x8080325a materials,
+        //            {
+        //                throw new NotImplementedException();
+        //            }
+        //        }
+        //    });
+        //}
 
-        foreach (var entity in entities)
-        {
-            foreach (var resourceHash in entity.TagData.EntityResources.Select(entity.GetReader(), r => r.Resource))
-            {
-                EntityResource e = FileResourcer.Get().GetFile<EntityResource>(resourceHash);
-                if (e.TagData.Unk18.GetValue(e.GetReader()) is S79818080 a)
-                {
-                    foreach (var d2ClassF1918080 in a.Array1)
-                    {
-                        if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is S40668080 b)
-                        {
-                            sounds.Add(b.Sound);
-                        }
-                    }
-                    foreach (var d2ClassF1918080 in a.Array2)
-                    {
-                        if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is S40668080 b)
-                        {
-                            sounds.Add(b.Sound);
-                        }
-                    }
-                }
-            }
-        }
+        //foreach (var entity in entities)
+        //{
+        //    foreach (var resourceHash in entity.TagData.EntityResources.Select(entity.GetReader(), r => r.Resource))
+        //    {
+        //        EntityResource e = FileResourcer.Get().GetFile<EntityResource>(resourceHash);
+        //        if (e.TagData.Unk18.GetValue(e.GetReader()) is S79818080 a)
+        //        {
+        //            foreach (var d2ClassF1918080 in a.Array1)
+        //            {
+        //                if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is S40668080 b)
+        //                {
+        //                    sounds.Add(b.Sound);
+        //                }
+        //            }
+        //            foreach (var d2ClassF1918080 in a.Array2)
+        //            {
+        //                if (d2ClassF1918080.Unk10.GetValue(e.GetReader()) is S40668080 b)
+        //                {
+        //                    sounds.Add(b.Sound);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
         return sounds;
     }
 
