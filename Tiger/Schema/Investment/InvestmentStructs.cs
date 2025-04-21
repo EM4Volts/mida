@@ -661,7 +661,7 @@ public struct S8C978080
     public long FileSize;
     public DynamicArrayUnloaded<S0F878080> AssignmentBSL;
     [SchemaField(TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<S0B008080> Unk18;
+    public DynamicArray<SUint32> Unk18;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "0F878080", 0x18)]

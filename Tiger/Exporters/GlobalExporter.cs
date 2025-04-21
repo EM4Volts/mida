@@ -282,7 +282,7 @@ public class GlobalExporter : AbstractExporter
                     Constants = globals.Values.Select(x => x.Vec).ToList()
                 });
 
-                //System.Console.WriteLine($"\t-{globals.Unk00}: Index {globals.ChannelIndex}");
+                //System.Console.WriteLine($"\t-{globals.Value}: Index {globals.ChannelIndex}");
 
                 //TfxBytecodeInterpreter bytecode = new(TfxBytecodeOp.ParseAll(globals.UnkBytecode));
                 //System.Console.WriteLine($"\t-Bytecode ops ({bytecode.Opcodes.Count})");

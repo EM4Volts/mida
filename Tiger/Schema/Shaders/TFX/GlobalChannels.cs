@@ -70,7 +70,7 @@ public struct SD1918080
     public int ChannelIndex;
 
     [SchemaField(0x30, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<S09008080> UnkBytecode;
+    public DynamicArray<SUint8> UnkBytecode;
     public DynamicArray<Vec4> Values;
 }
 

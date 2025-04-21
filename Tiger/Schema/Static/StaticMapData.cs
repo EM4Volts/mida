@@ -49,7 +49,7 @@ public struct SStaticMapData
     public DynamicArray<SStaticMeshInstanceTransform> Instances;
 
     [SchemaField(TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<SUnknownUInt> Unk50;
+    public DynamicArray<SUint32> Unk50;
 
     [SchemaField(0x78, TigerStrategy.MARATHON_ALPHA)]
     public DynamicArray<SStaticMeshHash> Statics;
@@ -58,11 +58,6 @@ public struct SStaticMapData
     public DynamicArray<SStaticMeshInstanceMap> InstanceCounts;
 }
 
-[SchemaStruct(TigerStrategy.MARATHON_ALPHA, "0B008080", 0x04)]
-public struct SUnknownUInt
-{
-    public uint Unk00;
-}
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B1938080", 0x18)]
 public struct SOcclusionBounds
@@ -238,7 +233,7 @@ public struct SA16D8080
 {
     public ulong FileSize;
     [SchemaField(0x30)]
-    public DynamicArray<S09008080> Bytecode;
+    public DynamicArray<SUint8> Bytecode;
     public DynamicArray<Vec4> Buffer1; // bytecode constants?
     [SchemaField(0x60)]
     public DynamicArray<Vec4> Buffer2;
