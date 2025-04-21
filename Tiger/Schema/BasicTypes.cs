@@ -49,18 +49,15 @@
         public uint Value;
     }
 
-    [SchemaStruct("0F008080", 4)]
-    public struct SReal32
-    {
-        public float Value;
-    }
-
-
     [SchemaStruct("0C008080", 8)]
     public struct SUint64
     {
         public ulong Value;
     }
 
-
+    [SchemaStruct("0F008080", 4)]
+    public struct SReal32
+    {
+        public float Value;
+    }
 }
