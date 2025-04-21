@@ -20,7 +20,7 @@ public partial class GeneralConfigView : UserControl
     public GeneralConfigView()
     {
         InitializeComponent();
-        _config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        _config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
     }
 
     public void OnControlLoaded(object sender, RoutedEventArgs e)

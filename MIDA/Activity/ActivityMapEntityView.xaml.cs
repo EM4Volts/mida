@@ -19,7 +19,7 @@ namespace MIDA;
 public partial class ActivityMapEntityView : UserControl
 {
     private FbxHandler _globalFbxHandler = null;
-    private static ConfigSubsystem _config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+    private static ConfigSubsystem _config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
 
     private IActivity _currentActivity;
     private DisplayEntBubble _currentBubble;
@@ -43,17 +43,7 @@ public partial class ActivityMapEntityView : UserControl
 
     private void OnControlLoaded(object sender, RoutedEventArgs routedEventArgs)
     {
-        if (ConfigSubsystem.Get().GetAnimatedBackground())
-        {
-            SpinnerShader _spinner = new SpinnerShader();
-            Spinner.Effect = _spinner;
-            SizeChanged += _spinner.OnSizeChanged;
-            _spinner.ScreenWidth = (float)ActualWidth;
-            _spinner.ScreenHeight = (float)ActualHeight;
-            _spinner.Scale = new(0, 0);
-            _spinner.Offset = new(-1, -1);
-            SpinnerContainer.Visibility = Visibility.Visible;
-        }
+
     }
 
     private ObservableCollection<DisplayEntBubble> GetMapList(IActivity activity)

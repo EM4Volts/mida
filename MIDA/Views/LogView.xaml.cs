@@ -90,8 +90,8 @@ public class LogHandler
     public static void LogException(Exception ex)
     {
         Log.Fatal("\n### Crash ###\n" + ex.Source + ex.InnerException + ex + ex.Message + ex.StackTrace);
-        Log.Fatal("ConfigSubsystem file:\n" + File.ReadAllText("Charm.exe.config"));
-        ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        Log.Fatal("ConfigSubsystem file:\n" + File.ReadAllText("MIDA.exe.config"));
+        ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
         if (config.GetPackagesPath(config.GetCurrentStrategy()) != String.Empty)
             Log.Fatal("Number of packages:\n" + Directory.GetFiles(config.GetPackagesPath(config.GetCurrentStrategy())).Length);
         if (config.GetExportSavePath() != String.Empty)

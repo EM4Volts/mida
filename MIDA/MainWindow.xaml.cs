@@ -39,6 +39,8 @@ public partial class MainWindow
     private bool _bHasInitialised = false;
     public FileVersionInfo GameInfo = null;
 
+    public Spinner2 Spinner;
+
     private void OnControlLoaded(object sender, RoutedEventArgs routedEventArgs)
     {
         if (MainMenuTab.Visibility == Visibility.Visible)
@@ -48,9 +50,20 @@ public partial class MainWindow
         }
 
         Icon appIcon = System.Drawing.Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        CharmIcon.Source = GetBitmapSource(appIcon);
+        MIDAIcon.Source = GetBitmapSource(appIcon);
 
-        RenderSpinner();
+        if (ConfigSubsystem.Get().GetAnimatedBackground())
+        {
+            if (Spinner is null)
+                Spinner = new Spinner2((int)Width, (int)Height);
+
+            SpinnerContainer.Children.Add(Spinner);
+        }
+        else
+            SpinnerContainer.Visibility = Visibility.Hidden;
+
+
+        //RenderSpinner();
     }
 
     public MainWindow()
@@ -87,7 +100,7 @@ public partial class MainWindow
 
         // Check if packages path exists in config
         // ConfigSubsystem.CheckPackagesPathIsValid();
-        ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
         if (config.GetPackagesPath(Strategy.CurrentStrategy) != "" && config.GetExportSavePath() != "")
         {
             MainMenuTab.Visibility = Visibility.Visible;
@@ -132,8 +145,8 @@ public partial class MainWindow
             DarkenBackground = true,
             Icon = "⚠️",
             Title = "ATTENTION",
-            Subtitle = "Charm is NOT a datamining tool!",
-            Description = $"Charm's main purpose is focused towards 3D artists, content preservation and learning how the game works!" +
+            Subtitle = "MIDA is NOT a datamining tool!",
+            Description = $"MIDA's main purpose is focused towards 3D artists, content preservation and learning how the game works!" +
             $"\n\nBy using MIDA, you agree to:" +
             $"\n• Not use this to leak content." +
             $"\n• Not use this to spread spoilers." +
@@ -233,11 +246,11 @@ public partial class MainWindow
 
     private void InitialiseSubsystems()
     {
-        Arithmic.Log.Info("Initialising Charm subsystems");
+        Arithmic.Log.Info("Initialising MIDA subsystems");
         string[] args = Environment.GetCommandLineArgs();
-        CharmInstance.Args = new CharmArgs(args);
-        CharmInstance.InitialiseSubsystems();
-        Arithmic.Log.Info("Initialised Charm subsystems");
+        MIDAInstance.Args = new MIDAArgs(args);
+        MIDAInstance.InitialiseSubsystems();
+        Arithmic.Log.Info("Initialised MIDA subsystems");
 
     }
 
@@ -245,8 +258,8 @@ public partial class MainWindow
     {
         try
         {
-            ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
-            var path = config.GetPackagesPath(Strategy.CurrentStrategy).Split("packages")[0] + "destiny2.exe";
+            ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
+            var path = config.GetPackagesPath(Strategy.CurrentStrategy).Split("packages")[0] + "Marathon.exe";
             var versionInfo = FileVersionInfo.GetVersionInfo(path);
             string version = versionInfo.FileVersion;
             GameInfo = versionInfo;
@@ -260,8 +273,9 @@ public partial class MainWindow
 
     private async void CheckVersion()
     {
-        Arithmic.Log.Info($"Charm Version: {App.CurrentVersion.Id}");
-        var versionChecker = new ApplicationVersionChecker("https://github.com/MontagueM/Charm/raw/delta/TFS", App.CurrentVersion);
+        Arithmic.Log.Info($"MIDA Version: {App.CurrentVersion.Id}");
+        return; // TODO, dont check for updates cus theres no release yet
+        var versionChecker = new ApplicationVersionChecker("https://github.com/DeltaDesigns/MIDA/raw/main/", App.CurrentVersion);
         versionChecker.LatestVersionName = "version";
         try
         {
@@ -280,7 +294,7 @@ public partial class MainWindow
                     DarkenBackground = true,
                     Icon = "",
                     Title = "UPDATE AVAILABLE",
-                    Subtitle = "A new Charm version is available!",
+                    Subtitle = "A new MIDA version is available!",
                     Description =
                     $"Current Version: v{App.CurrentVersion.Id}\n" +
                     $"Latest Version: v{latestVersion.Id}",
@@ -311,13 +325,13 @@ public partial class MainWindow
 
     private void OpenLatestRelease(object sender, MouseButtonEventArgs e)
     {
-        Process.Start(new ProcessStartInfo { FileName = $"https://github.com/MontagueM/Charm/releases/latest", UseShellExecute = true });
+        Process.Start(new ProcessStartInfo { FileName = $"https://github.com/DeltaDesigns/MIDA/releases", UseShellExecute = true });
     }
 
     private async void InitialiseHandlers()
     {
         // Set texture format
-        ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
         TextureExtractor.SetTextureFormat(config.GetOutputTextureFormat());
     }
 

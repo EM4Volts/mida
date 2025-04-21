@@ -84,7 +84,7 @@ public class Exporter : Subsystem<Exporter>
     {
         bool aggregateOutput = outputDirectory is not null;
         if (outputDirectory is null)
-            outputDirectory = CharmInstance.GetSubsystem<ConfigSubsystem>().GetExportSavePath();
+            outputDirectory = MIDAInstance.GetSubsystem<ConfigSubsystem>().GetExportSavePath();
 
         ExportEvent(new ExportEventArgs(_scenes, outputDirectory, aggregateOutput));
         Reset();

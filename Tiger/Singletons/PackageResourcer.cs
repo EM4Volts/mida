@@ -65,7 +65,7 @@ public class PackageResourcer : Strategy.StrategistSingleton<PackageResourcer>
     }
 
     /// <summary>
-    /// Loads keys for redacted packages from the keys.txt (if it exists) in the Charm folder 
+    /// Loads keys for redacted packages from the keys.txt (if it exists) in the MIDA folder 
     /// </summary>
     public void LoadPackageKeys()
     {

@@ -31,18 +31,7 @@
             <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
 
-        <Grid
-            x:Name="SpinnerContainer"
-            Grid.RowSpan="2"
-            Background="Transparent"
-            Opacity="1"
-            Visibility="Hidden">
-            <Border
-                x:Name="Spinner"
-                Background="Transparent"
-                BorderThickness="0"
-                Opacity="1" />
-        </Grid>
+
 
         <Grid
             x:Name="MainContainer"
@@ -187,7 +176,7 @@
                             </Border>
                         </Button>
 
-                        <Grid Margin="10" />
+
                     </StackPanel>
 
                     <StackPanel
@@ -250,7 +239,7 @@
                             </Border>
                         </Button>
 
-                        <Grid Margin="10" />
+
                     </StackPanel>
 
                     <StackPanel
@@ -328,9 +317,10 @@
                             </Border>
                         </Button>
 
-                        <Grid Margin="10" />
+
                     </StackPanel>
                 </StackPanel>
+
                 <Grid Margin="0,10,0,0" Background="Transparent">
                     <Border
                         Grid.Column="1"
@@ -396,7 +386,7 @@
                     MouseEnter="CategoryButton_MouseEnter"
                     MouseLeave="CategoryButton_MouseLeave"
                     Style="{DynamicResource D2StyleButton}"
-                    Tag="GITHUB:View the source code for Charm">
+                    Tag="GITHUB:View the source code for MIDA">
                     <TextBlock
                         Margin="5"
                         d:FontFamily="Haas Grot Text 55 Roman"
@@ -412,7 +402,7 @@
                     MouseEnter="CategoryButton_MouseEnter"
                     MouseLeave="CategoryButton_MouseLeave"
                     Style="{DynamicResource D2StyleButton}"
-                    Tag="ABOUT:View the credits for Charm">
+                    Tag="ABOUT:View the credits for MIDA">
                     <TextBlock
                         Margin="5"
                         d:FontFamily="Haas Grot Text 55 Roman"

@@ -6,7 +6,7 @@ namespace Tiger.Commandlets;
 
 public class ExportStaticMeshCommandlet : ICommandlet
 {
-    public void Run(CharmArgs args)
+    public void Run(MIDAArgs args)
     {
         string hash;
         if (!args.GetArgValue("hash", out hash))

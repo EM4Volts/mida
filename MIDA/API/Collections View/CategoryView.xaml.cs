@@ -64,17 +64,6 @@ public partial class CategoryView : UserControl
         //MouseMove += ToolTip.UserControl_MouseMove;
         Panel.SetZIndex(ToolTip, 50);
         MainGrid.Children.Add(ToolTip);
-
-        if (ConfigSubsystem.Get().GetAnimatedBackground())
-        {
-            SpinnerShader _spinner = new SpinnerShader();
-            Spinner.Effect = _spinner;
-            SizeChanged += _spinner.OnSizeChanged;
-            _spinner.ScreenWidth = (float)ActualWidth;
-            _spinner.ScreenHeight = (float)ActualHeight;
-            _spinner.Scale = new(0, 0);
-            _spinner.Offset = new(-3.6, -3.3);
-        }
     }
 
     public void LoadSubcategories(CollectionsView.ItemCategory itemCategory)
@@ -655,7 +644,7 @@ public partial class CategoryView : UserControl
                 else
                 {
                     // shader
-                    ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+                    ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
                     string savePath = config.GetExportSavePath();
                     string itemName = Helpers.SanitizeString(item.ItemName);
                     savePath += $"/{itemName}";

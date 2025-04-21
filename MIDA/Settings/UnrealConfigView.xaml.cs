@@ -9,7 +9,7 @@ public partial class UnrealConfigView : UserControl
     public UnrealConfigView()
     {
         InitializeComponent();
-        _config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        _config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
     }
 
     private ConfigSubsystem _config;

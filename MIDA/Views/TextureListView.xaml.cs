@@ -23,7 +23,7 @@ namespace MIDA;
 public partial class TextureListView : UserControl
 {
     private static MainWindow _mainWindow = null;
-    private ConfigSubsystem Config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+    private ConfigSubsystem Config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
     private APITooltip ToolTip;
 
     private ConcurrentBag<PackageItem> PackageItems;
@@ -51,17 +51,17 @@ public partial class TextureListView : UserControl
         Panel.SetZIndex(ToolTip, 50);
         MainContainer.Children.Add(ToolTip);
 
-        if (ConfigSubsystem.Get().GetAnimatedBackground())
-        {
-            SpinnerShader _spinner = new SpinnerShader();
-            Spinner.Effect = _spinner;
-            SizeChanged += _spinner.OnSizeChanged;
-            _spinner.ScreenWidth = (float)ActualWidth;
-            _spinner.ScreenHeight = (float)ActualHeight;
-            _spinner.Scale = new(0, 0);
-            _spinner.Offset = new(-3.6, -3.3);
-            SpinnerContainer.Visibility = Visibility.Visible;
-        }
+        //if (ConfigSubsystem.Get().GetAnimatedBackground())
+        //{
+        //    SpinnerShader _spinner = new SpinnerShader();
+        //    Spinner.Effect = _spinner;
+        //    SizeChanged += _spinner.OnSizeChanged;
+        //    _spinner.ScreenWidth = (float)ActualWidth;
+        //    _spinner.ScreenHeight = (float)ActualHeight;
+        //    _spinner.Scale = new(0, 0);
+        //    _spinner.Offset = new(-3.6, -3.3);
+        //    SpinnerContainer.Visibility = Visibility.Visible;
+        //}
     }
 
     public async void LoadContent()

@@ -40,7 +40,7 @@ namespace Tiger.Schema.Shaders
             }
         }
 
-        private static ConfigSubsystem _config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        private static ConfigSubsystem _config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
 
         public void SavePixelShader(string saveDirectory, bool isTerrain = false)
         {

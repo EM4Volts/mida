@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Tiger;
 
 namespace MIDA;
 
@@ -29,8 +28,8 @@ public partial class ConfigView : UserControl
         ButtonCollection = new ObservableCollection<ButtonData>
         {
             new ButtonData { Text = "GENERAL" },
-            new ButtonData { Text = "S&BOX" },
-            new ButtonData { Text = "UNREAL" }
+            new ButtonData { Text = "S&BOX", IsEnabled = false},
+            new ButtonData { Text = "UNREAL", IsEnabled = false }
         };
 
         Settings.ItemsSource = ButtonCollection;
@@ -39,18 +38,6 @@ public partial class ConfigView : UserControl
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         SelectRadioButton(Settings, 0);
-
-        if (ConfigSubsystem.Get().GetAnimatedBackground())
-        {
-            SpinnerShader _spinner = new SpinnerShader();
-            Spinner.Effect = _spinner;
-            SizeChanged += _spinner.OnSizeChanged;
-            _spinner.ScreenWidth = (float)ActualWidth;
-            _spinner.ScreenHeight = (float)ActualHeight;
-            _spinner.Scale = new(4, 4);
-            _spinner.Offset = new(-3.6, -3.3);
-            SpinnerContainer.Visibility = Visibility.Visible;
-        }
     }
 
     // Not ideal but it works
@@ -106,5 +93,6 @@ public partial class ConfigView : UserControl
     public class ButtonData
     {
         public string Text { get; set; }
+        public bool IsEnabled { get; set; } = true;
     }
 }

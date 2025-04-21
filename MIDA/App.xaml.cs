@@ -15,17 +15,17 @@ namespace MIDA
     /// </summary>
     public partial class App : Application
     {
-        public static ApplicationVersion CurrentVersion = new ApplicationVersion("2.6.0");
+        public static ApplicationVersion CurrentVersion = new ApplicationVersion("0.1.0");
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            // Idk why for some people Charm is looking at system32 instead of the exe location...
+            // Idk why for some people MIDA is looking at system32 instead of the exe location...
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
             if (!IsVcRedistInstalled())
             {
                 MessageBoxResult result = MessageBox.Show(
-                    "Charm requires Visual C++ Redistributables to function properly, would you like to install these now?",
+                    "MIDA requires Visual C++ Redistributables to function properly, would you like to install these now?",
                     "Missing Dependency",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Warning
@@ -57,50 +57,7 @@ namespace MIDA
                 }
                 if (apiHash != 0)
                 {
-                    return; // todo fix api
-                    // to check if we need to update caches
-                    // PackageHandler.Initialise();
-                    //
-                    // // Initialise FNV handler -- must be first bc my code is shit
-                    // FnvHandler.Initialise();
-                    //
-                    // // Get all hash64 -- must be before InvestmentHandler
-                    // TagHash64Handler.Initialise();
-                    //
-                    // // Initialise investment
-                    // InvestmentHandler.Initialise();
-                    //
-                    // // InvestmentHandler.DebugAllInvestmentEntities();
-                    // // InvestmentHandler.DebugAPIRequestAllInfo();
-                    // // InvestmentHandler.DebugAPIRenderMetadata();
-                    //
-                    // FbxHandler fbxHandler = new FbxHandler();
-                    //
-                    // TigerHash hash = new TigerHash(apiHash);
-                    //
-                    // var entities = InvestmentHandler.GetEntitiesFromHash(hash);
-                    // string meshName = hash;
-                    // string savePath = ConfigSubsystem.GetExportSavePath() + $"/API_{meshName}";
-                    // Directory.CreateDirectory(savePath);
-                    //
-                    // foreach (var entity in entities)
-                    // {
-                    //     var dynamicParts = entity.Load(ExportDetailLevel.MostDetailed);
-                    //     fbxHandler.AddEntityToScene(entity, dynamicParts, ExportDetailLevel.MostDetailed);
-                    //     entity.SaveMaterialsFromParts(savePath, dynamicParts, ConfigSubsystem.GetUnrealInteropEnabled() || ConfigSubsystem.GetS2ShaderExportEnabled());
-                    //     entity.SaveTexturePlates(savePath);
-                    // }
-                    //
-                    // fbxHandler.InfoHandler.SetMeshName(meshName);
-                    // if (ConfigSubsystem.GetUnrealInteropEnabled())
-                    // {
-                    //     fbxHandler.InfoHandler.SetUnrealInteropPath(ConfigSubsystem.GetUnrealInteropPath());
-                    //     AutomatedExporter.SaveInteropUnrealPythonFile(savePath, meshName, AutomatedExporter.EImportType.Entity, ConfigSubsystem.GetOutputTextureFormat());
-                    //     //AutomatedExporter.SaveInteropBlenderPythonFile(savePath, meshName, AutomatedExporter.ImportType.Entity, ConfigSubsystem.GetOutputTextureFormat());
-                    // }
-                    // fbxHandler.ExportScene($"{savePath}/{meshName}.fbx");
-                    // Console.WriteLine($"[Charm] Saved all data to {savePath}.");
-                    // //Shutdown();
+                    return;
                 }
             }
         }

@@ -13,7 +13,28 @@
     PreviewKeyDown="MainWindow_PreviewKeyDown"
     WindowState="Maximized"
     mc:Ignorable="d">
-    <Grid Background="Transparent">
+    <Grid Style="{StaticResource GradientBackground}">
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Grid.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation
+                            Storyboard.TargetProperty="Opacity"
+                            From="0"
+                            To="1"
+                            Duration="0:0:0.25" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+
+        <Grid
+            x:Name="SpinnerContainer"
+            Grid.RowSpan="2"
+            Panel.ZIndex="0"
+            Background="#131316"
+            Opacity="1"
+            Visibility="Visible" />
 
         <StackPanel
             Margin="0,5,10,0"
@@ -22,7 +43,7 @@
             Panel.ZIndex="1"
             Orientation="Horizontal">
             <Image
-                x:Name="CharmIcon"
+                x:Name="MIDAIcon"
                 Width="20"
                 Height="20"
                 Margin="0,0,5,0"

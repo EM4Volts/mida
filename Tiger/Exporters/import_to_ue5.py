@@ -3,7 +3,7 @@ import os
 import json
 
 
-class CharmImporter:
+class MIDAImporter:
     def __init__(self, folder_path: str, b_unique_folder: bool) -> None:
         self.folder_path = folder_path
         info_name = f"{__file__.split('/')[-1].split('_')[0]}_info.cfg"
@@ -361,6 +361,6 @@ class CharmImporter:
 
 
 if __name__ == "__main__":
-    importer = CharmImporter(os.path.dirname(os.path.realpath(__file__)), b_unique_folder=False)
+    importer = MIDAImporter(os.path.dirname(os.path.realpath(__file__)), b_unique_folder=False)
     importer.import_entity()
     # importer.update_material_code()

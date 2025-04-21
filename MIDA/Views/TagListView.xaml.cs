@@ -1450,7 +1450,7 @@ public partial class TagListView : UserControl
             text.Append($"{view.StringHash} : {view.RawString} \n");
         });
 
-        ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
         string saveDirectory = config.GetExportSavePath() + $"/Strings/{info.Hash}_{info.Name}/";
         Directory.CreateDirectory(saveDirectory);
 
@@ -1617,7 +1617,7 @@ public partial class TagListView : UserControl
 
     private void ExportSound(ExportInfo info)
     {
-        ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
 
         WwiseSound sound = FileResourcer.Get().GetFile<WwiseSound>(info.Hash);
         string saveDirectory = config.GetExportSavePath() + $"/Sound/{(_weaponItemName == null ? "" : $"{_weaponItemName}/")}{info.Hash}_{info.Name}/";
@@ -1635,7 +1635,7 @@ public partial class TagListView : UserControl
                 viewer.MusicPlayer.Pause();
         });
 
-        ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
         Wem wem = FileResourcer.Get().GetFile<Wem>(info.Hash);
         string saveDirectory = config.GetExportSavePath() + $"/Sound/{info.Hash}_{info.Name}/";
         Directory.CreateDirectory(saveDirectory);

@@ -2,19 +2,19 @@
 
 public interface ICommandlet
 {
-    public void Run(CharmArgs args);
+    public void Run(MIDAArgs args);
 }
 
-public class CharmArgs
+public class MIDAArgs
 {
     private string[] _args { get; }
 
-    public CharmArgs()
+    public MIDAArgs()
     {
         _args = Environment.GetCommandLineArgs();
     }
 
-    public CharmArgs(string[] args)
+    public MIDAArgs(string[] args)
     {
         _args = args;
     }

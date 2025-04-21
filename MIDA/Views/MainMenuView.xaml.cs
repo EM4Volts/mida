@@ -50,18 +50,6 @@ public partial class MainMenuView : UserControl
         ToolTip = new();
         Panel.SetZIndex(ToolTip, 50);
         MainContainer.Children.Add(ToolTip);
-
-        if (ConfigSubsystem.Get().GetAnimatedBackground())
-        {
-            SpinnerShader _spinner = new SpinnerShader();
-            Spinner.Effect = _spinner;
-            SizeChanged += _spinner.OnSizeChanged;
-            _spinner.ScreenWidth = (float)ActualWidth;
-            _spinner.ScreenHeight = (float)ActualHeight;
-            _spinner.Scale = new(2, 2);
-            _spinner.Offset = new(-1, -1);
-            SpinnerContainer.Visibility = Visibility.Visible;
-        }
     }
 
     private void CategoryButton_MouseEnter(object sender, MouseEventArgs e)
@@ -197,7 +185,7 @@ public partial class MainMenuView : UserControl
 
     private void GithubButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Process.Start(new ProcessStartInfo { FileName = "https://github.com/MontagueM/Charm/tree/delta/TFS%2Bmisc", UseShellExecute = true });
+        Process.Start(new ProcessStartInfo { FileName = "https://github.com/DeltaDesigns/MIDA", UseShellExecute = true });
     }
 
     private void UserControl_MouseMove(object sender, MouseEventArgs e)
@@ -222,16 +210,13 @@ public partial class MainMenuView : UserControl
             DarkenBackground = true,
             Icon = "",
             //about.IconImage = MainWindow.GetBitmapSource(System.Drawing.Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetExecutingAssembly().Location));
-            Title = $"CHARM {App.CurrentVersion.Id}",
-            Subtitle = "Charm was created by Montague",
+            Title = $"MIDA {App.CurrentVersion.Id}",
+            Subtitle = "MIDA is a fork of Charm designed soley for Marathon",
             Description =
-            "Charm was developed for 3D artists, to preserve vaulted content as much as possible, and for learning how the Tiger engine works in general!\n\n" +
+            "MIDA was developed for 3D artists, to preserve content as much as possible, and for learning how the Tiger engine works in general!\n\n" +
             "Additional help/development from:\n" +
-            "• Delta\n" +
             "• nblock\n" +
-            "• Cohae\n" +
-            "• BIOS\n" +
-            "• HighRTT\n",
+            "• Cohae\n",
             Style = PopupBanner.PopupStyle.Information
         };
         about.Show();

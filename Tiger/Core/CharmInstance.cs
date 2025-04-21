@@ -4,11 +4,11 @@ using Arithmic;
 namespace Tiger;
 
 // Is alive for the entire duration of the program
-public static class CharmInstance
+public static class MIDAInstance
 {
     private static Dictionary<string, Subsystem> _subsystems = new();
 
-    public static CharmArgs Args { get; set; } = new CharmArgs();
+    public static MIDAArgs Args { get; set; } = new MIDAArgs();
 
     public static bool HasSubsystem<T>() where T : Subsystem
     {

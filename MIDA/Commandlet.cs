@@ -16,7 +16,7 @@ public abstract class Commandlet
     /// <returns>true if a commandlet was run.</returns>
     public static bool RunCommandlet()
     {
-        if (CharmInstance.Args.GetArgValue("commandlet", out string commandletName))
+        if (MIDAInstance.Args.GetArgValue("commandlet", out string commandletName))
         {
             Stopwatch stopwatch = new();
             stopwatch.Start();
@@ -37,7 +37,7 @@ public abstract class Commandlet
 
     private static void ParseBaseCommandletParams()
     {
-        if (CharmInstance.Args.IsArgPresent("NewPackagePathsCache"))
+        if (MIDAInstance.Args.IsArgPresent("NewPackagePathsCache"))
         {
             PackagePathsCache.ClearCacheFiles();
         }
@@ -52,7 +52,7 @@ public abstract class Commandlet
         }
 
         ICommandlet commandlet = (ICommandlet)Activator.CreateInstance(commandletType);
-        commandlet.Run(CharmInstance.Args);
+        commandlet.Run(MIDAInstance.Args);
     }
 
     private static Type? FindCommandletFromClassName(string commandletName)

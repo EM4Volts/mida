@@ -15,7 +15,7 @@ public class SaveStringsDatabaseCommandlet : ICommandlet
 
     private static ConcurrentDictionary<uint, List<LocalizedStringView>> _strings = new();
 
-    public void Run(CharmArgs args)
+    public void Run(MIDAArgs args)
     {
         PackageResourcer resourcer = PackageResourcer.Get();
         HashSet<LocalizedStrings> tags = resourcer.GetAllFiles<LocalizedStrings>();

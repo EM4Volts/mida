@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -11,7 +11,6 @@
 		<Platforms>x64</Platforms>
 		<IsPackable>false</IsPackable>
 		<Authors />
-		<Company>MontagueM</Company>
 		<LangVersion>11</LangVersion>
 		<ApplicationIcon>charm.ico</ApplicationIcon>
 		<RunPostBuildEvent>Always</RunPostBuildEvent>
@@ -20,9 +19,9 @@
 
     <ItemGroup>
       <None Remove="Shaders\procedural_spinner.ps.cso" />
+      <None Remove="Shaders\procedural_spinner.ps.hlsl" />
       <None Remove="Shaders\procedural_spinner.vs.cso" />
-      <None Remove="Shaders\Spinner.fx" />
-      <None Remove="Shaders\Spinner.hlsl" />
+      <None Remove="Shaders\procedural_spinner.vs.hlsl" />
     </ItemGroup>
 
     <ItemGroup>
@@ -131,16 +130,13 @@
       <Content Include="Shaders\procedural_spinner.ps.cso">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Include="Shaders\procedural_spinner.ps.hlsl">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <Content Include="Shaders\procedural_spinner.vs.cso">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="Shaders\Spinner.fx">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Shaders\Spinner.hlsl">
+      <Content Include="Shaders\procedural_spinner.vs.hlsl">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

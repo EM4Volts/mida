@@ -153,7 +153,7 @@ public partial class DareView : UserControl
     private void ExecuteQueue_OnClick(object sender, RoutedEventArgs e)
     {
         List<string> apiStages = _selectedItems.Select((_, i) => $"Exporting {_selectedItems[i].ItemName} ({i + 1}/{_selectedItems.Count})").ToList();
-        ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
         string savePath = config.GetExportSavePath();
         bool aggregateOutput = (bool)AggregateOutput.IsChecked;
 
@@ -223,7 +223,7 @@ public partial class DareView : UserControl
         MainWindow.Progress.SetProgressStages(apiStages);
         Task.Run(() =>
         {
-            ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+            ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
             string savePath = config.GetExportSavePath();
             savePath += $"/AllShaders";
             Directory.CreateDirectory(savePath);
@@ -246,7 +246,7 @@ public partial class DareView : UserControl
 
     private void OpenOutputFolder_OnClick(object sender, RoutedEventArgs e)
     {
-        ConfigSubsystem config = CharmInstance.GetSubsystem<ConfigSubsystem>();
+        ConfigSubsystem config = MIDAInstance.GetSubsystem<ConfigSubsystem>();
         Process.Start("explorer.exe", config.GetExportSavePath());
     }
 
