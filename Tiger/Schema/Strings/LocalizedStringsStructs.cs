@@ -26,7 +26,7 @@ public struct SLocalizedStringsData
     // might be a colour table here
 
     [SchemaField(0x28, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArrayUnloaded<SStringCharacter> StringCharacters;
+    public DynamicArrayUnloaded<SInt8> StringCharacters;
     public DynamicArrayUnloaded<SStringPartDefinition> StringCombinations;
 }
 
@@ -40,12 +40,6 @@ public struct SStringPart
     public ushort ByteLength;    // these can differ if multibyte unicode
     public ushort StringLength;
     public ushort CipherShift;    // now always zero
-}
-
-[SchemaStruct("05008080", 0x01)]
-public struct SStringCharacter
-{
-    public byte Character;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "F5998080", 0x10)]

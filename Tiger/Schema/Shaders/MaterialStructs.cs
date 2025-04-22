@@ -44,7 +44,7 @@ public struct SMaterialShader
     public DynamicArray<STextureTag> Textures;
 
     [SchemaField(0x20, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArray<S09008080> TFX_Bytecode;
+    public DynamicArray<SUint8> TFX_Bytecode;
     public DynamicArray<Vec4> TFX_Bytecode_Constants;
     public DynamicArray<SDirectXSamplerTag> Samplers;
     public DynamicArray<Vec4> CBuffers; // Fallback if Vector4Container doesn't exist, I guess..?
@@ -128,13 +128,6 @@ public struct SDirectXSamplerTag
     {
         return Sampler;
     }
-}
-
-
-[SchemaStruct("80800009", 1)]
-public struct S09008080
-{
-    public byte Value;
 }
 
 [SchemaStruct("80800090", 0x10)]

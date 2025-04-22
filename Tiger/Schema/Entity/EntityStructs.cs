@@ -14,12 +14,6 @@ public struct SEntity
     public DynamicArrayUnloaded<SCD9A8080> EntityResources;
 }
 
-[SchemaStruct("06008080", 0x2)]
-public struct S06008080
-{
-    public short Unk0;
-}
-
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "8080BAA2", 0xC)]
 public struct SCD9A8080  // entity resource entry
 {
@@ -177,8 +171,8 @@ public struct S40AF8080
 public struct SAE9F8080
 {
     [SchemaField(0x38, TigerStrategy.MARATHON_ALPHA)]
-    public DynamicArrayUnloaded<S07008080> Unk38;
-    public DynamicArrayUnloaded<S07008080> Unk48;
+    public DynamicArrayUnloaded<SInt32> Unk38;
+    public DynamicArrayUnloaded<SInt32> Unk48;
     public DynamicArrayUnloaded<S47BF8080> Unk58;
     public DynamicArrayUnloaded<S40AF8080> Unk68;
 }
@@ -189,8 +183,8 @@ public struct SAF9F8080
     [SchemaField(0x90)]
     public DynamicArrayUnloaded<S42AF8080> NodeHierarchy;
     public DynamicArrayUnloaded<S47BF8080> DefaultInverseObjectSpaceTransforms;
-    //public DynamicArrayUnloaded<S06008080> RangeIndexMap;
-    //public DynamicArrayUnloaded<S06008080> InnerIndexMap;
+    //public DynamicArrayUnloaded<SInt16> RangeIndexMap;
+    //public DynamicArrayUnloaded<SInt16> InnerIndexMap;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B79F8080", 0x110)]
@@ -200,8 +194,8 @@ public struct SB79F8080
     public DynamicArrayUnloaded<S42AF8080> NodeHierarchy;
     public DynamicArrayUnloaded<S47BF8080> DefaultObjectSpaceTransforms;
     public DynamicArrayUnloaded<S47BF8080> DefaultInverseObjectSpaceTransforms;
-    public DynamicArrayUnloaded<S06008080> RangeIndexMap;
-    public DynamicArrayUnloaded<S06008080> InnerIndexMap;
+    public DynamicArrayUnloaded<SInt16> RangeIndexMap;
+    public DynamicArrayUnloaded<SInt16> InnerIndexMap;
 
     [SchemaField(TigerStrategy.MARATHON_ALPHA)]
     public Vector2 UnkE0;
@@ -312,12 +306,6 @@ public struct S44868080
 {
 }
 
-[SchemaStruct("0B008080", 4)]
-public struct S0B008080
-{
-    public uint Unk00;
-}
-
 [SchemaStruct("668B8080", 0x70)]
 public struct S668B8080
 {
@@ -329,12 +317,6 @@ public struct S668B8080
 public struct S628B8080
 {
     public Vector4 Unk00;
-}
-
-[SchemaStruct("0F008080", 4)]
-public struct S0F008080
-{
-    public float Unk00;
 }
 
 [SchemaStruct("90008080", 0x10)]
@@ -389,12 +371,6 @@ public struct S1D848080
 
     [SchemaField(TigerStrategy.MARATHON_ALPHA, Tag64 = true)]
     public Tag Entity;
-}
-
-[SchemaStruct("07008080", 4)]
-public struct S07008080
-{
-    public uint Unk00;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "81888080", 0xEC)]

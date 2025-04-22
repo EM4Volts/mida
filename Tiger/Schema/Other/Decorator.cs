@@ -28,8 +28,8 @@ public class Decorator : Tag<SDecorator>
         using TigerReader reader = _tag.BufferData.TagData.InstanceBuffer.GetReferenceReader();
         for (int i = 0; i < _tag.InstanceRanges.Count - 1; i++)
         {
-            var start = _tag.InstanceRanges[i].Unk00;
-            var end = _tag.InstanceRanges[i + 1].Unk00;
+            var start = _tag.InstanceRanges[i].Value;
+            var end = _tag.InstanceRanges[i + 1].Value;
             var count = end - start;
 
             var dynID = models.Count == 1 ? i : 0;
@@ -65,7 +65,7 @@ public class Decorator : Tag<SDecorator>
             // Trees need(?) their vertex shader to transform correctly...
             //if (model.TagData.SpeedTreeData != null)
             //{
-            //    var scale = model.TagData.SpeedTreeData.TagData.Unk08[0].Unk00;
+            //    var scale = model.TagData.SpeedTreeData.TagData.Unk08[0].Value;
             //    var offset = model.TagData.SpeedTreeData.TagData.Unk08[0].Unk10;
             //    foreach (var part in parts)
             //    {
@@ -169,12 +169,12 @@ public struct SDecorator
 {
     public ulong Size;
     public DynamicArray<SB16C8080> DecoratorModels;
-    public DynamicArray<S07008080> InstanceRanges;
-    public DynamicArray<S07008080> Unk28;
-    public DynamicArray<S07008080> Unk38;
+    public DynamicArray<SInt32> InstanceRanges;
+    public DynamicArray<SInt32> Unk28;
+    public DynamicArray<SInt32> Unk38;
     public Tag<SA46C8080> BufferData;
     public Tag<SOcclusionBounds> OcculusionBounds;
-    public DynamicArray<S07008080> Unk50;
+    public DynamicArray<SInt32> Unk50;
 }
 
 [SchemaStruct(TigerStrategy.MARATHON_ALPHA, "B16C8080", 0x4)]

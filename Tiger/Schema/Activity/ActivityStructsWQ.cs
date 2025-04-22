@@ -394,14 +394,7 @@ public struct S0B978080
     public TigerHash Unk0C;
     public TigerHash Unk10;
     [SchemaField(0x40)]
-    public DynamicArray<S0C008080> Unk40;
-}
-
-[SchemaStruct("0C008080", 8)]
-public struct S0C008080
-{
-    public TigerHash Unk00;
-    public TigerHash Unk04;
+    public DynamicArray<SUint64> Unk40;
 }
 
 #region Audio

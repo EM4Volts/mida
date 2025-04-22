@@ -25,7 +25,7 @@ public class EntityControlRig : EntityResource
     //    var ikDescriptors = skelInfo.UnkB8;
     //    for (int i = 0; i < ikDescriptors.Count; i++)
     //    {
-    //        string name = ikDescriptors[i].Unk00.ToString();
+    //        string name = ikDescriptors[i].Value.ToString();
     //        // if (!(name.Contains("thigh") || name.Contains("thigh"))) continue;;
     //        var rotation = ikTransforms[i].Rotation;
     //        var translation = ikTransforms[i].Translation.ToVec3();
