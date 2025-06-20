@@ -12,4 +12,7 @@ The destiny community (mainly the art community that rips models etc) is heavily
 under the pretend of "preventing leaks" they dont want to release their own tools that are somewhat finished and work for alot of things already.
 while i understand that work goes into these tools its also scummy to gatekeep them like this, some people of their private group already upload art using the ripped models while others arent even allowed to ask for any news on the tools.
 
+There is nothing in thoose gamefiles worth leaking. voids model is in there but then again, youve seen 2000 arts of her by bungie already.
+
 before anyone says something. charm, and mida were licensed under GLP 3.
+
