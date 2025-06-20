@@ -14,7 +14,7 @@ while i understand that work goes into these tools its also scummy to gatekeep t
 
 There is nothing in thoose gamefiles worth leaking. voids model is in there but then again, youve seen 2000 arts of her by bungie already.
 
-before anyone says something. charm, and mida were licensed under GLP 3.
+before anyone says something. charm, and mida were licensed under GPL 3.
 
 
 I WONT RELEASE BINARIES AND WONT ASSIST IN BUILDING IT.
