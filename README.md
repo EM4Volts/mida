@@ -1,7 +1,7 @@
 Source code for MIDA. a Ripping software for Marathon (2025/26), based on CHARM 
 
 Link to branch with the actual code:
-(https://github.com/EM4Volts/mida/tree/midaL)[https://github.com/EM4Volts/mida/tree/midaL]
+[https://github.com/EM4Volts/mida/tree/midaL](https://github.com/EM4Volts/mida/tree/midaL)
 
 
 How did i get this?
