@@ -16,3 +16,5 @@ There is nothing in thoose gamefiles worth leaking. voids model is in there but 
 
 before anyone says something. charm, and mida were licensed under GLP 3.
 
+
+I WONT RELEASE BINARIES AND WONT ASSIST IN BUILDING IT.
